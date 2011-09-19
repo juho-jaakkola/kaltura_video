@@ -32,24 +32,32 @@ $group = get_entity($ob->container_guid);
 if($group instanceof ElggGroup) {
 	elgg_set_page_owner_guid($group->getGUID());
 	
-	add_submenu_item(elgg_echo('kalturavideo:label:groupvideos'), $CONFIG->wwwroot."pg/kaltura_video/".$group->username);
+	// @todo Is this needed or is start.php menus sufficient
+	elgg_register_menu_item('owner_block', array(
+		'name' => 'kaltura_video_groups',
+		'href' => "kaltura_video/group/{$page_owner->getGUID()}/all",
+		'text' => sprintf(elgg_echo("kalturavideo:label:groupvideos:TEST")),
+		'context' => 'groups',
+	));
+	
+	//add_submenu_item(elgg_echo('kalturavideo:label:groupvideos'), $CONFIG->wwwroot."pg/kaltura_video/".$group->username);
+} else {
+	$group = false;
 }
-else $group = false;
 
 //generic widget
 $widget = kaltura_create_generic_widget_html ( $metadata->kaltura_video_id , 'l' );
 $widgetm = kaltura_create_generic_widget_html ( $metadata->kaltura_video_id , 'm' );
 
 //if widget exists
-if($metadata->kaltura_video_widget_html) {
+if ($metadata->kaltura_video_widget_html) {
 	//generated widget
 	$widget = $metadata->kaltura_video_widget_html;
 	$metadata->kaltura_video_widget_width .= 'px';
 	$metadata->kaltura_video_widget_height .= 'px';
 
 	//echo "WIDGET ".$metadata->kaltura_video_widget_uid;
-}
-else {
+} else {
 	preg_match('/width="([0-9]*)"/',$widget,$matchs);
 	$metadata->kaltura_video_widget_width = 'auto';
 	if($matchs[1]) $metadata->kaltura_video_widget_width = $matchs[1]."px";
@@ -64,7 +72,7 @@ else {
 $title = elgg_echo("kalturavideo:label:adminvideos").': ';
 $title .= elgg_echo("kalturavideo:label:showvideo");
 
-if(elgg_get_viewtype() != 'default') {
+if (elgg_get_viewtype() != 'default') {
 	//put here the standard view call: rss, opendd, etc.
 	echo $standard_entity;
 	//add comments
@@ -95,8 +103,10 @@ echo elgg_view("profile/icon",array('entity' => $uob, 'size' => 'tiny'));
 
 <?php echo elgg_echo('by'); ?> <a href="<?php echo $CONFIG->wwwroot.'pg/kaltura_video/'.$uob->username; ?>" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos")); ?>"><?php echo $uob->name; ?></a>
 <?php
-if($group) echo elgg_echo('ingroup')." <a href=\"{$CONFIG->wwwroot}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
- ?>
+if ($group) {
+	echo elgg_echo('ingroup')." <a href=\"{$CONFIG->wwwroot}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
+}
+?>
 <?php echo elgg_echo("kalturavideo:label:length"); ?> <strong><?php echo $metadata->kaltura_video_length; ?></strong>
 <?php echo elgg_echo("kalturavideo:label:plays"); ?> <strong class="ajax_play" rel="<?php echo $metadata->kaltura_video_id; ?>"><?php echo intval($metadata->kaltura_video_plays); ?></strong>
 <!-- display the comments link -->
