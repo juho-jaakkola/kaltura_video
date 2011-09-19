@@ -34,8 +34,8 @@
 				'dark' => array("name" => "Dark", "uiConfId" => 48410, "width" => 400, "height" => 335)
 				),//end corp
 			"ce" => array(
-				'light' => array("name" => "Light", "uiConfId" => 1727915, "width" => 400, "height" => 335), // original: 48411
-				'dark' => array("name" => "Dark", "uiConfId" => 48410, "width" => 400, "height" => 335)
+				'light' => array("name" => "Light", "uiConfId" => 1727911, "width" => 400, "height" => 335), // original: 48411 works: 1727915
+				'dark' => array("name" => "Dark", "uiConfId" => 1727911, "width" => 400, "height" => 335)
 				)//end ce
 		),//end player
 		"kcw" => array(
@@ -44,7 +44,7 @@
 				'dark' => array("name" => "Dark", "uiConfId" => 1000198)
 				),//end corp
 			"ce" => array(
-				'cw1' => array("name" => "cw for KMC (680x480px)", "uiConfId" => 541), // original: 36202
+				'cw1' => array("name" => "cw for KMC (680x480px)", "uiConfId" => 1013682), // original: 36202
 				)//end ce
 		),//end kaltura contribution wizard
 		"kse" => array(
@@ -53,7 +53,7 @@
 				'light' => array("name" => "Light", "uiConfId" => 1000201)
 				),//end corp
 			"ce" => array(
-				'se1' => array("name" => "samplekit simple editor (890x546px)", "uiConfId" => 36300)
+				'se1' => array("name" => "samplekit simple editor (890x546px)", "uiConfId" => 1002226) // origianl: 36300
 				)//end ce
 		)//end kaltura standars efditor
 	);
