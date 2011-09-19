@@ -1,0 +1,111 @@
+INSTALL FILE
+========================================================================
+PLUGIN VERSION: 1.2
+ELGG VERSION: 1.7.1
+
+AUTHOR:
+
+Ivan Vergés
+May 2010
+ivan@microstudi.net
+========================================================================
+
+DEPENDENCIES:
+
+	Elgg 1.5, 1.6, 1.7
+	CURL libraries for PHP needed!!!
+
+INSTALL:
+
+	0. Please be sure that you have Elgg installed in a site with CURL
+	   libraries for PHP
+
+	1. Copy the directory kaltura_video/ and all his files to the
+	   plugins folder in elgg_path/mod/
+
+	2. Activate the plugin in tools administration
+
+	3. Configure the plugin by clicking in
+	   "Administration" -> Kaltura Video Admin
+
+	   IMPORTANT: You need be a partner of kaltura.com or have your own
+	   copy of Kaltura Community Edition (CE) in order to use this
+	   plugin.
+	   This plugin has an integraded form to register to Kaltura.
+	   Do it in "Administration" -> Kaltura Video Admin
+
+UPGRADING FROM OLDER VERSIONS:
+
+	1. Completly remove the old kaltura_video/ directory in the
+	   plugin's folder (mod/) and put the new one instead
+
+	2. Check the configuration options by login into your Elgg
+	   installation as admin and go to:
+	   "Administration" -> Kaltura Video Admin
+
+	3. Run the "Recreate all video objects" as administrador if your
+	   older version is lower than 1.0
+
+	4. That's all, enjoy it!
+
+KALTURA CE SERVER
+
+	You can change the server and the flash widgets used in the plugin
+	by login into your Elgg installation as admin and go to:
+	"Administration" -> Kaltura Video Admin
+
+TINYMCE INTEGRATION
+
+	This plugin can be integrated into TinyMCE rich text editor. To do
+	that, simply go to "Administration" -> Kaltura Video Admin
+	and choose "Try to integrate into tinyMCE".
+
+	However	there are a lot versions of this plugin and the integration
+	method is far away from perfection.
+
+	So, if something is broken after activating the integration,
+	deactivate it and report me this issue!
+
+ADVANCED IMPORT VIDEOS FROM KALTURA
+
+	From version 1.0 you can easyly import videos created outside Elgg
+	in Kaltura (for example with the drupal or wordpress plugin).
+
+	To do that, go to Kaltura's CMS (or your own copy of Kaltura CE):
+	http://www.kaltura.com/index.php/kmc
+
+	Login in, edit the "Video Mix" videos (you can only import this kind
+	of videos). Put the "Admin Tags" property with the value of
+	"elgg_plugin" followed by the username in Elgg you want to assign
+	the video.
+
+	EX:
+
+	If you want to import a video from Kaltura's CMS to the user "foo"
+	("foo" is the username, not the name of the user) edit the details
+	of the video in Kaltura's CMS and let the Admin tags like this:
+
+	elgg_plugin foo
+
+	Then go to your Elgg installation and run "Recreate objects" logged
+	intoo and admin account.
+
+========================================================================
+
+DONATIONS:
+
+	Note that I'm not affiliated with Elgg (Curverider) or Kaltura Corp.
+	So if you like this plugin consider to make a donation here:
+
+	https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3518572
+
+========================================================================
+
+@author Ivan Vergés <ivan@microstudi.net>
+                    - Twitter: http://twitter.com/microstudi
+
+@license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+@copyright Ivan Vergés 2010
+@link http://microstudi.net/elgg/
+
+========================================================================
