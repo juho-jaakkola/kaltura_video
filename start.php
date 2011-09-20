@@ -47,24 +47,6 @@ function kaltura_video_init() {
 		}
 	}
 
-	$user = elgg_get_logged_in_user_entity();
-
-	// Set up site menu for logged in users
-	if (elgg_is_logged_in()) {
-		elgg_register_menu_item('site', array(
-			'name' => 'kaltura_video',
-			'href' => "kaltura_video/all", //,"pg/kaltura_video/" . $_SESSION['user']->username,
-			'text' => elgg_echo('kalturavideo:label:adminvideos'),
-		));
-	// Or for non-logged in users
-	} else {
-		elgg_register_menu_item('site', array(
-			'name' => 'kaltura_video_all',
-			'href' => 'kaltura_video/all', //"mod/kaltura_video/everyone.php",
-			'text' => elgg_echo('kalturavideo:label:adminvideos'),
-		));
-	}
-
 	// Extend system CSS with our own styles, which are defined in the blog/css view
 	elgg_extend_view('css','kaltura/css');
 
@@ -165,12 +147,11 @@ function kaltura_video_page_setup() {
 
 	// Show menus only if plugin is configured
 	if (elgg_get_plugin_setting("password", "kaltura_video")) {
-		// Settings page for admin
-		elgg_register_menu_item('page', array(
-			'name' => 'kaltura_video_admin',
-			'href' => 'pg/kaltura_video',
-			'text' => elgg_echo('kalturavideo:admin'),
-			'context' => 'admin',
+		// Site menu item
+		elgg_register_menu_item('site', array(
+			'name' => 'kaltura_video_sitevideos',
+			'href' => 'kaltura_video/all',
+			'text' => elgg_echo('kalturavideo:label:adminvideos'),
 		));
 	
 		// All videos
@@ -270,7 +251,15 @@ function kaltura_video_page_setup() {
 			//add_submenu_item(sprintf(elgg_echo("kalturavideo:label:groupvideos"),$page_owner->name), $CONFIG->wwwroot . "pg/kaltura_video/" . $page_owner->username);
 		}
 	}
-
+	
+	// Link to plugin configuration 
+	elgg_register_menu_item('page', array(
+		'name' => 'kaltura_video',
+		'href' => 'admin/kaltura_video',
+		'text' => elgg_echo('admin:kaltura_video'),
+		'context' => 'admin',
+		'section' => 'configure'
+	));
 }
 
 /**

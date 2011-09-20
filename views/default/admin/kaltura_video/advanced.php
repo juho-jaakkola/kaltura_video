@@ -1,7 +1,9 @@
 <?php
 
 	$configured = $vars['configured'];
-
+	
+	global $CONFIG;
+	require_once($CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/kaltura_helpers.php');
 ?>
 <h3 class="settings"><?php echo elgg_echo('kalturavideo:label:recreateobjects'); ?></h3>
 

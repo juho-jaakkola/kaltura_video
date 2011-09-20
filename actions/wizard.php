@@ -74,7 +74,7 @@
 				elgg_set_plugin_setting("admin_secret", $adminSecret,"kaltura_video");
 
 				system_message(elgg_echo("kalturavideo:registeredok"));
-				forward(get_config('url')."pg/kaltura_video_admin/?type=server");
+				forward(get_config('url')."admin/kaltura_video/?type=server");
 			}
 			catch(Exception $e) {
 				$error = $e->getMessage();

@@ -14,36 +14,33 @@ require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php
 $type = $vars['type'];
 $configured = $vars['configured'];
 
-
 $form_body = '';
-if($type == 'partner_wizard') {
+if ($type == 'partner_wizard') {
 	//action
 	$action = "kaltura_video/wizard";
-	$form_body .= elgg_view('kaltura/admin.wizard',array('configured'=>$configured));
+	$form_body .= elgg_view('admin/kaltura_video/wizard', array('configured' => $configured));
 
 	$form_body .= elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
-
-}
-else {
+} else {
 	$action = "kaltura_video/admin";
-	if($type == 'server') {
-		$form_body .= elgg_view('kaltura/admin.server',array('configured'=>$configured));
-		$form_body .= elgg_view('kaltura/admin.partnerid',array('configured'=>$configured));
+	if ($type == 'server') {
+		$form_body .= elgg_view('admin/kaltura_video/server', array('configured' => $configured));
+		$form_body .= elgg_view('admin/kaltura_video/partnerid', array('configured' => $configured));
 		$form_body .= elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
 	}
-	elseif($type == 'custom') {
-		$form_body .= elgg_view('kaltura/admin.custom',array('configured'=>$configured));
+	elseif ($type == 'custom') {
+		$form_body .= elgg_view('admin/kaltura_video/custom', array('configured' => $configured));
 		$form_body .= elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
 	}
-	elseif($type == 'behavior') {
-		$form_body .= elgg_view('kaltura/admin.behavior',array('configured'=>$configured));
+	elseif ($type == 'behavior') {
+		$form_body .= elgg_view('admin/kaltura_video/behavior', array('configured' => $configured));
 		$form_body .= elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
 	}
-	elseif($type == 'advanced') {
-		$form_body .= elgg_view('kaltura/admin.advanced',array('configured'=>$configured));
+	elseif ($type == 'advanced') {
+		$form_body .= elgg_view('admin/kaltura_video/advanced', array('configured' => $configured));
 	}
-	elseif($type == 'credits') {
-		$form_body .= elgg_view('kaltura/admin.credits',array('configured'=>$configured));
+	elseif ($type == 'credits') {
+		$form_body .= elgg_view('admin/kaltura_video/credits', array('configured' => $configured));
 	}
 
 	//hope of donations...

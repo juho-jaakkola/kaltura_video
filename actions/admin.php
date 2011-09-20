@@ -57,7 +57,7 @@
 				elgg_set_plugin_setting("admin_secret", $adminSecret,"kaltura_video");
 
 				system_message(elgg_echo("kalturavideo:registeredok"));
-				forward(get_config('url')."pg/kaltura_video_admin/?type=$type");
+				forward(get_config('url')."admin/kaltura_video/?type=$type");
 			}
 			catch(Exception $e) {
 				$error = $e->getMessage();
@@ -68,7 +68,7 @@
 		}
 		if($error) {
 			register_error($error);
-			forward(get_config('url')."pg/kaltura_video_admin/?type=$type");
+			forward(get_config('url')."admin/kaltura_video/?type=$type");
 		}
 	}
 	elseif($type == 'custom') {
@@ -179,6 +179,6 @@
 	}
 
 	//by default return and do nothing
-	forward(get_config('url')."pg/kaltura_video_admin/?type=$type");
+	forward(get_config('url')."admin/kaltura_video/?type=$type");
 
 ?>

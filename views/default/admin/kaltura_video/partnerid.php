@@ -9,19 +9,19 @@
 <p>
 	<?php echo elgg_echo('kalturavideo:label:partner_id'); ?>:<br />
 	<?php
-		echo elgg_view('input/text', array('name' => 'partner_id','id' => 'partner_id','disabled'=>$configured, 'value' => elgg_get_plugin_setting('partner_id')));
+		echo elgg_view('input/text', array('name' => 'partner_id','id' => 'partner_id','disabled'=>$configured, 'value' => elgg_get_plugin_setting('partner_id', 'kaltura_video')));
 	?>
 </p>
 <p>
 	<?php echo elgg_echo('email'); ?>: <br />
 	<?php
-		echo elgg_view('input/text', array('name' => 'email','id' => 'email','disabled'=>$configured, 'value' => elgg_get_plugin_setting('email') ));
+		echo elgg_view('input/text', array('name' => 'email','id' => 'email','disabled'=>$configured, 'value' => elgg_get_plugin_setting('email', 'kaltura_video') ));
 	?>
 </p>
 <p>
 	<?php echo elgg_echo('password'); ?>:
 	<?php
-		echo elgg_view('input/password', array('name' => 'password','id' => 'password','disabled'=>$configured, 'value' => elgg_get_plugin_setting('password') ));
+		echo elgg_view('input/password', array('name' => 'password','id' => 'password','disabled'=>$configured, 'value' => elgg_get_plugin_setting('password', 'kaltura_video') ));
 
 	if($configured) {
 	?>

@@ -183,6 +183,7 @@ Objects not created by the Kaltura Elgg Plugin will not be touched.",
 	'kalturavideo:error:curl' => "Extension CURL not loaded!\nPlease be sure to enable this extension in order to use this plugin!\nPlease read the README file for more information.",
 
 	//new from version 1.1
+	'admin:kaltura_video' => 'Kaltura Video',
 	'kalturavideo:menu:server' => "Server",
 	'kalturavideo:menu:custom' => "Player &amp; Editor",
 	'kalturavideo:menu:behavior' => "Plugin behavior",
