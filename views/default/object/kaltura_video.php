@@ -8,13 +8,13 @@
 * @link http://microstudi.net/elgg/
 **/
 
-include_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php");
+include_once($CONFIG->pluginspath . "kaltura_video/kaltura/api_client/includes.php");
 
 $owner = $vars['entity']->getOwnerEntity();
 $access_id = $vars['entity']->access_id;
 
 $metadata = kaltura_get_metadata($vars['entity']);
-if(@empty($metadata->kaltura_video_id)) {
+if (@empty($metadata->kaltura_video_id)) {
 	$vars['entity']->delete();
 	return false;
 }
@@ -27,9 +27,11 @@ $rating = round($rating);
 $num_comments = elgg_count_comments($vars['entity']);
 
 $group = get_entity($vars['entity']->container_guid);
-if(!($group instanceof ElggGroup)) $group = false;
+if (!($group instanceof ElggGroup)) {
+	$group = false;
+}
 
-if(elgg_get_context()!='search') {
+if (elgg_get_context()!='search') {
 	//this view is for My videos:
 
 ?>
@@ -52,12 +54,12 @@ if(elgg_get_context()!='search') {
  <?php echo elgg_echo('by'); ?> <a href="<?php echo $CONFIG->wwwroot.'pg/kaltura_video/'.$owner->username; ?>" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos")); ?>"><?php echo $owner->name; ?></a>
 
 <?php
-if($group) {
+if ($group) {
 	echo elgg_echo('ingroup')." <a href=\"{$CONFIG->wwwroot}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
 }
 
-if($metadata->kaltura_video_comments_on != 'Off') {
- ?>
+if ($metadata->kaltura_video_comments_on != 'Off') {
+?>
  - <a href="<?php echo $vars['entity']->getURL(); ?>#comments"><?php echo sprintf(elgg_echo("comments")) . " (" . $num_comments . ")"; ?></a>
 <?php
 }
@@ -72,7 +74,7 @@ if($metadata->kaltura_video_comments_on != 'Off') {
 
 <?php
 
-if($metadata->kaltura_video_rating_on != 'Off') {
+if ($metadata->kaltura_video_rating_on != 'Off') {
 
 ?>
 	<span class="kaltura_video_rating">
@@ -89,8 +91,8 @@ if($metadata->kaltura_video_rating_on != 'Off') {
 <a href="<?php echo $vars['entity']->getURL(); ?>" class="submit_button"><?php echo elgg_echo("kalturavideo:label:view"); ?></a>
 
 <?php
-if($vars['entity']->canEdit()) {
-	if($metadata->kaltura_video_editable) {
+if ($vars['entity']->canEdit()) {
+	if ($metadata->kaltura_video_editable) {
 		echo ' <a href="#" rel="' . $metadata->kaltura_video_id . '" class="submit_button edit">' . elgg_echo("kalturavideo:label:edit") . '</a> ';
 	}
 ?>
@@ -106,8 +108,7 @@ if($vars['entity']->canEdit()) {
 	echo elgg_echo('access').': ';
 	echo kaltura_view_select_privacity($metadata->kaltura_video_id,$access_id,$group,$metadata->kaltura_video_collaborative);
 
-}
-elseif($metadata->kaltura_video_cancollaborate) {
+} elseif ($metadata->kaltura_video_cancollaborate) {
 
 ?>
 	<a href="#" rel="<?php echo $metadata->kaltura_video_id; ?>" class="submit_button edit" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>">
@@ -126,8 +127,7 @@ elseif($metadata->kaltura_video_cancollaborate) {
 </div>
 
 <?php
-}
-else {
+} else {
 	//this view is for everything else
 
 	$icon = '<a href="'.$vars['entity']->getURL().'">';
@@ -141,16 +141,19 @@ else {
 	$info .= "<p class=\"owner_timestamp\">";
 	$info .= $metadata->kaltura_video_created." ";
 	$info .= elgg_echo('by')." <a href=\"{$vars['url']}pg/kaltura_video/{$owner->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$owner->name}</a> ";
-	if($group) $info .= elgg_echo('ingroup')." <a href=\"{$vars['url']}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
+	if ($group) {
+		$info .= elgg_echo('ingroup')." <a href=\"{$vars['url']}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
+	}
 	$info .= elgg_echo("kalturavideo:label:length"). ' <strong>'.$metadata->kaltura_video_length.'</strong> ';
 	$info .= elgg_echo("kalturavideo:label:plays"). ' <strong>'.((int)$metadata->kaltura_video_plays).'</strong>';
 
-	if($metadata->kaltura_video_rating_on != 'Off') {
+	if ($metadata->kaltura_video_rating_on != 'Off') {
 		$info .= " ".elgg_echo("kalturavideo:rating").": <strong>".$rating."</strong>";
 	}
 
-	if ($num_comments && $metadata->kaltura_video_comments_on != 'Off')
+	if ($num_comments && $metadata->kaltura_video_comments_on != 'Off') {
 		$info .= ", <a href=\"{$vars['entity']->getURL()}\">".sprintf(elgg_echo("comments")). " (" . $num_comments . ")</a>";
+	}
 
 
 
@@ -169,11 +172,13 @@ else {
 		$info .= "</p>";
 		//when listing user videos is ok:
 		$info .= "<p class=\"shares_gallery_user\"><a href=\"{$vars['url']}pg/kaltura_video/{$owner->username}/\">{$owner->name}</a> ";
-		if($group) $info .= elgg_echo('ingroup')." <a href=\"{$vars['url']}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
+		if ($group) {
+			$info .= elgg_echo('ingroup')." <a href=\"{$vars['url']}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
+		}
 
 		$info .= '<span class="shared_timestamp">'.$metadata->kaltura_video_created.'</span>';
 
-		if($metadata->kaltura_video_rating_on != 'Off') {
+		if ($metadata->kaltura_video_rating_on != 'Off') {
 			$info .= " ".elgg_echo("kalturavideo:rating").": <strong>".$rating."</strong>";
 		}
 
@@ -185,8 +190,7 @@ else {
 		echo "<div class=\"share_gallery_info\">" . $info . "</div>";
 		echo "</div>";
 
-	}
-	else {
+	} else {
 		//this view is for context search listing
 		echo elgg_view_listing($icon, $info);
 	}

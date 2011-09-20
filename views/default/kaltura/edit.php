@@ -17,100 +17,104 @@
 	$is_new_object = get_input('entryid',0);
 
 	// Set title, form destination
-		if (isset($vars['entity'])) {
-
-			$title = sprintf(elgg_echo("kalturavideo:label:adminvideos"),$object->title);
-			$action = "kaltura_video/update";
-			$title = $vars['entity']->title;
-			$body = $vars['entity']->description;
-			$tags = $vars['entity']->tags;
-			$access_id = $vars['entity']->access_id;
-			if($is_new_object && $access_id==ACCESS_PRIVATE) {
-				$access_id = get_default_access();
-				$vars['entity']->access_id = $access_id;
-				$vars['entity']->save();
-			}
-
-			$metadata = kaltura_get_metadata($vars['entity']);
-
-			if ($metadata->kaltura_video_comments_on == 'Off') {
-				$comments_on = false;
-			} else {
-				$comments_on = true;
-			}
-			if ($metadata->kaltura_video_rating_on == 'Off') {
-				$rating_on = false;
-			} else {
-				$rating_on = true;
-			}
-			if ($metadata->kaltura_video_cancollaborate) {
-				$collaborate_on = true;
-			}
-			else {
-				$collaborate_on = false;
-			}
-
-		} else  {
-			forward();
+	if (isset($vars['entity'])) {
+		$title = sprintf(elgg_echo("kalturavideo:label:adminvideos"),$object->title);
+		$action = "kaltura_video/update";
+		$title = $vars['entity']->title;
+		$body = $vars['entity']->description;
+		$tags = $vars['entity']->tags;
+		$access_id = $vars['entity']->access_id;
+		
+		if ($is_new_object && $access_id==ACCESS_PRIVATE) {
+			$access_id = get_default_access();
+			$vars['entity']->access_id = $access_id;
+			$vars['entity']->save();
 		}
 
-		// set the required variables
-		$title_label = elgg_echo('title');
-		$title_textbox = elgg_view('input/text', array('name' => 'title', 'value' => $title));
-		$text_label = elgg_echo('description');
-		$text_textarea = elgg_view('input/longtext', array('name' => 'description', 'value' => $body));
-		$tag_label = elgg_echo('tags');
-		$tag_input = elgg_view('input/tags', array('name' => 'tags', 'value' => $tags));
-		$access_label = elgg_echo('access');
+		$metadata = kaltura_get_metadata($vars['entity']);
 
-		if($comments_on)
-			$comments_on_switch = "checked=\"checked\"";
-		else
-			$comment_on_switch = "";
-		if($rating_on)
-			$rating_on_switch = "checked=\"checked\"";
-		else
-			$rating_on_switch = "";
-
-		if($collaborate_on)
-			$collaborate_on_switch = "checked=\"checked\"";
-		else
-			$collaborate_on_switch = "";
-
-		$thumb = '<img style="width:200px;" src="' . $metadata->kaltura_video_thumbnail . '" alt="" title="' . htmlspecialchars($vars['entity']->title) . '" />';
-
-		$access_input = elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id));
-		$submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
-		$publish = elgg_echo('save');
-		$cat = elgg_echo('categories');
-		$privacy = elgg_echo('access');
-		$allowcomments = elgg_echo('kalturavideo:comments:allow');
-		$allowrating = elgg_echo('kalturavideo:rating:allow');
-		$allowcollaborate = elgg_echo('kalturavideo:label:collaborative');
-
-		//collaborate part
-		if(get_entity($vars['entity']->container_guid) instanceof ElggGroup) {
-			$collaborate_part = '<p><label><input type="checkbox" name="collaborate_select" '.$collaborate_on_switch.' /><img src="'. $CONFIG->wwwroot .'mod/kaltura_video/kaltura/images/group.png" alt="'. htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")). '" style="vertical-align:middle;" /> '.$allowcollaborate.'</label></p>';
+		if ($metadata->kaltura_video_comments_on == 'Off') {
+			$comments_on = false;
+		} else {
+			$comments_on = true;
 		}
-		else {
-			$collaborate_part = '';
+		
+		if ($metadata->kaltura_video_rating_on == 'Off') {
+			$rating_on = false;
+		} else {
+			$rating_on = true;
 		}
-
-		//rating part
-		$rating_part = "<p><label><input type=\"checkbox\" name=\"rating_select\"  {$rating_on_switch} /> {$allowrating}</label></p>";
-		if(elgg_get_plugin_setting("enablerating","kaltura_video") == 'no') {
-			$rating_part = '';
-			$collaborate_part = '';
+		
+		if ($metadata->kaltura_video_cancollaborate) {
+			$collaborate_on = true;
+		} else {
+			$collaborate_on = false;
 		}
+	} else  {
+		forward();
+	}
 
-		// INSERT EXTRAS HERE
-		$extras = elgg_view('categories',$vars);
-		if (!empty($extras)) $extras = '<div id="kaltura_edit_sidebar">' . $extras . '</div>';
+	// set the required variables
+	$title_label = elgg_echo('title');
+	$title_textbox = elgg_view('input/text', array('name' => 'title', 'value' => $title));
+	$text_label = elgg_echo('description');
+	$text_textarea = elgg_view('input/longtext', array('name' => 'description', 'value' => $body));
+	$tag_label = elgg_echo('tags');
+	$tag_input = elgg_view('input/tags', array('name' => 'tags', 'value' => $tags));
+	$access_label = elgg_echo('access');
+
+	if ($comments_on) {
+		$comments_on_switch = "checked=\"checked\"";
+	} else {
+		$comment_on_switch = "";
+	}
+	
+	if ($rating_on) {
+		$rating_on_switch = "checked=\"checked\"";
+	} else {
+		$rating_on_switch = "";
+	}
+
+	if ($collaborate_on) {
+		$collaborate_on_switch = "checked=\"checked\"";
+	} else {
+		$collaborate_on_switch = "";
+	}
+
+	$thumb = '<img style="width:200px;" src="' . $metadata->kaltura_video_thumbnail . '" alt="" title="' . htmlspecialchars($vars['entity']->title) . '" />';
+
+	$access_input = elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id));
+	$submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
+	$publish = elgg_echo('save');
+	$cat = elgg_echo('categories');
+	$privacy = elgg_echo('access');
+	$allowcomments = elgg_echo('kalturavideo:comments:allow');
+	$allowrating = elgg_echo('kalturavideo:rating:allow');
+	$allowcollaborate = elgg_echo('kalturavideo:label:collaborative');
+
+	//collaborate part
+	if (get_entity($vars['entity']->container_guid) instanceof ElggGroup) {
+		$collaborate_part = '<p><label><input type="checkbox" name="collaborate_select" '.$collaborate_on_switch.' /><img src="'. $CONFIG->wwwroot .'mod/kaltura_video/kaltura/images/group.png" alt="'. htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")). '" style="vertical-align:middle;" /> '.$allowcollaborate.'</label></p>';
+	} else {
+		$collaborate_part = '';
+	}
+
+	//rating part
+	$rating_part = "<p><label><input type=\"checkbox\" name=\"rating_select\"  {$rating_on_switch} /> {$allowrating}</label></p>";
+	if (elgg_get_plugin_setting("enablerating","kaltura_video") == 'no') {
+		$rating_part = '';
+		$collaborate_part = '';
+	}
+
+	// INSERT EXTRAS HERE
+	$extras = elgg_view('categories',$vars);
+	if (!empty($extras)) {
+		$extras = '<div id="kaltura_edit_sidebar">' . $extras . '</div>';
+	}
 
 ?>
 
 <?php
-
 	$form_body = <<<EOT
 
 	<div id="two_column_left_sidebar_210">
@@ -150,7 +154,7 @@ EOT;
 
 	$entity_hidden = elgg_view('input/hidden', array('name' => 'kaltura_video_id', 'value' => $metadata->kaltura_video_id));
 	//to no update the river if it's a new object (it has done before)
-	if($is_new_object) {
+	if ($is_new_object) {
 		$entity_hidden .= elgg_view('input/hidden', array('name' => 'do_no_add_toriver', 'value' => 1));
 	}
 

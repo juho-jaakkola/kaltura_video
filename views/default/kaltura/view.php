@@ -13,7 +13,10 @@ include_once(dirname(dirname(dirname(dirname(__FILE__))))."/kaltura/api_client/i
 $guid = (int) get_input('videopost');
 
 $ob = get_entity($guid);
-if(!$ob) forward();
+if (!$ob) {
+	forward();
+}
+
 $access_id = $ob->access_id;
 $metadata = kaltura_get_metadata($ob);
 
@@ -24,12 +27,12 @@ $num_comments = elgg_count_comments($ob);
 // If we've been asked to display the full view
 $comments =  elgg_view_comments($ob);
 
-list($votes,$rating_image,$rating) = kaltura_get_rating($ob);
+list($votes, $rating_image, $rating) = kaltura_get_rating($ob);
 $can_rate = (elgg_is_logged_in() && !kaltura_is_rated_by_user($ob->getGUID(),$_SESSION['user'],$votes));
 
 //groups handle
 $group = get_entity($ob->container_guid);
-if($group instanceof ElggGroup) {
+if ($group instanceof ElggGroup) {
 	elgg_set_page_owner_guid($group->getGUID());
 	
 	// @todo Is this needed or is start.php menus sufficient
@@ -60,11 +63,11 @@ if ($metadata->kaltura_video_widget_html) {
 } else {
 	preg_match('/width="([0-9]*)"/',$widget,$matchs);
 	$metadata->kaltura_video_widget_width = 'auto';
-	if($matchs[1]) $metadata->kaltura_video_widget_width = $matchs[1]."px";
+	if ($matchs[1]) $metadata->kaltura_video_widget_width = $matchs[1]."px";
 
 	$metadata->kaltura_video_widget_height = 'auto';
 	preg_match('/height="([0-9]*)"/',$widget,$matchs);
-	if($matchs[1]) $metadata->kaltura_video_widget_height = $matchs[1]."px";
+	if ($matchs[1]) $metadata->kaltura_video_widget_height = $matchs[1]."px";
 
 	//echo "GENERIC WIDGET";
 }
@@ -111,7 +114,7 @@ if ($group) {
 <?php echo elgg_echo("kalturavideo:label:plays"); ?> <strong class="ajax_play" rel="<?php echo $metadata->kaltura_video_id; ?>"><?php echo intval($metadata->kaltura_video_plays); ?></strong>
 <!-- display the comments link -->
 <?php
-if($metadata->kaltura_video_comments_on != 'Off') {
+if ($metadata->kaltura_video_comments_on != 'Off') {
 ?>
 	<a href="<?php echo $ob->getURL(); ?>#comments"><?php echo sprintf(elgg_echo("comments")) . " (" . $num_comments . ")"; ?></a><br />
 <?php
@@ -146,23 +149,16 @@ echo autop($ob->description);
 <div class="clear"></div>
 
 
-
-
 <p class="kaltura_video_rating">
-<?php
-if($metadata->kaltura_video_rating_on != 'Off') {
-?>
+<?php if ($metadata->kaltura_video_rating_on != 'Off'): ?>
 	<img src="<?php echo $CONFIG->wwwroot."mod/kaltura_video/kaltura/images/ratings/$rating_image"; ?>" alt="<?php echo "$rating"; ?>" /> <?php echo ("($votes " . elgg_echo('kalturavideo:votes') . ")"); ?>
-
-<?php
-}
-?>
+<?php endif; ?>
 
 <a href="#" class="submit_button showdetails"><?php echo elgg_echo("kalturavideo:show:advoptions"); ?></a>
 
 <?php
 
-if($metadata->kaltura_video_cancollaborate && !$metadata->kaltura_video_editable) {
+if ($metadata->kaltura_video_cancollaborate && !$metadata->kaltura_video_editable) {
 
 ?>
 	&nbsp;
@@ -192,13 +188,13 @@ if ($can_rate && $metadata->kaltura_video_rating_on != 'Off') {
 </div>
 
 <?php
-if($ob->canEdit()) {
+if ($ob->canEdit()) {
 ?>
 
 	<!-- options -->
 	<p class="options">
 <?php
-	if($metadata->kaltura_video_editable) {
+	if ($metadata->kaltura_video_editable) {
 		echo ' <a href="#" rel="' . $metadata->kaltura_video_id . '" class="submit_button edit">' . elgg_echo("kalturavideo:label:edit") . '</a> ';
 	}
 ?>
@@ -220,7 +216,7 @@ if($ob->canEdit()) {
 
 </div>
 <?php
-if($metadata->kaltura_video_comments_on != 'Off') {
+if ($metadata->kaltura_video_comments_on != 'Off') {
 ?>
 	<div id="comments">
 	<?php echo $comments; ?>
