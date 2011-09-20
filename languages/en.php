@@ -197,7 +197,7 @@ Objects not created by the Kaltura Elgg Plugin will not be touched.",
 	'kalturavideo:admin:editor' => "Online Video Editor Options",
 	'kalturavideo:admin:textareas' => "Textareas Integration",
 	'kalturavideo:admin:credits' => "Credits",
-	'kalturavideo:admin:suport' => "Suport",
+	'kalturavideo:admin:support' => "Support",
 
 	'kalturavideo:server:info' => "To use the Kaltura Platform features, you need to have a valid Partner ID with the Kaltura Server.",
 	'kalturavideo:server:type' => "Choose your Kaltura Server",
