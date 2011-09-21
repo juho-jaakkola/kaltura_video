@@ -12,11 +12,11 @@
 <p>
 	<?php echo elgg_echo('kalturavideo:label:defaultplayer'); ?>:
 	<?php
-		$t = elgg_get_plugin_setting('kaltura_server_type');
+		$t = elgg_get_plugin_setting('kaltura_server_type', 'kaltura_video');
 		if(empty($t)) $t = 'corp';
 		$widgets = $KALTURA_GLOBAL_UICONF['kdp'][$t];
 
-		$default = elgg_get_plugin_setting('defaultplayer');
+		$default = elgg_get_plugin_setting('defaultplayer', 'kaltura_video');
 		$vals = array();
 		foreach($widgets as $k => $v) {
 			$vals[$k] = $v['name'].' ('.elgg_echo("kalturavideo:generic").' - ' .$v['width'].'x'.$v['height'].'px)';
@@ -37,11 +37,11 @@
 	?>
 </p>
 
-<div id="kaltura_video_layer_defaultplayer"<?php echo (elgg_get_plugin_setting('defaultplayer')!='custom' ? 'style="display:none;"' : ''); ?> rel="1">
+<div id="kaltura_video_layer_defaultplayer"<?php echo (elgg_get_plugin_setting('defaultplayer', 'kaltura_video')!='custom' ? 'style="display:none;"' : ''); ?> rel="1">
 <p>
 	<?php echo elgg_echo('kalturavideo:uiconf1'); ?>:
 	<?php
-		echo elgg_view('input/url', array('name' => 'custom_kdp','id' => 'custom_kdp', 'value' => elgg_get_plugin_setting('custom_kdp'), 'class' => 'input-short' ));
+		echo elgg_view('input/url', array('name' => 'custom_kdp','id' => 'custom_kdp', 'value' => elgg_get_plugin_setting('custom_kdp', 'kaltura_video'), 'class' => 'input-short' ));
 		echo '<a href="#" id="kaltura_video_getlist_custom_kdp">&larr;'.elgg_echo("kalturavideo:uiconf:getlist").'</a>'
 	?>
 </p>
@@ -57,11 +57,11 @@
 <p>
 	<?php echo elgg_echo('kalturavideo:label:defaultkcw'); ?>:
 	<?php
-		$t = elgg_get_plugin_setting('kaltura_server_type');
+		$t = elgg_get_plugin_setting('kaltura_server_type', 'kaltura_video');
 		if(empty($t)) $t = 'corp';
 		$widgets = $KALTURA_GLOBAL_UICONF['kcw'][$t];
 
-		$default = elgg_get_plugin_setting('defaultkcw');
+		$default = elgg_get_plugin_setting('defaultkcw', 'kaltura_video');
 		$vals = array();
 		foreach($widgets as $k => $v) {
 			$vals[$k] = $v['name'].' ('.elgg_echo("kalturavideo:generic").')';
@@ -82,11 +82,11 @@
 	?>
 </p>
 
-<div id="kaltura_video_layer_defaultkcw"<?php echo (elgg_get_plugin_setting('defaultkcw')!='custom' ? 'style="display:none;"' : ''); ?> rel="2">
+<div id="kaltura_video_layer_defaultkcw"<?php echo (elgg_get_plugin_setting('defaultkcw', 'kaltura_video') != 'custom' ? 'style="display:none;"' : ''); ?> rel="2">
 <p>
 	<?php echo elgg_echo('kalturavideo:uiconf2'); ?>:
 	<?php
-		echo elgg_view('input/url', array('name' => 'custom_kcw','id' => 'custom_kcw', 'value' => elgg_get_plugin_setting('custom_kcw'), 'class' => 'input-short' ));
+		echo elgg_view('input/url', array('name' => 'custom_kcw','id' => 'custom_kcw', 'value' => elgg_get_plugin_setting('custom_kcw', 'kaltura_video'), 'class' => 'input-short' ));
 		echo '<a href="#" id="kaltura_video_getlist_custom_kcw">&larr;'.elgg_echo("kalturavideo:uiconf:getlist").'</a>'
 	?>
 </p>
@@ -95,11 +95,11 @@
 <p>
 	<?php echo elgg_echo('kalturavideo:label:defaulteditor'); ?>:
 	<?php
-		$t = elgg_get_plugin_setting('kaltura_server_type');
+		$t = elgg_get_plugin_setting('kaltura_server_type', 'kaltura_video');
 		if(empty($t)) $t = 'corp';
 		$widgets = $KALTURA_GLOBAL_UICONF['kse'][$t];
 
-		$default = elgg_get_plugin_setting('defaulteditor');
+		$default = elgg_get_plugin_setting('defaulteditor', 'kaltura_video');
 		$vals = array();
 		foreach($widgets as $k => $v) {
 			$vals[$k] = $v['name'].' ('.elgg_echo("kalturavideo:generic").')';
@@ -120,11 +120,11 @@
 	?>
 </p>
 
-<div id="kaltura_video_layer_defaulteditor"<?php echo (elgg_get_plugin_setting('defaulteditor')!='custom' ? 'style="display:none;"' : ''); ?> rel="3">
+<div id="kaltura_video_layer_defaulteditor"<?php echo (elgg_get_plugin_setting('defaulteditor', 'kaltura_video') != 'custom' ? 'style="display:none;"' : ''); ?> rel="3">
 <p>
 	<?php echo elgg_echo('kalturavideo:uiconf3'); ?>:
 	<?php
-		echo elgg_view('input/url', array('name' => 'custom_kse','id' => 'custom_kse', 'value' => elgg_get_plugin_setting('custom_kse'), 'class' => 'input-short' ));
+		echo elgg_view('input/url', array('name' => 'custom_kse','id' => 'custom_kse', 'value' => elgg_get_plugin_setting('custom_kse', 'kaltura_video'), 'class' => 'input-short' ));
 		echo '<a href="#" id="kaltura_video_getlist_custom_kse">&larr;'.elgg_echo("kalturavideo:uiconf:getlist").'</a>';
 	?>
 </p>
