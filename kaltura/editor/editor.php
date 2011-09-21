@@ -11,7 +11,7 @@
 require_once(dirname(dirname(__FILE__))."/api_client/includes.php");
 global $KALTURA_GLOBAL_UICONF;
 
-if(!extension_loaded('curl')) {
+if (!extension_loaded('curl')) {
 	echo kaltura_get_error_page('',elgg_echo('kalturavideo:error:curl'));
 	die;
 }
@@ -22,22 +22,23 @@ if (!$entryId) {
 	$error = elgg_echo('kalturavideo:error:noid');
 }
 
-if(elgg_get_plugin_setting("alloweditor","kaltura_video") == 'no') {
+if (elgg_get_plugin_setting("alloweditor","kaltura_video") == 'no') {
 	$error = elgg_echo('kalturavideo:alloweditor:notallowed');
 }
 
 $ob = kaltura_get_entity($entryId);
 $metadata = kaltura_get_metadata($ob);
 
-if(!$error) {
+if (!$error) {
 	try {
 		//check if user is allowed to edit this video
-		if($metadata->kaltura_video_cancollaborate) {
-			if($uob = get_user($ob->owner_guid)) {
+		if ($metadata->kaltura_video_cancollaborate) {
+			if ($uob = get_user($ob->owner_guid)) {
 				//change the user ID, for the creator of the video
 				$user_ID = KALTURA_ELGG_USER_PREFIX.$uob->username;
-				if($ob->container_guid != $user_guid)
+				if ($ob->container_guid != $user_guid) {
 					$user_ID .= ":".$ob->container_guid;
+				}
 			}
 		}
 
@@ -46,33 +47,37 @@ if(!$error) {
 		$entry = $kmodel->getEntry($entryId);
 		$ks = $kmodel->getClientSideSession("edit:*");
 
-		$kse = elgg_get_plugin_setting('defaulteditor',"kaltura_video");
-		if($kse == 'custom') $kse_uid = elgg_get_plugin_setting('custom_kse',"kaltura_video");
-		else {
-			$t = elgg_get_plugin_setting('kaltura_server_type',"kaltura_video");
-			if(empty($t)) $t = 'corp';
+		$kse = elgg_get_plugin_setting('defaulteditor', "kaltura_video");
+		if ($kse == 'custom') {
+			$kse_uid = elgg_get_plugin_setting('custom_kse', "kaltura_video");
+		} else {
+			$t = elgg_get_plugin_setting('kaltura_server_type', "kaltura_video");
+			if (empty($t)) {
+				$t = 'corp';
+			}
 			$editors = $KALTURA_GLOBAL_UICONF['kse'][$t];
 			$kswf = $editors[$kse];
-			if(empty($kswf)) $kswf = current($editors);
+			if (empty($kswf)) {
+				$kswf = current($editors);
+			}
 			$kse_uid = $kswf['uiConfId'];
 		}
 
 		$viewData["swfUrl"] 	= KalturaHelpers::getSimpleEditorUrl($kse_uid);
 		$viewData["flashVars"] 	= KalturaHelpers::getSimpleEditorFlashVars($ks, $entryId);
 
-		if($metadata->kaltura_video_cancollaborate || $metadata->kaltura_video_editable) {
+		if ($metadata->kaltura_video_cancollaborate || $metadata->kaltura_video_editable) {
 			//create the widget if not exists
 			kaltura_update_object($entry,$kmodel);
+		} else {
+			$error = elgg_echo('kalturavideo:edit:notallowed');
 		}
-		else $error = elgg_echo('kalturavideo:edit:notallowed');
-
-	}
-	catch(Exception $e) {
+	} catch(Exception $e) {
 		$error = $e->getMessage();
 	}
 }
 
-if($error) {
+if ($error) {
 	echo kaltura_get_error_page('',$error);
 	die;
 }
