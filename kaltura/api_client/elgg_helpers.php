@@ -86,8 +86,12 @@ function kaltura_get_rating($entity) {
 //gets a kaltura object with all metadata from a guid
 function kaltura_get_metadata($entity) {
 	unset($ob);
-	if(!$entity) return false;
-	$metadata = get_metadata_for_entity($entity->getGUID());
+	
+	if (!$entity) {
+		return false;
+	}
+
+	$metadata = elgg_get_metadata(array('guid' => $entity->getGUID(), 'limit' => 0));
 
 	foreach ($metadata as $meta) {
 		if (strpos($meta->name, "kaltura_video_") === 0) {
