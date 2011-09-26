@@ -19,12 +19,12 @@ if (@empty($metadata->kaltura_video_id)) {
 	return false;
 }
 
-list($votes,$rating_image,$rating) = kaltura_get_rating($vars['entity']);
+list($votes, $rating_image, $rating) = kaltura_get_rating($vars['entity']);
 
 $rating = round($rating);
 
-//get the number of comments
-$num_comments = elgg_count_comments($vars['entity']);
+// Get the number of comments
+$num_comments = $vars['entity']->countComments();
 
 $group = get_entity($vars['entity']->container_guid);
 if (!($group instanceof ElggGroup)) {
