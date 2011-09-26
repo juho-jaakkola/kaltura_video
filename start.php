@@ -314,6 +314,10 @@ function kaltura_video_page_handler($page) {
 		case 'friends':
 			include "$file_dir/friends.php";
 			break;
+		case 'edit':
+			set_input('videopost', $page[1]);
+			include "$file_dir/edit.php";
+			break;
 		case 'view':
 			set_input('videopost', $page[1]);
 			include("$file_dir/show.php");

@@ -88,17 +88,17 @@ if ($metadata->kaltura_video_rating_on != 'Off') {
 
 <p class="options">
 
-<a href="<?php echo $vars['entity']->getURL(); ?>" class="submit_button"><?php echo elgg_echo("kalturavideo:label:view"); ?></a>
+<a href="<?php echo $vars['entity']->getURL(); ?>" class="elgg-button-action"><?php echo elgg_echo("kalturavideo:label:view"); ?></a>
 
 <?php
 if ($vars['entity']->canEdit()) {
 	if ($metadata->kaltura_video_editable) {
-		echo ' <a href="#" rel="' . $metadata->kaltura_video_id . '" class="submit_button edit">' . elgg_echo("kalturavideo:label:edit") . '</a> ';
+		echo ' <a href="#" rel="' . $metadata->kaltura_video_id . '" class="elgg-button-action edit">' . elgg_echo("kalturavideo:label:edit") . '</a> ';
 	}
 ?>
-	<a href="<?php echo $vars['url']; ?>mod/kaltura_video/edit.php?videopost=<?php echo $vars['entity']->getGUID(); ?>"  class="submit_button"><?php echo elgg_echo("kalturavideo:label:editdetails"); ?></a>
+	<a href="<?php echo $vars['url']; ?>mod/kaltura_video/edit.php?videopost=<?php echo $vars['entity']->getGUID(); ?>"  class="elgg-button-action"><?php echo elgg_echo("kalturavideo:label:editdetails"); ?></a>
 <?php
-	echo elgg_view("output/confirmlink",array("text" => elgg_echo("kalturavideo:label:delete"), "href" => $vars['url'] . 'action/kaltura_video/delete?delete_video=' . $metadata->kaltura_video_id , "confirm" => elgg_echo("kalturavideo:prompt:delete") , "class" => 'submit_button'));
+	echo elgg_view("output/confirmlink",array("text" => elgg_echo("kalturavideo:label:delete"), "href" => $vars['url'] . 'action/kaltura_video/delete?delete_video=' . $metadata->kaltura_video_id , "confirm" => elgg_echo("kalturavideo:prompt:delete") , "class" => 'elgg-button-action'));
 ?>
 
 	</p>
@@ -111,7 +111,7 @@ if ($vars['entity']->canEdit()) {
 } elseif ($metadata->kaltura_video_cancollaborate) {
 
 ?>
-	<a href="#" rel="<?php echo $metadata->kaltura_video_id; ?>" class="submit_button edit" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>">
+	<a href="#" rel="<?php echo $metadata->kaltura_video_id; ?>" class="elgg-button-action edit" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>">
 	<img src="<?php echo $CONFIG->wwwroot; ?>mod/kaltura_video/kaltura/images/group.png" alt="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>" style="vertical-align:middle;" />
 	<?php echo elgg_echo("kalturavideo:label:edit"); ?></a>
 

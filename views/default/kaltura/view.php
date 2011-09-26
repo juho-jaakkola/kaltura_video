@@ -110,14 +110,12 @@ if ($group) {
 ?>
 <?php echo elgg_echo("kalturavideo:label:length"); ?> <strong><?php echo $metadata->kaltura_video_length; ?></strong>
 <?php echo elgg_echo("kalturavideo:label:plays"); ?> <strong class="ajax_play" rel="<?php echo $metadata->kaltura_video_id; ?>"><?php echo intval($metadata->kaltura_video_plays); ?></strong>
+
 <!-- display the comments link -->
-<?php
-if ($metadata->kaltura_video_comments_on != 'Off') {
-?>
+<?php if ($metadata->kaltura_video_comments_on != 'Off'): ?>
 	<a href="<?php echo $ob->getURL(); ?>#comments"><?php echo sprintf(elgg_echo("comments")) . " (" . $num_comments . ")"; ?></a><br />
-<?php
-}
-?>
+<?php endif; ?>
+
 </p>
 <!-- display tags -->
 <p class="tags">
@@ -134,91 +132,97 @@ if (!empty($categories)) {
 
 ?>
 </p>
-<div class="clearfloat"></div>
 
+<div class="clearfloat"></div>
 
 <!-- descrition -->
 <div class="kalturaplayer left bigwidget" style="height:<?php echo $metadata->kaltura_video_widget_height; ?>;width:<?php echo $metadata->kaltura_video_widget_width; ?>;"><?php echo $widget; ?></div>
+
 <div class="text">
-<?php
-echo autop($ob->description);
-?>
+	<?php echo autop($ob->description); ?>
 </div>
 <div class="clear"></div>
 
-
 <p class="kaltura_video_rating">
-<?php if ($metadata->kaltura_video_rating_on != 'Off'): ?>
-	<img src="<?php echo $CONFIG->wwwroot."mod/kaltura_video/kaltura/images/ratings/$rating_image"; ?>" alt="<?php echo "$rating"; ?>" /> <?php echo ("($votes " . elgg_echo('kalturavideo:votes') . ")"); ?>
-<?php endif; ?>
-
-<a href="#" class="submit_button showdetails"><?php echo elgg_echo("kalturavideo:show:advoptions"); ?></a>
-
-<?php
-
-if ($metadata->kaltura_video_cancollaborate && !$metadata->kaltura_video_editable) {
-
-?>
-	&nbsp;
-	<strong><?php echo elgg_echo("kalturavideo:label:collaborative"); ?>:</strong>
-	<a href="#" rel="<?php echo $metadata->kaltura_video_id; ?>" class="submit_button edit" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>"><img src="<?php echo $CONFIG->wwwroot; ?>mod/kaltura_video/kaltura/images/group.png" alt="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>" style="vertical-align:middle;" />
-	<?php echo elgg_echo("kalturavideo:label:edit"); ?></a>
-
-<?php
-}
-?>
+	<?php if ($metadata->kaltura_video_rating_on != 'Off'): ?>
+		<img src="<?php echo $CONFIG->wwwroot."mod/kaltura_video/kaltura/images/ratings/$rating_image"; ?>" alt="<?php echo "$rating"; ?>" /> <?php echo ("($votes " . elgg_echo('kalturavideo:votes') . ")"); ?>
+	<?php endif; ?>
+	
+	<a href="#" class="elgg-button-action showdetails"><?php echo elgg_echo("kalturavideo:show:advoptions"); ?></a>
+	
+	<?php if ($metadata->kaltura_video_cancollaborate && !$metadata->kaltura_video_editable): ?>
+		&nbsp;
+		<strong><?php echo elgg_echo("kalturavideo:label:collaborative"); ?>:</strong>
+		<a href="#" rel="<?php echo $metadata->kaltura_video_id; ?>" class="elgg-button-action edit" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>"><img src="<?php echo $CONFIG->wwwroot; ?>mod/kaltura_video/kaltura/images/group.png" alt="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>" style="vertical-align:middle;" />
+		<?php echo elgg_echo("kalturavideo:label:edit"); ?></a>
+	<?php endif; ?>
 </p>
 
 <?php
-
 if ($can_rate && $metadata->kaltura_video_rating_on != 'Off') {
-	echo elgg_view('input/form', array('action' => "{$CONFIG->wwwroot}action/kaltura_video/rate", "name"=>"form1", "id"=>"form1", 'body' => elgg_view("kaltura/view.rate",array('entity' => $ob))));
+	echo elgg_view('input/form', array(
+		'action' => "{$CONFIG->wwwroot}action/kaltura_video/rate",
+		"name"=>"form1",
+		"id"=>"form1",
+		'body' => elgg_view("kaltura/view.rate", array('entity' => $ob))
+	));
 }
 ?>
 
 <div class="hide kaltura_video_details">
-<p><strong><?php echo elgg_echo("kalturavideo:label:thumbnail");?></strong></p>
-<p><a href="<?php echo $metadata->kaltura_video_thumbnail; ?>" onclick="window.open(this.href);return false;"><?php echo $metadata->kaltura_video_thumbnail; ?></a></p>
-<p><strong><?php echo elgg_echo("kalturavideo:label:sharel");?></strong></p>
-<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widget); ?>" /></p>
-<p><strong><?php echo elgg_echo("kalturavideo:label:sharem");?></strong></p>
-<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widgetm); ?>" /></p>
+	<p><strong><?php echo elgg_echo("kalturavideo:label:thumbnail");?></strong></p>
+	<p><a href="<?php echo $metadata->kaltura_video_thumbnail; ?>" onclick="window.open(this.href);return false;"><?php echo $metadata->kaltura_video_thumbnail; ?></a></p>
+	<p><strong><?php echo elgg_echo("kalturavideo:label:sharel");?></strong></p>
+	<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widget); ?>" /></p>
+	<p><strong><?php echo elgg_echo("kalturavideo:label:sharem");?></strong></p>
+	<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widgetm); ?>" /></p>
 </div>
 
-<?php
-if ($ob->canEdit()) {
-?>
-
+<?php if ($ob->canEdit()): ?>
 	<!-- options -->
 	<p class="options">
-<?php
+	
+	<?php
+	// Edit video link
 	if ($metadata->kaltura_video_editable) {
-		echo ' <a href="#" rel="' . $metadata->kaltura_video_id . '" class="submit_button edit">' . elgg_echo("kalturavideo:label:edit") . '</a> ';
+		echo elgg_view("output/url", array(
+			"text" => elgg_echo("kalturavideo:label:edit"),
+			"href" => "#",
+			"rel" => $metadata->kaltura_video_id,
+			"class" => 'elgg-button-action edit',
+		));
 	}
-?>
-	<a href="<?php echo $CONFIG->wwwroot; ?>mod/kaltura_video/edit.php?videopost=<?php echo $ob->getGUID(); ?>" rel="<?php echo $metadata->kaltura_video_id; ?>" class="submit_button"><?php echo elgg_echo("kalturavideo:label:editdetails"); ?></a>
-<?php
+	
+	// Edit video details link
+	echo elgg_view("output/url", array(
+		"text" => elgg_echo("kalturavideo:label:editdetails"),
+		"href" => "kaltura_video/edit/{$ob->getGUID()}/",
+		"rel" => $metadata->kaltura_video_id,
+		"class" => 'elgg-button-action',
+	));
 
-	echo elgg_view("output/confirmlink",array("text" => elgg_echo("kalturavideo:label:delete"), "href" => $CONFIG->wwwroot . 'action/kaltura_video/delete?delete_video=' . $metadata->kaltura_video_id , "confirm" => elgg_echo("kalturavideo:prompt:delete") , "class" => 'submit_button'));
+	// Delete video link
+	echo elgg_view("output/confirmlink", array(
+		"text" => elgg_echo("kalturavideo:label:delete"),
+		"href" => "action/kaltura_video/delete?delete_video={$metadata->kaltura_video_id}/",
+		"confirm" => elgg_echo("kalturavideo:prompt:delete"),
+		"class" => 'elgg-button-action'
+	));
 
-	echo ' '.elgg_echo('access').': ';
-	echo kaltura_view_select_privacity($metadata->kaltura_video_id,$access_id,$group,$metadata->kaltura_video_collaborative);
-
-?>
+	// Access level settings
+	echo ' ' . elgg_echo('access') . ': ';
+	echo kaltura_view_select_privacity($metadata->kaltura_video_id, $access_id, $group, $metadata->kaltura_video_collaborative);
+	?>
+	
 	</p>
-<?php
-}
-?>
+<?php endif; ?>
 
 </div>
 
 </div>
-<?php
-if ($metadata->kaltura_video_comments_on != 'Off') {
-?>
+
+<?php if ($metadata->kaltura_video_comments_on != 'Off'): ?>
 	<div id="comments">
-	<?php echo $comments; ?>
+		<?php echo $comments; ?>
 	</div>
-<?php
-}
-?>
+<?php endif; ?>
