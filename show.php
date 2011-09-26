@@ -8,39 +8,34 @@
 * @link http://microstudi.net/elgg/
 **/
 
+// Load Elgg engine
+require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
-	// Load Elgg engine
-	require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+// Get the specified blog post
+$post = (int) get_input('videopost');
 
-	// Get the specified blog post
-	$post = (int) get_input('videopost');
-
-	// If we can get out the blog post ...
-	if ($videopost = get_entity($post)) {
+// If we can get out the blog post ...
+if ($videopost = get_entity($post)) {
 
 	// Set the page owner
-		elgg_set_page_owner_guid($videopost->getOwner());
-		$page_owner = get_entity($videopost->getOwner());
+	elgg_set_page_owner_guid($videopost->getOwnerGUID());
+	$page_owner = get_entity($videopost->getOwnerGUID);
 
-	// Display it
-		$area2 = elgg_view("kaltura/view");
 	// Set the title appropriately
-		$title = sprintf(elgg_echo("kalturavideo:posttitle"),$page_owner->name,$videopost->title);
-		$area1 = elgg_view_title($videopost->title);
+	$params['title'] = $videopost->title;
+	
+	// Display the entity
+	$params['content'] = elgg_view("kaltura/view");
+	
 
 	// Display through the correct canvas area
-		$body = elgg_view_layout("two_column_left_sidebar", '', $area1 . $area2 , $area3 );
-
-	// If we're not allowed to see the blog post
-	} else {
-
+	$body = elgg_view_layout("content", $params );
+} else {
+	// If we're not allowed to see the post
 	// Display the 'post not found' page instead
-			$body = elgg_view("kaltura/notfound");
-			$title = elgg_echo("kalturavideo:notfound");
+	$params['title'] = elgg_echo("kalturavideo:notfound");
+	$body = elgg_view("kaltura/notfound");
+}
 
-	}
-
-	// Display page
-	page_draw($title,$body);
-
-?>
+// Display the page
+echo elgg_view_page($params['title'], $body);
