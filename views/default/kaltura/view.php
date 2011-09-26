@@ -20,9 +20,9 @@ if (!$ob) {
 $access_id = $ob->access_id;
 $metadata = kaltura_get_metadata($ob);
 
-$standard_entity = elgg_view_entity($ob, true);
+$standard_entity = elgg_view_entity($ob, array('full_view' => true));
 //get the number of comments
-$num_comments = elgg_count_comments($ob);
+$num_comments = $ob->countComments();
 
 // If we've been asked to display the full view
 $comments =  elgg_view_comments($ob);
@@ -93,21 +93,19 @@ if (elgg_get_viewtype() != 'default') {
 -->
 <div class="post_icon">
 <?php
-
 $uob = get_user($ob->owner_guid);
-echo elgg_view("profile/icon",array('entity' => $uob, 'size' => 'tiny'));
-
+echo elgg_view_entity_icon($uob, 'tiny');
 ?>
 </div>
 <p class="strapline">
 <?php
-	echo sprintf(elgg_echo("kalturavideo:strapline"),$metadata->kaltura_video_created);
+	echo sprintf(elgg_echo("kalturavideo:strapline"), $metadata->kaltura_video_created);
 ?>
 
-<?php echo elgg_echo('by'); ?> <a href="<?php echo $CONFIG->wwwroot.'pg/kaltura_video/'.$uob->username; ?>" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos")); ?>"><?php echo $uob->name; ?></a>
+<?php echo elgg_echo('by'); ?> <a href="<?php echo "{$CONFIG->wwwroot}kaltura_video/owner/{$uob->username}"; ?>" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos")); ?>"><?php echo $uob->name; ?></a>
 <?php
 if ($group) {
-	echo elgg_echo('ingroup')." <a href=\"{$CONFIG->wwwroot}pg/kaltura_video/{$group->username}/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
+	echo elgg_echo('ingroup')." <a href=\"{$CONFIG->wwwroot}kaltura_video/group/{$page_owner->getGUID()}/all/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
 }
 ?>
 <?php echo elgg_echo("kalturavideo:label:length"); ?> <strong><?php echo $metadata->kaltura_video_length; ?></strong>
