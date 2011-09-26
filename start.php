@@ -67,7 +67,7 @@ function kaltura_video_init() {
 	elgg_register_page_handler('kaltura_video_admin','kaltura_video_page_handler');
 
 	// Register a url handler
-	elgg_register_entity_url_handler('kaltura_video_url','object', 'kaltura_video');
+	elgg_register_entity_url_handler('object', 'kaltura_video', 'kaltura_video_url');
 
 	// Register granular notification for this type
 	if (is_callable('register_notification_object')) {
@@ -132,11 +132,21 @@ function kaltura_video_notify_message($hook, $entity_type, $returnvalue, $params
 	return null;
 }
 
-function kaltura_video_url($post) {
-	global $CONFIG;
-	$title = $post->title;
-	$title = friendly_title($title);
-	return $CONFIG->url . "pg/kaltura_video/" . $post->getOwnerEntity()->username . "/show/" . $post->getGUID() . "/" . $title;
+/**
+ * Format and return the URL for videos.
+ *
+ * @param ElggObject $entity Kaltura video object
+ * @return string URL of video.
+ */
+function kaltura_video_url($entity) {
+	if (!$entity->getOwnerEntity()) {
+		// default to a standard view if no owner.
+		return FALSE;
+	}
+	
+	$title = elgg_get_friendly_title($entity->title);
+	
+	return "kaltura_video/view/{$entity->guid}/$title";
 }
 
 /**
@@ -305,7 +315,7 @@ function kaltura_video_page_handler($page) {
 			include "$file_dir/friends.php";
 			break;
 		case 'view':
-			set_input('videopost', $page[2]);
+			set_input('videopost', $page[1]);
 			include("$file_dir/show.php");
 			return true;
 			break;
