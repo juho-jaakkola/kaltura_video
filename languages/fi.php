@@ -162,8 +162,8 @@ Toiminto ei vaikuta kohteisiin, joita ei ole luotu Kaltura video -pluginilla.",
 	'kalturavideo:rating:allow' => "Salli arviointi",
 	//these get inserted into the river links to take the user to the entity
 	'kalturavideo:river:updated' => "%s päivitti",
-	'kalturavideo:river:create' => "uuden videon nimeltään",
-	'kalturavideo:river:update' => "uusi video nimeltään",
+	'kalturavideo:river:create' => "uuden videon nimeltä",
+	'kalturavideo:river:update' => "videota",
 	//the river search the translation with the object label (kaltura_video)
 	'kaltura_video:river:annotate' => "kommentin videoon",
 	'kalturavideo:river:rates' => "%s antoi arvion videolle",
