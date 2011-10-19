@@ -77,7 +77,7 @@ $translations = array(
 	'kalturavideo:rating' => "Arviointi",
 	'kalturavideo:yourrate' => "Sinun arviosi:",
 	'kalturavideo:rate' => "Äänestä!",
-	'kalturavideo:votes' => "äänet",
+	'kalturavideo:votes' => "ääntä",
 	'kalturavideo:ratesucces' => "Arviosi tallennettiin.",
 	'kalturavideo:rateempty' => "Valitse arvo ennen äänestämistä",
 	'kalturavideo:notrated' => "Olet jo arvioinut tämän kohteen",
@@ -145,7 +145,7 @@ Toiminto ei vaikuta kohteisiin, joita ei ole luotu Kaltura video -pluginilla.",
 	'kalturavideo:label:addbuttonlongtext' => "Lisää tekstikenttiin painike %s",
 	'kalturavideo:option:simple' => "Perustoiminto (painike tektikenttien päällä)",
 	'kalturavideo:option:tinymce' => "Yritä integroida tinyMCE-editoriin",
-	'kalturavideo:note:addbuttonlongtext' => "Jos lisäät tämän painikkeen, käyttäjät voivat lisätä &lt;object&gt; html-tageja tekstikenttiins. Objektit toimivat vaikka htmlawed-plugin olisi päällä.",
+	'kalturavideo:note:addbuttonlongtext' => "Jos lisäät tämän painikkeen, käyttäjät voivat lisätä videoita &lt;object&gt;-tageilla tekstikenttiin. Objektit toimivat vaikka htmlawed-plugin olisi päällä.",
 	'kalturavideo:enablevideo' => "Ota käyttöön ryhmän videot",
 	'kalturavideo:label:groupvideos' => "Ryhmän videot",
 	'kalturavideo:user' => "Käyttäjän %s videot",
@@ -207,9 +207,13 @@ Testitili sisältää 10GB ilmaista tilaa.",
 	'kalturavideo:server:ceinfo' => "Kalturan yhteisöversio on yhteisön tukema, mutta omatoimisesti ylläpidetty versio Kalturan videoalustasta.",
 	'kalturavideo:server:moreinfo' => "Lue lisää",
 	'kalturavideo:server:ceurl' => "Kaltura CE -palvelimen URL",
-	'kalturavideo:server:alertchange' => "VAROITUS: Muuttamalla tätä dataa menetät kaikki olemassa olevat videosi!
-Oletko varma?
-Tämän toiminnon jälkeen haluat todennäköisesti uudelleenluoda kaikki video-objektisi.",
+	'kalturavideo:server:alertchange' => "VAROITUS: Muuttaessasi nämä asetukset, menetät kaikki olemassa olevat videosi!
+	
+Tämän toiminnon jälkeen haluat todennäköisesti uudelleenluoda kaikki video-objektisi.
+
+Haluatko varmasti jatkaa?
+",
+
 	'kalturavideo:wizard:cannot' => "Tätä sivua ei voi käyttää nykyisillä asetuksilla",
 	'kalturavideo:advanced:recreateobjects' => "Kyllä, luo uudelleen kaikki video-objektit",
 	'kalturavideo:recreate:initiating' => "Noudetaan tietoja Kaltura-palvelimelta...",
