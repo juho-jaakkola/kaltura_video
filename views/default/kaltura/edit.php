@@ -86,7 +86,7 @@
 	$access_input = elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id));
 	$submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
 	$publish = elgg_echo('save');
-	$cat = elgg_echo('categories');
+	$cat = elgg_echo('input/categories');
 	$privacy = elgg_echo('access');
 	$allowcomments = elgg_echo('kalturavideo:comments:allow');
 	$allowrating = elgg_echo('kalturavideo:rating:allow');
@@ -107,7 +107,7 @@
 	}
 
 	// INSERT EXTRAS HERE
-	$extras = elgg_view('categories',$vars);
+	$extras = elgg_view('input/categories',$vars);
 	if (!empty($extras)) {
 		$extras = '<div id="kaltura_edit_sidebar">' . $extras . '</div>';
 	}

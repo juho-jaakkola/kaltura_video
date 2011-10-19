@@ -125,7 +125,7 @@ if (!empty($tags)) {
 	echo $tags ;
 }
 
-$categories = elgg_view('categories/view', array('entity' => $ob));
+$categories = elgg_view('output/categories', array('entity' => $ob));
 if (!empty($categories)) {
 	echo ($tags ? ' - ' : '' ).$categories;
 }
