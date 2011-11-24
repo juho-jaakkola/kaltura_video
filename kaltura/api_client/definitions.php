@@ -9,11 +9,11 @@
 **/
 	global $KALTURA_GLOBAL_UICONF, $JQUERY_LIB, $KALTURA_TINYMCE_PATHS;
 	//this prefix is used to identify the users of kaltura that are created in Elgg
-	define("KALTURA_ELGG_USER_PREFIX", "Elgg_");
+	define("KALTURA_ELGG_USER_PREFIX", "elgg_");
 	//the admin tags for kaltura CMS, every created/modified video from Elgg will have this tags
 	define("KALTURA_ADMIN_TAGS", "elgg_plugin");
 
-	$JQUERY_LIB = 'jquery-1.6.2.min.js';
+	$JQUERY_LIB = 'jquery-1.6.4.min.js';
 
 	// Plugin name => path to longtext view
 	// relative to $CONFIG->pluginspath
