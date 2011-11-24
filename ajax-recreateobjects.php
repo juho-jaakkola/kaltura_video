@@ -67,7 +67,19 @@ if($page > 0) {
 
 				$body = 'FOUND: <img src="'.$result->thumbnailUrl.'" style="height:20px;vertical-align:middle;" /> '.$result->id.' ('.$result->name.')';
 
-				$user = substr($result->userId,strlen($prefix));
+				/**
+				 * @fixme This is apparently supposed to find only the videos of current user.
+				 * Not working though. The username is not stored like this in Kaltura Server.
+				 */
+				// Remove username prefix
+				//$user = preg_replace("/$prefix/", '', $result->userId);
+				// Remove underscores
+				//$user = preg_replace("/_/", '', $user);
+				$user = 'admin';
+				
+				// This is not working
+				//$user = substr($result->userId,strlen($prefix));
+				
 				$groupid = 0;
 				if(!$user) {
 					//old configuration option

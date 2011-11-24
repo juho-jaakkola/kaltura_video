@@ -15,10 +15,6 @@ function kaltura_video_init() {
 	//Add the javascript
 	elgg_extend_view('page/elements/head', 'kaltura/jscripts');
 
-	//elgg_register_js('kaltura-admin', $CONFIG->pluginspath . 'kaltura/admin');
-	//elgg_register_js('kaltura-tinymce', $CONFIG->pluginspath . 'kaltura/kaltura');
-	//elgg_register_js('kaltura', $CONFIG->pluginspath . 'kaltura/tinymce');
-
 	$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
 	if (!$addbutton) $addbutton = 'simple';
 
@@ -76,6 +72,9 @@ function kaltura_video_init() {
 
 	// Listen to notification events and supply a more useful message
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'kaltura_notify_message');
+	
+	// entity menu
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'kaltura_video_entity_menu_setup');
 
 	// Add profile widget
     elgg_register_widget_type('kaltura_video',elgg_echo('kalturavideo:label:latest'),elgg_echo('kalturavideo:text:widgetdesc'));
@@ -270,6 +269,38 @@ function kaltura_video_page_setup() {
 		'context' => 'admin',
 		'section' => 'configure'
 	));
+}
+
+/**
+ * Add particular links/info to entity menu
+ */
+function kaltura_video_entity_menu_setup($hook, $type, $return, $params) {
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = $params['entity'];
+	$handler = elgg_extract('handler', $params, false);
+	if ($handler != 'kaltura_video') {
+		return $return;
+	}
+
+	# Link for editing the video
+	//if ($entity->canEdit() && $entity->kaltura_video_editable) { // @todo
+	if ($entity->canEdit()) {
+		$status_text = elgg_echo("kalturavideo:label:edit");
+		$options = array(
+			'name' => 'kaltura_video_edit',
+			'text' => "<span>$status_text</span>",
+			'href' => "#",
+			'priority' => 150,
+			'class' => 'edit',
+			'rel' => $entity->kaltura_video_id,
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+	
+	return $return;
 }
 
 /**
