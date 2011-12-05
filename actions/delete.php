@@ -8,67 +8,65 @@
 * @link http://microstudi.net/elgg/
 **/
 
-require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php");
+require_once($CONFIG->pluginspath . "kaltura_video/kaltura/api_client/includes.php");
 gatekeeper();
 
-$delete_video = get_input('delete_video');
+$guid = get_input('guid');
 
-if($delete_video) {
+if ($guid) {
 	$error = '';
 	$code = '';
 
-	$ob = kaltura_get_entity($delete_video);
+	$ob = kaltura_get_entity($guid);
 
 	try {
-		//check if belongs to this user (or is admin)
-		if($ob->canEdit()) {
+		//check if entity belongs to this user (or user is admin)
+		if ($ob->canEdit()) {
 			$kmodel = KalturaModel::getInstance();
 			//open the kaltura list without admin privileges
-			$entry = $kmodel->getEntry ( $delete_video );
-			if($entry instanceof KalturaMixEntry) {
+			$entry = $kmodel->getEntry($guid);
+			if ($entry instanceof KalturaMixEntry) {
 				//deleting media related
 				//TODO: MAYBE should ask before do this!!!
-				$list = $kmodel->listMixMediaEntries($delete_video);
+				$list = $kmodel->listMixMediaEntries($guid);
 				//print_r($list);die;
-				foreach($list as $subEntry) {
+				foreach ($list as $subEntry) {
 					$kmodel->deleteEntry($subEntry->id);
 				}
 				//Delete the mix
-				$kmodel->deleteEntry ( $delete_video );
-				$ob = kaltura_get_entity($delete_video);
-				if($ob) $ob->delete();
-				system_message(str_replace("%ID%",$delete_video,elgg_echo("kalturavideo:action:deleteok")));
+				$kmodel->deleteEntry($guid);
+				$ob = kaltura_get_entity($guid);
+				if ($ob) {
+					if ($ob->delete()) {
+						system_message(str_replace("%ID%", $guid, elgg_echo("kalturavideo:action:deleteok")));
+					}
+				}
+			} else {
+				$error = str_replace("%ID%", $guid, elgg_echo("kalturavideo:action:deleteko"));
 			}
-			else {
-				$error = str_replace("%ID%",$delete_video,elgg_echo("kalturavideo:action:deleteko"));
-			}
-		}
-		else {
+		} else {
 			$error = elgg_echo('kalturavideo:edit:notallowed');
 		}
-	}
-	catch(Exception $e) {
+	} catch(Exception $e) {
 		$code = $e->getCode();
 		$error = $e->getMessage();
 	}
 
-	if( $code == 'ENTRY_ID_NOT_FOUND') {
+	if ($code == 'ENTRY_ID_NOT_FOUND') {
 		//we can delete the elgg object
-		$ob = kaltura_get_entity($delete_video);
-		if($ob instanceOf ElggObject) {
+		$ob = kaltura_get_entity($guid);
+		if ($ob instanceOf ElggObject) {
 			$ob->delete();
 		}
-		system_message(str_replace("%ID%",$delete_video,elgg_echo("kalturavideo:action:deleteok")));
+		system_message(str_replace("%ID%", $guid, elgg_echo("kalturavideo:action:deleteok")));
 	}
 
-	if($error) {
+	if ($error) {
 		register_error($error);
 	}
 }
 
 $url = $_SERVER['HTTP_REFERER'];
-if(strpos($url,'/kaltura_video/') === false) $url = $CONFIG->url.'pg/kaltura_video/';
-if(!$error && strpos($url,'/show/')!==false) $url = $CONFIG->url.'pg/kaltura_video/';
+if (strpos($url,'/kaltura_video/') === false) $url = $CONFIG->url . 'kaltura_video/';
+if (!$error && strpos($url,'/show/') !== false) $url = $CONFIG->url . 'kaltura_video/';
 forward($url);
-
-?>
