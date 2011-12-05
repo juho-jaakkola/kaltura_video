@@ -16,18 +16,21 @@ $guid = get_input('guid');
 if ($guid) {
 	$error = '';
 	$code = '';
+	
+	// @todo Add support for deleting broken videos (object exists in Elgg
+	// but not in kaltura server)
 
 	$ob = kaltura_get_entity($guid);
 
 	try {
 		//check if entity belongs to this user (or user is admin)
-		if ($ob->canEdit()) {
+		if ($ob && $ob->canEdit()) {
 			$kmodel = KalturaModel::getInstance();
 			//open the kaltura list without admin privileges
 			$entry = $kmodel->getEntry($guid);
 			if ($entry instanceof KalturaMixEntry) {
 				//deleting media related
-				//TODO: MAYBE should ask before do this!!!
+				// @todo MAYBE should ask before doing this!!!
 				$list = $kmodel->listMixMediaEntries($guid);
 				//print_r($list);die;
 				foreach ($list as $subEntry) {
