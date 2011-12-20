@@ -304,6 +304,35 @@ function kaltura_video_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
+ * Adds a toggle to extra menu for switching between list and gallery views
+ */
+function kaltura_video_register_toggle() {
+	$url = elgg_http_remove_url_query_element(current_page_url(), 'list_type');
+
+	if (get_input('list_type', 'list') == 'list') {
+		$list_type = "gallery";
+		$icon = elgg_view_icon('grid');
+	} else {
+		$list_type = "list";
+		$icon = elgg_view_icon('list');
+	}
+
+	if (substr_count($url, '?')) {
+		$url .= "&list_type=" . $list_type;
+	} else {
+		$url .= "?list_type=" . $list_type;
+	}
+
+	elgg_register_menu_item('extras', array(
+		'name' => 'file_list',
+		'text' => $icon,
+		'href' => $url,
+		'title' => elgg_echo("file:list:$list_type"),
+		'priority' => 1000,
+	));
+}
+
+/**
  * Dispatches video pages.
  * URLs take the form of
  *  All videos:      kaltura_video/all
@@ -340,9 +369,11 @@ function kaltura_video_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
+			kaltura_video_register_toggle();
 			include "$file_dir/index.php";
 			break;
 		case 'friends':
+			kaltura_video_register_toggle();
 			include "$file_dir/friends.php";
 			break;
 		case 'edit':
@@ -359,6 +390,7 @@ function kaltura_video_page_handler($page) {
 		//	break;
 		case 'all':
 		default:
+			kaltura_video_register_toggle();
 			include "$file_dir/everyone.php";
 			break;
 	}

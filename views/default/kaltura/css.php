@@ -161,6 +161,11 @@
 	-moz-border-radius: 4px;
 }
 
+.video-gallery-item {
+	border: 1px solid red;
+	margin: 5px;
+}
+
 #blog_edit_page {
 	/* background: #bbdaf7; */
 	margin-top:-10px;

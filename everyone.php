@@ -18,6 +18,7 @@ elgg_set_page_owner_guid($_SESSION['guid']);
 
 $limit = get_input("limit", 10);
 $offset = get_input("offset", 0);
+$list_type = get_input("list_type");
 
 $params['title'] = elgg_echo('kalturavideo:label:allvideos');
 
@@ -26,7 +27,8 @@ $params['content'] = elgg_list_entities(array(
 	'subtypes' => 'kaltura_video',
 	'limit' => $limit,
 	'offset' => $offset,
-	'full_view' => FALSE
+	'list_type' => $list_type, // @todo Is this how list type is changed?
+	'full_view' => FALSE,
 ));
 
 // get tagcloud
