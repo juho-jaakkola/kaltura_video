@@ -8,9 +8,7 @@
 * @link http://microstudi.net/elgg/
 **/
 
-// Load Elgg engine
 define('everyonekaltura_video','true');
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 
 // Get the current page's owner
 $page_owner = $_SESSION['user'];

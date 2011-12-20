@@ -9,8 +9,6 @@
 * @link http://microstudi.net/elgg/
 **/
 
-// Load Elgg engine
-require_once(dirname(__FILE__) . "/kaltura/api_client/includes.php");
 gatekeeper();
 
 // Get the current page's owner

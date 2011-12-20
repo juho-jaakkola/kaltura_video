@@ -8,6 +8,7 @@
 * @link http://microstudi.net/elgg/
 **/
 
+// @todo Register/load libraries the elgg 1.8 way
 require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php");
 
 // Add title

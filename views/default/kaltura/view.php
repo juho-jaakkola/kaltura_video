@@ -20,7 +20,6 @@ if (!$ob) {
 $access_id = $ob->access_id;
 $metadata = kaltura_get_metadata($ob);
 
-$standard_entity = elgg_view_entity($ob, array('full_view' => true));
 //get the number of comments
 $num_comments = $ob->countComments();
 
@@ -76,6 +75,10 @@ $title = elgg_echo("kalturavideo:label:adminvideos").': ';
 $title .= elgg_echo("kalturavideo:label:showvideo");
 
 if (elgg_get_viewtype() != 'default') {
+	// @fixme This file is called through elgg_view_entity()
+	// so the same function cannot be used here again
+	$standard_entity = elgg_view_entity($ob, array('full_view' => true));
+	
 	//put here the standard view call: rss, opendd, etc.
 	echo $standard_entity;
 	//add comments

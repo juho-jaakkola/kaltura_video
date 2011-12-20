@@ -346,7 +346,7 @@ function kaltura_video_register_toggle() {
  * @return NULL
  */
 function kaltura_video_page_handler($page) {
-	$file_dir = elgg_get_plugins_path() . 'kaltura_video';
+	$file_dir = elgg_get_plugins_path() . 'kaltura_video/pages/kaltura_video';
 	
 	if (elgg_get_context() == 'kaltura_video_admin') {
 		include(dirname(__FILE__) . "/admin.php");

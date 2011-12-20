@@ -13,7 +13,7 @@
  *
  * */
 
-
+ // @todo Register/load libraries the elgg 1.8 way
 require_once(dirname(__FILE__)."/kaltura/api_client/includes.php");
 
 $object_label = "kaltura_video";

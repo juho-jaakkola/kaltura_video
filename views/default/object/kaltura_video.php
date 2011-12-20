@@ -37,7 +37,9 @@ if (elgg_get_context() !== 'search') {
 	//this view is for My videos:
 	
 	if ($vars['full_view'] && !elgg_in_context('gallery')) {
-		var_dump("@todo: Full view, no gallery");
+		// Full view
+		// @todo Pass guid as parameter?
+		echo elgg_view("kaltura/view");
 	} elseif ($vars['list_type'] == 'gallery') {
 		// @todo Check if elgg_in_context('gallery') coud be used to define list type
 		

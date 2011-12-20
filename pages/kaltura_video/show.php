@@ -8,9 +8,6 @@
 * @link http://microstudi.net/elgg/
 **/
 
-// Load Elgg engine
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
 // Get the specified blog post
 $post = (int) get_input('videopost');
 
@@ -25,7 +22,8 @@ if ($videopost = get_entity($post)) {
 	$params['title'] = $videopost->title;
 	
 	// Display the entity
-	$params['content'] = elgg_view("kaltura/view");
+	//$params['content'] = elgg_view("kaltura/view"); // old way
+	$params['content'] = elgg_view_entity($videopost, array('full_view' => true));
 	
 
 	// Display through the correct canvas area

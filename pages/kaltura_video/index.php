@@ -8,8 +8,6 @@
 * @link http://microstudi.net/elgg/
 **/
 
-// Load Elgg engine
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
 global $CONFIG;
 
 // Get the current page's owner
