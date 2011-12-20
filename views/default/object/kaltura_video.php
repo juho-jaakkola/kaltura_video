@@ -41,17 +41,15 @@ if (elgg_get_context() !== 'search') {
 		// @todo Pass guid as parameter?
 		echo elgg_view("kaltura/view");
 	} elseif ($vars['list_type'] == 'gallery') {
-		// @todo Check if elgg_in_context('gallery') coud be used to define list type
+		// @todo Check if elgg_in_context('gallery') coud be used to find out list type
 		
 		// Gallery view
 		echo '<div class="video-gallery-item">';
 		echo 
 		'<a href="' . $video->getURL() . '">' . 
-			'<img src="' .  $video->kaltura_video_thumbnail . '" alt="" >' .
 		 	"<h4>" . $video->title . "</h4>" .
+			'<img src="' .  $video->kaltura_video_thumbnail . '" alt="" >' .
 		 '</a>';
-		
-		echo "<p class='subtitle'>$owner_link $date</p>";
 		echo '</div>';
 	} else {
 		// Normal list view 

@@ -14,8 +14,8 @@ define('everyonekaltura_video','true');
 $page_owner = $_SESSION['user'];
 elgg_set_page_owner_guid($_SESSION['guid']);
 
-$limit = get_input("limit", 10);
-$offset = get_input("offset", 0);
+$limit = (int)get_input("limit", 12);
+$offset = (int)get_input("offset", 0);
 $list_type = get_input("list_type");
 
 $params['title'] = elgg_echo('kalturavideo:label:allvideos');
@@ -25,7 +25,7 @@ $params['content'] = elgg_list_entities(array(
 	'subtypes' => 'kaltura_video',
 	'limit' => $limit,
 	'offset' => $offset,
-	'list_type' => $list_type, // @todo Is this how list type is changed?
+	'list_type' => $list_type,
 	'full_view' => FALSE,
 ));
 

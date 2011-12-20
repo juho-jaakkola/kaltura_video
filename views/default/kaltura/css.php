@@ -162,8 +162,9 @@
 }
 
 .video-gallery-item {
-	border: 1px solid red;
-	margin: 5px;
+	text-align: center;
+	width: 130px;
+	margin: 10px;
 }
 
 #blog_edit_page {
