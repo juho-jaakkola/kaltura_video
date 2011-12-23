@@ -17,14 +17,24 @@ if ($guid) {
 	$error = '';
 	$code = '';
 	
-	// @todo Add support for deleting broken videos (object exists in Elgg
-	// but not in kaltura server)
-
 	$ob = kaltura_get_entity($guid);
+	
+	// @todo Make sure that this kind of invalid objects do not get created.
+	if (!$ob) {
+		// Delete invalid objects that exist in Elgg but not in video server
+		$video = get_entity($guid);
+		if ($video && $video->canEdit()) {
+			$video->delete();
+			system_message(str_replace("%ID%", $guid, elgg_echo("kalturavideo:action:deleteok")));
+			forward('kaltura_video');
+		}
+	}
 
 	try {
 		//check if entity belongs to this user (or user is admin)
 		if ($ob && $ob->canEdit()) {
+			die('test');
+			
 			$kmodel = KalturaModel::getInstance();
 			//open the kaltura list without admin privileges
 			$entry = $kmodel->getEntry($guid);
