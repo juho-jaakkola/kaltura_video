@@ -15,6 +15,8 @@ function kaltura_video_init() {
 	//Add the javascript
 	elgg_extend_view('page/elements/head', 'kaltura/jscripts');
 
+	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
+
 	$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
 	if (!$addbutton) $addbutton = 'simple';
 
