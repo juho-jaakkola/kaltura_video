@@ -99,8 +99,11 @@ function kaltura_video_init() {
 	elgg_register_action("kaltura_video/rate", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/rate.php");
 
 	if (elgg_is_admin_logged_in()) {
+		$path = $CONFIG->pluginspath . "kaltura_video/actions/admin/kaltura_video";
 		elgg_register_action("kaltura_video/admin", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/admin.php", 'admin');
 		elgg_register_action("kaltura_video/wizard", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/wizard.php", 'admin');
+		
+		elgg_register_action("admin/kaltura_video/server", "$path/server.php", 'admin');
 	}
 }
 
@@ -290,7 +293,6 @@ function kaltura_video_page_setup() {
 	 * @param int    $priority   The menu item priority
 	 */
 	elgg_register_admin_menu_item('configure', 'server', 'kaltura_video');
-	elgg_register_admin_menu_item('configure', 'admin', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'custom', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'wizard', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'advanced', 'kaltura_video');
