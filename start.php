@@ -94,13 +94,13 @@ function kaltura_video_init() {
 	elgg_register_entity_type('object','kaltura_video');
 
 	//actions for the plugin
-	elgg_register_action("kaltura_video/delete", $CONFIG->pluginspath . "kaltura_video/actions/delete.php");
-	elgg_register_action("kaltura_video/update", $CONFIG->pluginspath . "kaltura_video/actions/update.php");
-	elgg_register_action("kaltura_video/rate", $CONFIG->pluginspath . "kaltura_video/actions/rate.php");
+	elgg_register_action("kaltura_video/delete", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/delete.php");
+	elgg_register_action("kaltura_video/update", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/update.php");
+	elgg_register_action("kaltura_video/rate", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/rate.php");
 
 	if (elgg_is_admin_logged_in()) {
-		elgg_register_action("kaltura_video/admin", $CONFIG->pluginspath . "kaltura_video/actions/admin.php", 'admin');
-		elgg_register_action("kaltura_video/wizard", $CONFIG->pluginspath . "kaltura_video/actions/wizard.php", 'admin');
+		elgg_register_action("kaltura_video/admin", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/admin.php", 'admin');
+		elgg_register_action("kaltura_video/wizard", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/wizard.php", 'admin');
 	}
 }
 
