@@ -1,9 +1,7 @@
 <?php
-
-	require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/definitions.php");
+	elgg_load_library('kaltura_video');
 
 	$configured = $vars['configured'];
-
 ?>
 
 <h3 class="settings"><?php echo elgg_echo('kalturavideo:admin:videoeditor'); ?></h3>
