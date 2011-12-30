@@ -14,19 +14,19 @@
 <p>
 	<h4><?php echo elgg_echo('kalturavideo:label:sitename'); ?>: </h4>
 	<?php
-		echo elgg_view('input/text', array('name' => 'elgg_name', 'value' => get_config('sitename') ));
+		echo elgg_view('input/text', array('name' => 'elgg_name', 'value' => elgg_get_config('sitename') ));
 	?>
 </p>
 <p>
 	<h4><?php echo elgg_echo('kalturavideo:label:name'); ?>: </h4>
 	<?php
-		echo elgg_view('input/text', array('name' => 'name', 'value' => get_loggedin_user()->username ));
+		echo elgg_view('input/text', array('name' => 'name', 'value' => elgg_get_logged_in_user_entity()->username ));
 	?>
 </p>
 <p>
 	<h4><?php echo elgg_echo('kalturavideo:label:email'); ?>: </h4>
 	<?php
-		echo elgg_view('input/text', array('name' => 'email', 'value' => get_loggedin_user()->email ));
+		echo elgg_view('input/text', array('name' => 'email', 'value' => elgg_get_logged_in_user_entity()->email ));
 	?>
 </p>
 <p>
@@ -92,14 +92,21 @@
 		));
 	?>
 </p>
-<p><h4>
+<p>
+	<h4>
 		<?php
+		
+		$link = '<a href="http://corp.kaltura.com/terms-of-use" target="_blank">' . elgg_echo('kalturavideo:label:termsofuse') . '</a>';
+		$option = elgg_echo('kalturavideo:label:iagree', array($link));
+		
 		echo elgg_view('input/checkboxes', array(
 			'name' => 'agree_to_terms',
 			'options' => array(
-				sprintf(elgg_echo('kalturavideo:label:iagree'),'<a href="http://corp.kaltura.com/tandc" onclick="window.open(this.href);return false;">'.elgg_echo('kalturavideo:label:termsofuse').'</a>')
+				$option => 'yes',
 			)
 		));
 	?>
 	</h4>
 </p>
+
+<?php echo elgg_view('input/submit', array('value' => elgg_echo('save'))); ?>

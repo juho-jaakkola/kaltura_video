@@ -1,6 +1,8 @@
 <?php
 
-	require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/definitions.php");
+	//require_once($CONFIG->pluginspath . "kaltura_video/kaltura/api_client/definitions.php");
+	elgg_load_library('kaltura_video');
+	
 	global $KALTURA_GLOBAL_UICONF;
 
 	$configured = $vars['configured'];
@@ -48,8 +50,6 @@
 <p><?php echo sprintf(elgg_echo('kalturavideo:text:uiconf1'),'<a href="'.KalturaHelpers::getServerUrl().'/index.php/kmc" onclick="window.open(this.href);return false;">'.elgg_echo('kalturavideo:login').'</a>'); ?></p>
 
 </div>
-
-
 
 
 <h3 class="settings"><?php echo elgg_echo('kalturavideo:admin:editor'); ?></h3>

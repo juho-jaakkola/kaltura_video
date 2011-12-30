@@ -271,6 +271,32 @@ function kaltura_video_page_setup() {
 		'context' => 'admin',
 		'section' => 'configure'
 	));
+	
+	// Link to plugin configuration 
+	elgg_register_menu_item('page', array(
+		'name' => 'kaltura_video_foo',
+		'href' => 'admin/kaltura_video',
+		'text' => elgg_echo('admin:kaltura_video'),
+		'context' => 'admin',
+		'section' => 'configure'
+	));
+	
+	/**
+	 * Add admin menu items for plugin settings.
+	 *
+	 * @param string $section    The menu section to add to
+	 * @param string $menu_id    The unique ID of section
+	 * @param string $parent_id  If a child section, the parent section id
+	 * @param int    $priority   The menu item priority
+	 */
+	elgg_register_admin_menu_item('configure', 'server', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'admin', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'custom', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'wizard', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'advanced', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'behavior', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'partnerid', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'credits', 'kaltura_video');
 }
 
 /**

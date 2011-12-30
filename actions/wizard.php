@@ -8,16 +8,10 @@
 * @link http://microstudi.net/elgg/
 **/
 
-	require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php");
+	elgg_load_library('kaltura_video');
 
-
-	// Make sure we're logged as admin
-	admin_gatekeeper();
-   // Make sure action is secure
-	action_gatekeeper();
 	// Get input data
 	$type = get_input('type');
-
 
 	if($type == 'partner_wizard') {
 		$name 				= get_input('name');
