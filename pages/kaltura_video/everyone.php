@@ -1,12 +1,12 @@
 <?php
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ */
 
 define('everyonekaltura_video','true');
 
@@ -32,7 +32,7 @@ $params['content'] = elgg_list_entities(array(
 // get tagcloud
 // $params['content'] = "This will be a tagcloud for all posts";
 
-// Get categories, if they're installed
+// Get categories if they're enabled
 global $CONFIG;
 $params['content'] .= elgg_view('kaltura/categorylist', array(
 	'baseurl' => $CONFIG->wwwroot . 'search/?subtype=kaltura_video&tagtype=universal_categories&tag=',
@@ -43,5 +43,3 @@ $body = elgg_view_layout("content", $params);
 
 // Display page
 echo elgg_view_page($params['title'], $body);
-
-?>

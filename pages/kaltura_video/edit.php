@@ -1,13 +1,13 @@
 <?php
 
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ */
 
 gatekeeper();
 
@@ -35,5 +35,3 @@ if ($post) {
 
 // Display page
 echo elgg_view_page(sprintf(elgg_echo('kalturavideo:label:adminvideos') . ": " . elgg_echo('kalturavideo:label:editdetails'), $post->title), $body);
-
-?>

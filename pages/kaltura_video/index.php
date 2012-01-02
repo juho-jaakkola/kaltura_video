@@ -1,12 +1,12 @@
 <?php
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ */
 
 global $CONFIG;
 
@@ -36,8 +36,12 @@ $offset = get_input("offset", 0);
 
 $params['content'] .= elgg_list_entities(array('types' => 'object', 'subtypes' => 'kaltura_video', 'container_guid' => elgg_get_page_owner_guid(), 'limit' => $limit, 'offset' => $offset));
 
-// Get categories, if they're installed
-$params['content'] = elgg_view('kaltura/categorylist', array('baseurl' => $CONFIG->wwwroot . 'search/?subtype=kaltura_video&owner_guid='.$page_owner->guid.'&tagtype=universal_categories&tag=','subtype' => 'kaltura_video', 'owner_guid' => $page_owner->guid));
+// Get categories if they're enabled
+$params['content'] = elgg_view('kaltura/categorylist', array(
+	'baseurl' => $CONFIG->wwwroot . 'search/?subtype=kaltura_video&owner_guid=' . $page_owner->guid . '&tagtype=universal_categories&tag=',
+	'subtype' => 'kaltura_video',
+	'owner_guid' => $page_owner->guid
+));
 
 $params['filter_context'] = 'own';
 
@@ -46,5 +50,3 @@ $body = elgg_view_layout("content", $params);
 
 // Display page
 echo elgg_view_page($params['title'], $body);
-
-?>

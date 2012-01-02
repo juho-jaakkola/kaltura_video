@@ -1,12 +1,12 @@
 <?php
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ */
 
 define('everyonekaltura_video','true');
 
@@ -16,7 +16,9 @@ if ($page_owner === false || is_null($page_owner)) {
 	$page_owner = $_SESSION['user'];
 	elgg_set_page_owner_guid($_SESSION['guid']);
 }
-if (!($page_owner instanceof ElggEntity)) forward();
+if (!($page_owner instanceof ElggEntity)){
+	forward();
+}
 
 //set the title
 if ($page_owner == $_SESSION['user']) {
@@ -30,7 +32,10 @@ $params['content'] .= list_user_friends_objects($page_owner->getGUID(), 'kaltura
 
 // Get categories, if they're installed
 global $CONFIG;
-$params['content'] .= elgg_view('kaltura/categorylist',array('baseurl' => $CONFIG->wwwroot . 'search/?subtype=kaltura_video&owner_guid='.$page_owner->guid.'&friends='.$page_owner->guid.'&tagtype=universal_categories&tag=','subtype' => 'kaltura_video'));
+$params['content'] .= elgg_view('kaltura/categorylist', array(
+	'baseurl' => $CONFIG->wwwroot . 'search/?subtype=kaltura_video&owner_guid=' . $page_owner->guid . '&friends=' . $page_owner->guid . '&tagtype=universal_categories&tag=',
+	'subtype' => 'kaltura_video'
+));
 
 $params['filter_context'] = 'friends'; 
 
@@ -39,5 +44,3 @@ $body = elgg_view_layout('content', $params);
 
 // Display page
 echo elgg_view_page($params['title'], $body);
-
-?>
