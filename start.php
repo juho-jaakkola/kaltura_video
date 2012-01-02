@@ -20,7 +20,7 @@ function kaltura_video_init() {
 	$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
 	if (!$addbutton) $addbutton = 'simple';
 
-	if( in_array($addbutton , array('simple','tinymce')) ) {
+	if (in_array($addbutton , array('simple','tinymce'))) {
 
 		include_once(dirname(__FILE__)."/kaltura/api_client/definitions.php");
 
@@ -30,16 +30,15 @@ function kaltura_video_init() {
 
 		$KALTURA_CURRENT_TINYMCE_FILE = '';
 		foreach($KALTURA_TINYMCE_PATHS as $plugin => $path) {
-			if(elgg_is_active_plugin($plugin) && is_file($CONFIG->pluginspath.$path)) {
+			if (elgg_is_active_plugin($plugin) && is_file($CONFIG->pluginspath.$path)) {
 				$KALTURA_CURRENT_TINYMCE_FILE = $path;
 				break;
 			}
 		}
-
-		if( $addbutton == 'tinymce'	) {
+		
+		if ($addbutton == 'tinymce') {
 			set_view_location('input/longtext', $CONFIG->pluginspath . 'kaltura_video/kaltura/views/');
-		}
-		else {
+		} else {
 			elgg_extend_view('input/longtext', 'kaltura/addvideobutton',9);
 			//elgg_extend_view('input/longtext','embed/link',10);
 		}
@@ -61,8 +60,6 @@ function kaltura_video_init() {
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('kaltura_video','kaltura_video_page_handler');
-	// Register a admin page handler
-	elgg_register_page_handler('kaltura_video_admin','kaltura_video_page_handler');
 
 	// Register a url handler
 	elgg_register_entity_url_handler('object', 'kaltura_video', 'kaltura_video_url');
@@ -81,9 +78,11 @@ function kaltura_video_init() {
 	// Add profile widget
     elgg_register_widget_type('kaltura_video',elgg_echo('kalturavideo:label:latest'),elgg_echo('kalturavideo:text:widgetdesc'));
 
-   // Add index widget
+	// Add index widget
 	$enableindexwidget = elgg_get_plugin_setting('enableindexwidget', 'kaltura_video');
-	if (!$enableindexwidget) $enableindexwidget = 'single';
+	if (!$enableindexwidget) {
+		$enableindexwidget = 'single';
+	}
 
 	if (in_array($enableindexwidget , array('single', 'multi'))) {
 		elgg_extend_view('index/righthandside', 'kaltura/customindex.videos');
@@ -114,13 +113,11 @@ function kaltura_video_init() {
  * @param unknown_type $returnvalue
  * @param unknown_type $params
  */
-function kaltura_video_notify_message($hook, $entity_type, $returnvalue, $params)
-{
+function kaltura_video_notify_message($hook, $entity_type, $returnvalue, $params) {
 	$entity = $params['entity'];
 	$to_entity = $params['to_entity'];
 	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'kaltura_video'))
-	{
+	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'kaltura_video')) {
 		$descr = $entity->description;
 		$title = $entity->title;
 		if ($method == 'sms') {
@@ -202,7 +199,6 @@ function kaltura_video_page_setup() {
 				'text' => elgg_echo('kalturavideo:label:myvideos'),
 				'context' => 'kaltura_video',
 			));
-			//add_submenu_item(elgg_echo('kalturavideo:label:myvideos'), $CONFIG->wwwroot."pg/kaltura_video/" . $_SESSION['user']->username);
 			
 			// User's friend's videos
 			elgg_register_menu_item('page', array(
@@ -211,15 +207,11 @@ function kaltura_video_page_setup() {
 				'text' => elgg_echo('kalturavideo:label:friendsvideos'),
 				'context' => 'kaltura_video',
 			));
-			//add_submenu_item(elgg_echo('kalturavideo:label:friendsvideos'), $CONFIG->wwwroot."pg/kaltura_video/" . $_SESSION['user']->username ."/friends/");
 			
 			if (elgg_is_active_plugin('groups')) {
 				//this page is to search all groups videos, not ready yet
 				//add_submenu_item(elgg_echo('kalturavideo:label:allgroupvideos'), $CONFIG->wwwroot."mod/kaltura_video/groups.php");
 			}
-			
-			//add_submenu_item(elgg_echo('kalturavideo:label:allvideos'), $CONFIG->wwwroot."mod/kaltura_video/everyone.php");
-
 		} else if (elgg_get_page_owner_guid()) {
 			// Link to videos of page owner's friends
 			elgg_register_menu_item('page', array(
@@ -229,28 +221,18 @@ function kaltura_video_page_setup() {
 				'context' => 'kaltura_video',
 			));
 			
-			//add_submenu_item(sprintf(elgg_echo('kalturavideo:user'),$page_owner->name),$CONFIG->wwwroot."pg/kaltura_video/" . $page_owner->username);
-			
 			// Link to videos of page owner's friends
-			if ($page_owner instanceof ElggUser) { // Sorry groups, this isn't for you.
+			if ($page_owner instanceof ElggUser) {
 				elgg_register_menu_item('page', array(
 					'name' => 'kaltura_video_friends',
 					'href' => "kaltura_video/friends{$page_owner->username}",
 					'text' => sprintf(elgg_echo('kalturavideo:user:friends'), $page_owner->name),
 					'context' => 'kaltura_video',
 				));
-				
-				//add_submenu_item(sprintf(elgg_echo('kalturavideo:user:friends'),$page_owner->name),$CONFIG->wwwroot."pg/kaltura_video/" . $page_owner->username ."/friends/" );
 			}
-			//add_submenu_item(elgg_echo('kalturavideo:label:allvideos'), $CONFIG->wwwroot."mod/kaltura_video/everyone.php");
 		}
-
-		// @todo Remove this after new menu item works
-		if (can_write_to_container(0, elgg_get_page_owner_guid()) && elgg_is_logged_in()) {
-			//add_submenu_item(elgg_echo('kalturavideo:label:newvideo'), "#kaltura_create",'pagesactions');
-		}
-
 	}
+
 	// Group submenu option
 	if ($page_owner instanceof ElggGroup) {
 		if ($page_owner->kaltura_video_enable != "no") {
@@ -260,8 +242,6 @@ function kaltura_video_page_setup() {
 				'text' => sprintf(elgg_echo("kalturavideo:label:groupvideos"), $page_owner->name),
 				'context' => 'groups',
 			));
-			
-			//add_submenu_item(sprintf(elgg_echo("kalturavideo:label:groupvideos"),$page_owner->name), $CONFIG->wwwroot . "pg/kaltura_video/" . $page_owner->username);
 		}
 	}
 	
@@ -358,11 +338,6 @@ function kaltura_video_register_toggle() {
  */
 function kaltura_video_page_handler($page) {
 	$file_dir = elgg_get_plugins_path() . 'kaltura_video/pages/kaltura_video';
-	
-	if (elgg_get_context() == 'kaltura_video_admin') {
-		include(dirname(__FILE__) . "/admin.php");
-		return true;
-	}
 
 	if (!elgg_get_plugin_setting("password", "kaltura_video")) {
 		// If the URL is just 'feeds/username', or just 'feeds/', load the standard feeds index
@@ -394,80 +369,18 @@ function kaltura_video_page_handler($page) {
 		case 'view':
 			set_input('videopost', $page[1]);
 			include("$file_dir/show.php");
-			return true;
 			break;
 		//case 'group':
-		//	$params = blog_get_page_content_list($page[1]);
-		//	break;
+			// @ todo
+			//	break;
 		case 'all':
 		default:
 			kaltura_video_register_toggle();
 			include "$file_dir/everyone.php";
 			break;
 	}
-
-	//$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
-
-	//$body = elgg_view_layout('content', $params);
-
-	//echo elgg_view_page($params['title'], $body);
 }
 
-/**
-* feeds page handler; allows the use of fancy URLs
-*
-* @param array $page From the page_handler function
-* @return true|false Depending on success
-*/
-function kaltura_video_page_handler_old($page) {
-	global $CONFIG;
-
-	if (elgg_get_context()=='kaltura_video_admin') {
-		include(dirname(__FILE__) . "/admin.php");
-		return true;
-	}
-
-	if (!elgg_get_plugin_setting("password","kaltura_video")) {
-		// If the URL is just 'feeds/username', or just 'feeds/', load the standard feeds index
-		include(dirname(__FILE__) . "/missconfigured.php");
-		return true;
-	}
-
-	// The first component of a blog URL is the username
-	if (isset($page[0])) {
-		set_input('username',$page[0]);
-	}
-
-	// The second part dictates what we're doing
-	if (isset($page[1])) {
-		switch($page[1]) {
-			case 'friends':
-				include(dirname(__FILE__) . "/friends.php");
-				return true;
-				break;
-			case 'show':
-				set_input('videopost',$page[2]);
-				include(dirname(__FILE__) . "/show.php");
-				return true;
-				break;
-			default:
-				include(dirname(__FILE__) . "/index.php");
-				return true;
-		}
-	// If the URL is just 'blog/username', or just 'blog/', load the standard blog index
-	} else {
-		@include(dirname(__FILE__) . "/index.php");
-		return true;
-	}
-
-	return false;
-}
-
-
-// Make sure the status initialisation function is called on initialisation
-// we want this register the last, that's is only to hack the html cleaner
-// if we want to allow <object> tags (only with option addbutton enabled)
-elgg_register_event_handler('init','system','kaltura_video_init',9999);
-elgg_register_event_handler('pagesetup','system','kaltura_video_page_setup');
-
-?>
+// Initialize the plugin last so we can hack the htmlawed and allow <object> tags.
+elgg_register_event_handler('init', 'system', 'kaltura_video_init', 9999);
+elgg_register_event_handler('pagesetup', 'system', 'kaltura_video_page_setup');
