@@ -1,6 +1,7 @@
 <?php
 	elgg_load_library('kaltura_video');
-	$configured = $vars['configured'];
+	// Check if already configured
+	$configured = elgg_get_plugin_setting('password', "kaltura_video") ? true : false;
 	$servertype = elgg_get_plugin_setting('kaltura_server_type', 'kaltura_video');
 	$servertype = $servertype ? $servertype : 'corp';
 	$server_url = elgg_get_plugin_setting('kaltura_server_url', 'kaltura_video');

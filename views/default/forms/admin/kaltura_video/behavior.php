@@ -1,7 +1,5 @@
 <?php
 	elgg_load_library('kaltura_video');
-
-	$configured = $vars['configured'];
 ?>
 
 <h3 class="settings"><?php echo elgg_echo('kalturavideo:admin:videoeditor'); ?></h3>
@@ -10,7 +8,9 @@
 	<?php echo elgg_echo('kalturavideo:behavior:alloweditor'); ?>: <br />
 	<?php
 		$alloweditor = elgg_get_plugin_setting('alloweditor', 'kaltura_video');
-		if (!$alloweditor) $alloweditor = 'full';
+		if (!$alloweditor) {
+			$alloweditor = 'full';
+		}
 
 		echo elgg_view('input/dropdown', array(
 			'name' => 'alloweditor',
@@ -31,7 +31,9 @@
 	<?php echo elgg_echo('kalturavideo:behavior:enablerating'); ?>:
 	<?php
 		$enablerating = elgg_get_plugin_setting('enablerating', 'kaltura_video');
-		if (!$enablerating) $enablerating = 'yes';
+		if (!$enablerating) {
+			$enablerating = 'yes';
+		}
 
 		echo elgg_view('input/dropdown', array(
 			'name' => 'enablerating',
@@ -51,7 +53,9 @@
 	<?php echo sprintf(elgg_echo('kalturavideo:label:addbuttonlongtext'),'"<img src="'.$vars['url'] .'mod/kaltura_video/kaltura/images/interactive_video_button.gif" style="vertical-align:middle;" />'.elgg_echo('kalturavideo:label:addvideo').'"'); ?><strong>*</strong>:
 	<?php
 		$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
-		if (!$addbutton) $addbutton = 'simple';
+		if (!$addbutton) {
+			$addbutton = 'simple';
+		}
 
 		echo elgg_view('input/dropdown', array(
 			'name' => 'addbutton',
@@ -91,9 +95,17 @@
 	<?php echo elgg_echo('kalturavideo:behavior:numvideos'); ?>:
 	<?php
 		$total = (int) elgg_get_plugin_setting('numindexvideos', 'kaltura_video');
-		if(!$total) {
+		if (!$total) {
 			$total = 4;
 		}
-		echo elgg_view('input/url', array('name' => 'numindexvideos','id' => 'numindexvideos', 'value' => $total, 'class' => 'input-short', 'disabled'=>($enableindexwidget=='no') ));
+		echo elgg_view('input/url', array(
+			'name' => 'numindexvideos',
+			'id' => 'numindexvideos',
+			'value' => $total,
+			'class' => 'input-short',
+			'disabled' => ($enableindexwidget == 'no')
+		));
 	?>
 </p>
+
+<?php echo elgg_view('input/submit', array('value' => elgg_echo('save'))); ?>

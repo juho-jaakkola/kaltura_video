@@ -85,10 +85,9 @@ function kaltura_video_init() {
 	$enableindexwidget = elgg_get_plugin_setting('enableindexwidget', 'kaltura_video');
 	if (!$enableindexwidget) $enableindexwidget = 'single';
 
-	if( in_array($enableindexwidget , array('single', 'multi')) ) {
+	if (in_array($enableindexwidget , array('single', 'multi'))) {
 		elgg_extend_view('index/righthandside', 'kaltura/customindex.videos');
 	}
-
 
 	// Register entity type
 	elgg_register_entity_type('object','kaltura_video');
@@ -100,10 +99,10 @@ function kaltura_video_init() {
 
 	if (elgg_is_admin_logged_in()) {
 		$path = $CONFIG->pluginspath . "kaltura_video/actions/admin/kaltura_video";
-		elgg_register_action("kaltura_video/admin", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/admin.php", 'admin');
-		elgg_register_action("kaltura_video/wizard", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/wizard.php", 'admin');
-		
 		elgg_register_action("admin/kaltura_video/server", "$path/server.php", 'admin');
+		elgg_register_action("admin/kaltura_video/behavior", "$path/behavior.php", 'admin');
+		elgg_register_action("admin/kaltura_video/custom", "$path/custom.php", 'admin');
+		elgg_register_action("admin/kaltura_video/wizard", "$path/wizard.php", 'admin');
 	}
 }
 
@@ -275,29 +274,11 @@ function kaltura_video_page_setup() {
 		'section' => 'configure'
 	));
 	
-	// Link to plugin configuration 
-	elgg_register_menu_item('page', array(
-		'name' => 'kaltura_video_foo',
-		'href' => 'admin/kaltura_video',
-		'text' => elgg_echo('admin:kaltura_video'),
-		'context' => 'admin',
-		'section' => 'configure'
-	));
-	
-	/**
-	 * Add admin menu items for plugin settings.
-	 *
-	 * @param string $section    The menu section to add to
-	 * @param string $menu_id    The unique ID of section
-	 * @param string $parent_id  If a child section, the parent section id
-	 * @param int    $priority   The menu item priority
-	 */
 	elgg_register_admin_menu_item('configure', 'server', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'custom', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'wizard', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'advanced', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'behavior', 'kaltura_video');
-	elgg_register_admin_menu_item('configure', 'partnerid', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'credits', 'kaltura_video');
 }
 

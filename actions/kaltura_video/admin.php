@@ -1,12 +1,12 @@
 <?php
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ */
 
 	require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php");
 	// Make sure we're logged as admin
