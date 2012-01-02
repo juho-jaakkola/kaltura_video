@@ -1,14 +1,14 @@
 <?php
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ */
 
-include_once(dirname(dirname(dirname(dirname(__FILE__))))."/kaltura/api_client/includes.php");
+elgg_load_library('kaltura_video');
 
 $guid = (int) get_input('videopost');
 
@@ -27,7 +27,7 @@ $num_comments = $ob->countComments();
 $comments =  elgg_view_comments($ob);
 
 list($votes, $rating_image, $rating) = kaltura_get_rating($ob);
-$can_rate = (elgg_is_logged_in() && !kaltura_is_rated_by_user($ob->getGUID(),$_SESSION['user'],$votes));
+$can_rate = (elgg_is_logged_in() && !kaltura_is_rated_by_user($ob->getGUID(), $_SESSION['user'], $votes));
 
 //groups handle
 $group = get_entity($ob->container_guid);
@@ -41,8 +41,6 @@ if ($group instanceof ElggGroup) {
 		'text' => sprintf(elgg_echo("kalturavideo:label:groupvideos:TEST")),
 		'context' => 'groups',
 	));
-	
-	//add_submenu_item(elgg_echo('kalturavideo:label:groupvideos'), $CONFIG->wwwroot."pg/kaltura_video/".$group->username);
 } else {
 	$group = false;
 }
@@ -57,8 +55,6 @@ if ($metadata->kaltura_video_widget_html) {
 	$widget = $metadata->kaltura_video_widget_html;
 	$metadata->kaltura_video_widget_width .= 'px';
 	$metadata->kaltura_video_widget_height .= 'px';
-
-	//echo "WIDGET ".$metadata->kaltura_video_widget_uid;
 } else {
 	preg_match('/width="([0-9]*)"/',$widget,$matchs);
 	$metadata->kaltura_video_widget_width = 'auto';
@@ -67,8 +63,6 @@ if ($metadata->kaltura_video_widget_html) {
 	$metadata->kaltura_video_widget_height = 'auto';
 	preg_match('/height="([0-9]*)"/',$widget,$matchs);
 	if ($matchs[1]) $metadata->kaltura_video_widget_height = $matchs[1]."px";
-
-	//echo "GENERIC WIDGET";
 }
 
 $title = elgg_echo("kalturavideo:label:adminvideos").': ';

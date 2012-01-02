@@ -1,14 +1,5 @@
-<?php
-	$list = elgg_view('categories/list',$vars);
-	if (!empty($list)) {
-?>
-
+<?php if ($list = elgg_view('categories/list',$vars)): ?>
 	<div class="blog_categories">
 		<?php echo $list; ?>
 	</div>
-
-<?php
-
-	}
-
-?>
+<?php endif; ?>

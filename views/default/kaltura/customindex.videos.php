@@ -1,33 +1,40 @@
 <?php
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-*
-* Inspired in iZAP video widget!
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ *
+ * Inspired in iZAP video widget!
+ */
 
 $total = (int) elgg_get_plugin_setting('numindexvideos','kaltura_video');
-if(!$total) $total = 4;
+if (!$total) {
+	$total = 4;
+}
 
 $single = true;
-if(elgg_get_plugin_setting('enableindexwidget', 'kaltura_video') == 'multi') $single = false;
+if (elgg_get_plugin_setting('enableindexwidget', 'kaltura_video') == 'multi') {
+	$single = false;
+}
 
-if($single) $title = elgg_echo('kalturavideo:label:latest');
-else $title = elgg_echo('kalturavideo:index:toplatest');
+if ($single) {
+	$title = elgg_echo('kalturavideo:label:latest');
+} else {
+	$title = elgg_echo('kalturavideo:index:toplatest');
+}
 
-$url = $vars['url'].'/mod/kaltura_video/ajax-listvideos.php?total='.$total.'&type=';
+$url = $vars['url'].'/mod/kaltura_video/ajax-listvideos.php?total=' . $total . '&type=';
 
 ?>
 <div class="index_box">
-  <a href="<?php echo $vars['url']?>pg/kaltura_video/">
-    <?php echo elgg_view_title($title); ?>
-  </a>
+	<a href="<?php echo $vars['url']?>kaltura_video/">
+		<?php echo elgg_view_title($title); ?>
+	</a>
 <?php
-if(!$single) {
+if (!$single) {
 ?>
 	<div class="contentWrapper">
 		<div id="elgg_horizontal_tabbed_nav">
@@ -36,7 +43,7 @@ if(!$single) {
 			<li><a href="#" rel="<?php echo $url; ?>played"><?php echo elgg_echo('kalturavideo:index:played'); ?></a></li>
 			<li><a href="#" rel="<?php echo $url; ?>commented"><?php echo elgg_echo('kalturavideo:index:commented'); ?></a></li>
 <?php
-		if(elgg_get_plugin_setting('enablerating','kaltura_video') == 'yes') {
+		if (elgg_get_plugin_setting('enablerating','kaltura_video') == 'yes') {
 ?>
 			<li><a href="#" rel="<?php echo $url; ?>rated"><?php echo elgg_echo('kalturavideo:index:rated'); ?></a></li>
 <?php
