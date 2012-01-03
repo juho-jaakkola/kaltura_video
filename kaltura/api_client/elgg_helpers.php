@@ -465,7 +465,8 @@ function kaltura_create_generic_widget_html ( $entryId , $size='l' , $version=nu
 
 	$widget = '<object id="genericPlayer'.$entryId.'" type="application/x-shockwave-flash" allowScriptAccess="always" allowNetworking="all" height="' . $height . '" width="' . $width . '" data="'. $viewData["swfUrl"] . '">'.
 		'<param name="allowScriptAccess" value="always" />'.
-		'<param name="allowNetworking" value="all" />'.
+		'<param name="allowNetworking" value="all" />'. 
+		'<param name="allowfullscreen" value="true" />'. 
 		'<param name="bgcolor" value=#000000 />'.
 		'<param name="movie" value="'.$viewData["swfUrl"] . '"/>'.
     	'<param name="flashVars" value="' . $flashVarsStr . '" />' .
