@@ -47,8 +47,8 @@ if (elgg_get_context() !== 'search') {
 		echo '<div class="video-gallery-item">';
 		echo 
 		'<a href="' . $video->getURL() . '">' . 
-		 	"<h4>" . $video->title . "</h4>" .
 			'<img src="' .  $video->kaltura_video_thumbnail . '" alt="" >' .
+		 	"<h4>" . elgg_get_excerpt($video->title, 35) . "</h4>" .
 		 '</a>';
 		echo '</div>';
 	} else {
