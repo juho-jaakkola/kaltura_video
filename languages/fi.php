@@ -63,6 +63,15 @@ $translations = array(
 	'kalturavideo:error:objectnotavailable' => "Kohdetta ei ole saatavilla. Päivitä sivu ja yritä uudelleen.",
 	'kalturavideo:label:recreateobjects' => "Luo uudelleen kaikki videot-objektit",
 	'kalturavideo:edit:notallowed' => "Et voi muokata tätä videota",
+	
+	/**
+	 * River
+	 */
+	'river:create:object:kaltura_video' => '%s lisäsi videon %s',
+	'river:update:object:kaltura_video' => '%s päivitti videota %s',
+	'river:comment:object:kaltura_video' => '%s kommentoi videota %s',
+	
+	// Old river strings
 	'kalturavideo:river:created' => "%s lisäsi",
 	'kalturavideo:river:annotate' => "%s lisäsi kommentin kohteeseen",
 	'kalturavideo:river:item' => "videon",

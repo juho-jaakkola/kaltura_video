@@ -64,6 +64,16 @@ $translations = array(
 	'kalturavideo:error:objectnotavailable' => "Object not available. Please reload the page.",
 	'kalturavideo:label:recreateobjects' => "Recreate all video objects",
 	'kalturavideo:edit:notallowed' => "You can not edit this video!",
+	
+	/**
+	 * River
+	 */
+	'river:create:object:kaltura_video' => '%s added a new video %s',
+	'river:update:object:kaltura_video' => '%s updated the video %s',
+	'river:comment:object:kaltura_video' => '%s commented the video %s',
+	
+	
+	// Old river strings
 	'kalturavideo:river:created' => "%s created",
 	'kalturavideo:river:annotate' => "%s commented on",
 	'kalturavideo:river:item' => "an video",

@@ -1,14 +1,13 @@
 <?php
+/**
+ * View river item about a new video.
+ */
 
-	$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
-	$object = get_entity($vars['item']->object_guid);
-	$url = $object->getURL();
+$object = $vars['item']->getObjectEntity();
+$excerpt = strip_tags($object->excerpt);
+$excerpt = elgg_get_excerpt($excerpt);
 
-	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = sprintf(elgg_echo("kalturavideo:river:created"),$url) . " ";
-	$string .= elgg_echo("kalturavideo:river:create") . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
-
-
-?>
-
-<?php echo $string; ?>
+echo elgg_view('river/elements/layout', array(
+	'item' => $vars['item'],
+	'message' => $excerpt,
+));
