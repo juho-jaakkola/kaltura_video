@@ -8,8 +8,7 @@
 * @link http://microstudi.net/elgg/
 **/
 
-require_once($CONFIG->pluginspath . "kaltura_video/kaltura/api_client/includes.php");
-gatekeeper();
+elgg_load_library('kaltura_video');
 
 $guid = get_input('guid');
 
@@ -33,8 +32,6 @@ if ($guid) {
 	try {
 		//check if entity belongs to this user (or user is admin)
 		if ($ob && $ob->canEdit()) {
-			die('test');
-			
 			$kmodel = KalturaModel::getInstance();
 			//open the kaltura list without admin privileges
 			$entry = $kmodel->getEntry($guid);
@@ -80,6 +77,10 @@ if ($guid) {
 }
 
 $url = $_SERVER['HTTP_REFERER'];
-if (strpos($url,'/kaltura_video/') === false) $url = $CONFIG->url . 'kaltura_video/';
-if (!$error && strpos($url,'/show/') !== false) $url = $CONFIG->url . 'kaltura_video/';
+if (strpos($url,'/kaltura_video/') === false) {
+	$url = $CONFIG->url . 'kaltura_video/';
+}
+if (!$error && strpos($url,'/show/') !== false) {
+	$url = $CONFIG->url . 'kaltura_video/';
+}
 forward($url);

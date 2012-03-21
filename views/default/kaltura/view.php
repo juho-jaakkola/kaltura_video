@@ -8,14 +8,14 @@
  * @link http://microstudi.net/elgg/
  */
 
-elgg_load_library('kaltura_video');
-
-$guid = (int) get_input('videopost');
+$ob = elgg_extract('entity', $vars);
 
 $ob = get_entity($guid);
 if (!$ob) {
 	forward();
 }
+
+elgg_load_library('kaltura_video');
 
 $access_id = $ob->access_id;
 $metadata = kaltura_get_metadata($ob);

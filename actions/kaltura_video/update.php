@@ -8,7 +8,7 @@
 * @link http://microstudi.net/elgg/
 **/
 
-require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php");
+elgg_load_library('kaltura_video');
 
 $video_id = get_input('kaltura_video_id');
 $title = get_input('title');
@@ -64,7 +64,7 @@ if ($video_id) {
 			//now update the object!
 			$entry->comments_on = $comments_on; //whether the users wants to allow comments or not on the blog post
 			$entry->rating_on = $rating_on; //whether the users wants to allow comments or not on the blog post
-			if (!($ob = kaltura_update_object($entry,null,$access,null,null,true))) {
+			if (!($ob = kaltura_update_object($entry, null, $access, null, null, true))) {
 				$error = "Error update Elgg object";
 			} else {
 				$ob->kaltura_video_collaborative = ($collaborative=='on');

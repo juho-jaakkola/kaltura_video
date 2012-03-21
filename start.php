@@ -18,7 +18,9 @@ function kaltura_video_init() {
 	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
 
 	$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
-	if (!$addbutton) $addbutton = 'simple';
+	if (!$addbutton) {
+		$addbutton = 'simple';
+	}
 
 	if (in_array($addbutton , array('simple','tinymce'))) {
 
@@ -47,16 +49,13 @@ function kaltura_video_init() {
 	// Extend system CSS with our own styles, which are defined in the blog/css view
 	elgg_extend_view('css','kaltura/css');
 
-	// Extend hover-over menu
-	elgg_extend_view('profile/menu/links','kaltura/menu');
-
 	// Add to groups context
 	elgg_extend_view('groups/right_column', 'kaltura/groupprofile');
 	//if you prefer to see the widgets in the left part of the groups pages:
 	//extend_view('groups/left_column','kaltura/groupprofile');
 
 	// Add group menu option
-	add_group_tool_option('kaltura_video',elgg_echo('kalturavideo:enablevideo'),true);
+	add_group_tool_option('kaltura_video', elgg_echo('kalturavideo:enablevideo'), true);
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('kaltura_video','kaltura_video_page_handler');
@@ -91,10 +90,10 @@ function kaltura_video_init() {
 	// Register entity type
 	elgg_register_entity_type('object','kaltura_video');
 
-	//actions for the plugin
-	elgg_register_action("kaltura_video/delete", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/delete.php");
-	elgg_register_action("kaltura_video/update", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/update.php");
-	elgg_register_action("kaltura_video/rate", $CONFIG->pluginspath . "kaltura_video/actions/kaltura_video/rate.php");
+	$actionspath = elgg_get_plugins_path() . 'kaltura_video/actions/kaltura_video';
+	elgg_register_action("kaltura_video/delete", "$actionspath/delete.php");
+	elgg_register_action("kaltura_video/update", "$actionspath/update.php");
+	elgg_register_action("kaltura_video/rate", "$actionspath/rate.php");
 
 	if (elgg_is_admin_logged_in()) {
 		$path = $CONFIG->pluginspath . "kaltura_video/actions/admin/kaltura_video";

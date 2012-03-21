@@ -6,19 +6,21 @@
  * @author Ivan Vergés <ivan@microstudi.net>
  * @copyright Ivan Vergés 2010
  * @link http://microstudi.net/elgg/
+ * 
+ * @todo Most admin actions are moved under actions/admin/kaltura_video for Elgg 1.8.
+ * What is this file doing? Is it needed?
  */
 
-	require_once($CONFIG->pluginspath."kaltura_video/kaltura/api_client/includes.php");
+	elgg_load_library('kaltura_video');
+	
 	// Make sure we're logged as admin
 	admin_gatekeeper();
-	// Make sure action is secure
-	action_gatekeeper();
 
 	// Get input data
 	$type = get_input('type');
 
 	//partner wizard is not handled here
-	if($type == 'server') {
+	if ($type == 'server') {
 		$server_type = get_input('kaltura_server_type');
 		$server_url = get_input('kaltura_server_url');
 		$partnerId = get_input('partner_id');
@@ -58,20 +60,17 @@
 
 				system_message(elgg_echo("kalturavideo:registeredok"));
 				forward(get_config('url')."admin/kaltura_video/?type=$type");
-			}
-			catch(Exception $e) {
+			} catch(Exception $e) {
 				$error = $e->getMessage();
 			}
-		}
-		else {
+		} else {
 			$error = elgg_echo("kalturavideo:mustenterfields");
 		}
-		if($error) {
+		if ($error) {
 			register_error($error);
 			forward(get_config('url')."admin/kaltura_video/?type=$type");
 		}
-	}
-	elseif($type == 'custom') {
+	} elseif ($type == 'custom') {
 		$defaultplayer = get_input('defaultplayer');
 		$defaulteditor = get_input('defaulteditor');
 		$defaultkcw = get_input('defaultkcw');
@@ -80,13 +79,12 @@
 		$custom_kse = trim(get_input('custom_kse'));
 
 		$ok = true;
-		if($defaultplayer=='custom') {
+		if ($defaultplayer=='custom') {
 			//check the uid_conf
-			if(empty($custom_kdp)) {
+			if (empty($custom_kdp)) {
 				$ok = false;
 				register_error(elgg_echo("kalturavideo:error:uiconf"));
-			}
-			else {
+			} else {
 				//check if exists
 				try {
 					//open the kaltura instance
@@ -95,25 +93,23 @@
 					$result = $kmodel->getUiConf($custom_kdp);
 					//if no exception it's ok
 					elgg_set_plugin_setting("custom_kdp",$custom_kdp,"kaltura_video");
-					if($result->width && $result->height) {
+					if ($result->width && $result->height) {
 						elgg_set_plugin_setting("custom_kdp_width",$result->width,"kaltura_video");
 						elgg_set_plugin_setting("custom_kdp_height",$result->height,"kaltura_video");
 					}
-				}
-				catch(Exception $e) {
+				} catch(Exception $e) {
 					$ok = false;
 					$error = $e->getMessage();
 					register_error(elgg_echo("kalturavideo:error:uiconf")." $error");
 				}
 			}
 		}
-		if($defaultkcw=='custom' && $ok) {
+		if ($defaultkcw=='custom' && $ok) {
 			//check the uid_conf
-			if(empty($custom_kcw)) {
+			if (empty($custom_kcw)) {
 				$ok = false;
 				register_error(elgg_echo("kalturavideo:error:uiconf"));
-			}
-			else {
+			} else {
 				//check if exists
 				try {
 					//open the kaltura instance
@@ -122,21 +118,19 @@
 					$result = $kmodel->getUiConf($custom_kcw);
 					//if no exception it's ok
 					elgg_set_plugin_setting("custom_kcw",$custom_kcw,"kaltura_video");
-				}
-				catch(Exception $e) {
+				} catch(Exception $e) {
 					$ok = false;
 					$error = $e->getMessage();
 					register_error(elgg_echo("kalturavideo:error:uiconf")." $error");
 				}
 			}
 		}
-		if($defaulteditor=='custom' && $ok) {
+		if ($defaulteditor=='custom' && $ok) {
 			//check the uid_conf
-			if(empty($custom_kse)) {
+			if (empty($custom_kse)) {
 				$ok = false;
 				register_error(elgg_echo("kalturavideo:error:uiconf"));
-			}
-			else {
+			} else {
 				//check if exists
 				try {
 					//open the kaltura instance
@@ -145,22 +139,20 @@
 					$result = $kmodel->getUiConf($custom_kse);
 					//if no exception it's ok
 					elgg_set_plugin_setting("custom_kse",$custom_kse,"kaltura_video");
-				}
-				catch(Exception $e) {
+				} catch(Exception $e) {
 					$ok = false;
 					$error = $e->getMessage();
 					register_error(elgg_echo("kalturavideo:error:uiconf")." $error");
 				}
 			}
 		}
-		if($ok) {
+		if ($ok) {
 			elgg_set_plugin_setting("defaultplayer",$defaultplayer,"kaltura_video");
 			elgg_set_plugin_setting("defaulteditor",$defaulteditor,"kaltura_video");
 			elgg_set_plugin_setting("defaultkcw",$defaultkcw,"kaltura_video");
 			system_message(elgg_echo("kalturavideo:playerupdated"));
 		}
-	}
-	elseif($type == 'behavior') {
+	} elseif ($type == 'behavior') {
 		$addbutton = get_input('addbutton');
 		$alloweditor = get_input('alloweditor');
 		$enablerating = get_input('enablerating');
@@ -168,17 +160,19 @@
 		$numindexvideos = get_input('numindexvideos');
 
 		$ok = '';
-		if($addbutton) $ok = elgg_set_plugin_setting("addbutton",$addbutton,"kaltura_video");
-		if($alloweditor && $ok) $ok =elgg_set_plugin_setting("alloweditor",$alloweditor,"kaltura_video");
-		if($enablerating && $ok) $ok =elgg_set_plugin_setting("enablerating",$enablerating,"kaltura_video");
-		if($enableindexwidget && $ok) $ok =elgg_set_plugin_setting("enableindexwidget",$enableindexwidget,"kaltura_video");
-		if($numindexvideos && $ok) $ok =elgg_set_plugin_setting("numindexvideos",$numindexvideos,"kaltura_video");
+		if ($addbutton) $ok = elgg_set_plugin_setting("addbutton",$addbutton,"kaltura_video");
+		if ($alloweditor && $ok) $ok =elgg_set_plugin_setting("alloweditor",$alloweditor,"kaltura_video");
+		if ($enablerating && $ok) $ok =elgg_set_plugin_setting("enablerating",$enablerating,"kaltura_video");
+		if ($enableindexwidget && $ok) $ok =elgg_set_plugin_setting("enableindexwidget",$enableindexwidget,"kaltura_video");
+		if ($numindexvideos && $ok) $ok =elgg_set_plugin_setting("numindexvideos",$numindexvideos,"kaltura_video");
 
-		if($ok) system_message(elgg_echo("admin:configuration:success"));
-		else register_error(elgg_echo("admin:configuration:fail"));
+		if ($ok) {
+			system_message(elgg_echo("admin:configuration:success"));
+		} else {
+			register_error(elgg_echo("admin:configuration:fail"));
+		}
 	}
 
 	//by default return and do nothing
 	forward(get_config('url')."admin/kaltura_video/?type=$type");
 
-?>

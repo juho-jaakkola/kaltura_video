@@ -1,15 +1,18 @@
 <?php
 /**
-* Kaltura video client
-* @package ElggKalturaVideo
-* @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
-* @author Ivan Vergés <ivan@microstudi.net>
-* @copyright Ivan Vergés 2010
-* @link http://microstudi.net/elgg/
-**/
+ * Kaltura video client
+ * @package ElggKalturaVideo
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License version 3
+ * @author Ivan Vergés <ivan@microstudi.net>
+ * @copyright Ivan Vergés 2010
+ * @link http://microstudi.net/elgg/
+ * 
+ * @todo Most of these functions should propably be moved either to separate
+ * views or as methods in KalturaVideo class.
+ */
 
 /**
- * Usefull functions that are missing in Elgg or needed for some specific purpose
+ * Useful functions that are missing in Elgg or needed for some specific purpose
  */
 
 //Checks if a video is rated by the user
@@ -83,7 +86,11 @@ function kaltura_get_rating($entity) {
 	return array($numvotes, $rating_image, $article_rating);
 }
 
-//gets a kaltura object with all metadata from a guid
+/**
+ * gets a kaltura object with all metadata from a guid
+ * 
+ * @todo Who does this function even exist?
+ */
 function kaltura_get_metadata($entity) {
 	unset($ob);
 	
