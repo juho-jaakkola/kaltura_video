@@ -262,6 +262,26 @@ function kaltura_video_page_setup() {
 }
 
 /**
+ * Register title button that open video adding form to lightbox.
+ */
+function kaltura_video_register_title_button() {
+	if (elgg_is_logged_in()) {
+		$owner = elgg_get_page_owner_entity();
+		if (!$owner) {
+			// no owns the page so this is probably an all site list page
+			$owner = elgg_get_logged_in_user_entity();
+		}
+		if ($owner && $owner->canWriteToContainer()) {
+			elgg_register_menu_item('title', array(
+				'name' => 'kaltura_video_create',
+				'href' => '#kaltura_create',
+				'text' => elgg_echo('kalturavideo:label:newvideo'),
+				'class' => array('elgg-button', 'elgg-button-action'),
+			));
+		}
+	}
+}
+/**
  * Add particular links/info to entity menu
  */
 function kaltura_video_entity_menu_setup($hook, $type, $return, $params) {
@@ -366,7 +386,7 @@ function kaltura_video_page_handler($page) {
 			include "$file_dir/edit.php";
 			break;
 		case 'view':
-			set_input('videopost', $page[1]);
+			set_input('guid', $page[1]);
 			include("$file_dir/show.php");
 			break;
 		//case 'group':

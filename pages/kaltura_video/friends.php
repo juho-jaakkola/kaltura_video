@@ -20,6 +20,8 @@ if (!($page_owner instanceof ElggEntity)){
 	forward();
 }
 
+kaltura_video_register_title_button();
+
 //set the title
 if ($page_owner == $_SESSION['user']) {
 	$params['title'] = elgg_echo('kalturavideo:label:friendsvideos');

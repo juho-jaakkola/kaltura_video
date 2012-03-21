@@ -10,7 +10,8 @@
 
 elgg_load_library('kaltura_video');
 
-$video = $vars['entity'];
+$video = elgg_extract('entity', $vars);
+$full = elgg_extract('full_view', $vars);
 
 // @todo If this check needed?
 $metadata = kaltura_get_metadata($vars['entity']);
@@ -19,7 +20,7 @@ if (@empty($metadata->kaltura_video_id)) {
 	return false;
 }
 
-if ($vars['full_view'] && !elgg_in_context('gallery')) {
+if ($full) {
 	// Full view
 	echo elgg_view('kaltura/view', $vars);
 } elseif (elgg_in_context('gallery')) {

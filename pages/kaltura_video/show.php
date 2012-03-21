@@ -9,27 +9,23 @@
  */
 
 // Get the specified blog post
-$post = (int) get_input('videopost');
+$guid = get_input('guid');
 
 // If we can get out the blog post ...
-if ($videopost = get_entity($post)) {
-	// Set the page owner
-	elgg_set_page_owner_guid($videopost->getOwnerGUID());
-	$page_owner = get_entity($videopost->getOwnerGUID);
+if ($video = get_entity($guid)) {
+	elgg_set_page_owner_guid($video->getOwnerGUID());
 
-	// Set the title appropriately
-	$params['title'] = $videopost->title;
-	
-	// Display the entity
-	$params['content'] = elgg_view_entity($videopost, array('full_view' => true));
-	
-	$body = elgg_view_layout("content", $params);
+	$params['title'] = $video->title;
+	$params['content'] = elgg_view_entity($video, array('full_view' => true));
 } else {
 	// If we're not allowed to see the post
 	// Display the 'post not found' page instead
 	$params['title'] = elgg_echo("kalturavideo:notfound");
-	$body = elgg_view("kaltura/notfound");
+	$params['content'] = elgg_view("kaltura/notfound");
 }
+
+$params['filter'] = '';
+$body = elgg_view_layout("content", $params);
 
 // Display the page
 echo elgg_view_page($params['title'], $body);

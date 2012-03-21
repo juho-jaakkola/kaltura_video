@@ -10,7 +10,6 @@
 
 $ob = elgg_extract('entity', $vars);
 
-$ob = get_entity($guid);
 if (!$ob) {
 	forward();
 }

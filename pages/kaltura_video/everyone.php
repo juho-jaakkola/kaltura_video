@@ -18,6 +18,8 @@ $limit = (int)get_input("limit", 12);
 $offset = (int)get_input("offset", 0);
 $list_type = get_input("list_type");
 
+kaltura_video_register_title_button();
+
 $params['title'] = elgg_echo('kalturavideo:label:allvideos');
 
 $params['content'] = elgg_list_entities(array(
