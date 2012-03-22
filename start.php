@@ -105,6 +105,19 @@ function kaltura_video_init() {
 }
 
 /**
+ * Register kaltura_video objects to be loaded as KalturaVideo class.
+ */
+function kaltura_video_activate_plugin($event, $type, $details) {
+	echo "<pre>"; var_dump($details); die();
+	
+	if (!update_subtype('object', 'kaltura_video', 'KalturaVideo')) {
+		add_subtype('object', 'kaltura_video', 'KalturaVideo');
+	}
+	
+	return true;
+}
+
+/**
  * Returns a more meaningful message
  *
  * @param unknown_type $hook

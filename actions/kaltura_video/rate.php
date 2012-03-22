@@ -65,6 +65,7 @@
 		}
 
 		// Save new rating average and number of votes using video-s owner
+		// @todo Shouldn't these be metadata instead of annotations?
 		$entity->annotate('kaltura_video_rating', $newrate, ACCESS_PUBLIC, $owner, "integer");
 		$entity->annotate('kaltura_video_numvotes', $newcount, ACCESS_PUBLIC, $owner, "integer");
 		
@@ -73,7 +74,7 @@
 		// information to the video instead of the user.
 		$user->annotate('kaltura_video_rated', $guid);
 		// ...like this:
-		$rate_guid = $entity->annotate('kaltura_video_rating', $rate, ACCESS_PUBLIC, $user, "integer");
+		$rate_guid = $entity->annotate('rating', $rate, ACCESS_PUBLIC, $user, "integer");
 
 		//add to the river
 		// We must pass the rate guid here to view correct river view. (Annotation view instead of full view)
