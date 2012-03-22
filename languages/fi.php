@@ -70,6 +70,8 @@ $translations = array(
 	'river:create:object:kaltura_video' => '%s lisäsi videon %s',
 	'river:update:object:kaltura_video' => '%s päivitti videota %s',
 	'river:comment:object:kaltura_video' => '%s kommentoi videota %s',
+	'river:rate:object:kaltura_video' => '%s antoi arvion videolle %s',
+	'kaltura_video:userrate' => "Arvio: %s/5",
 	
 	// Old river strings
 	'kalturavideo:river:created' => "%s lisäsi",

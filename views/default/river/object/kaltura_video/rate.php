@@ -1,13 +1,14 @@
 <?php
+/**
+ * View river item about user's vote
+ * 
+ * @todo How about viewing the actual stars instead of textual presentation?
+ */
+$object = $vars['item']->getObjectEntity();
+$rate = $vars['item']->getAnnotation();
 
-	$performed_by = get_entity($vars['item']->subject_guid); // $statement->getSubject();
-	$object = get_entity($vars['item']->object_guid);
-	$url = $object->getURL();
 
-	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
-	$string = sprintf(elgg_echo("kalturavideo:river:rates"),$url) . " ";
-	$string .=  " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
-
-?>
-
-<?php echo $string; ?>
+echo elgg_view('river/elements/layout', array(
+	'item' => $vars['item'],
+	'message' => elgg_echo('kaltura_video:userrate', array($rate->value)),
+));

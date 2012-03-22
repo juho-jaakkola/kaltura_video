@@ -71,7 +71,8 @@ $translations = array(
 	'river:create:object:kaltura_video' => '%s added a new video %s',
 	'river:update:object:kaltura_video' => '%s updated the video %s',
 	'river:comment:object:kaltura_video' => '%s commented the video %s',
-	
+	'river:rate:object:kaltura_video' => '%s rated the video %s',
+	'kaltura_video:userrate' => "User's rating: %s/5",
 	
 	// Old river strings
 	'kalturavideo:river:created' => "%s created",

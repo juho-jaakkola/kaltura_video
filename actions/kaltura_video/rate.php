@@ -44,8 +44,11 @@
 	$newcount = ($numvotes + 1.00);
 	$newrate = ($newrate / $newcount);
 
+	$user = elgg_get_logged_in_user_entity();
+
 	//do no rate if is already rated
-	if (!kaltura_is_rated_by_user($guid,$_SESSION['user'],$numvotes)) {
+	// @todo Add a method to KalturaVideo class to check this.
+	if (!kaltura_is_rated_by_user($guid,$user,$numvotes)) {
 		// Delete old ratings
 		$kaltura_video_ratings = $entity->getAnnotations('kaltura_video_rating');
 		foreach ($kaltura_video_ratings as $kaltura_video_rating) {
@@ -61,14 +64,20 @@
 			$numvotesobject->delete();
 		}
 
-		// Save new rating
+		// Save new rating average and number of votes using video-s owner
 		$entity->annotate('kaltura_video_rating', $newrate, ACCESS_PUBLIC, $owner, "integer");
 		$entity->annotate('kaltura_video_numvotes', $newcount, ACCESS_PUBLIC, $owner, "integer");
+		
 		// Save this vote to avoid new duplicate votes
-		$_SESSION['user']->annotate('kaltura_video_rated', $guid);
+		// @todo Why is this saved to the user entity? Might be smarter to attach this
+		// information to the video instead of the user.
+		$user->annotate('kaltura_video_rated', $guid);
+		// ...like this:
+		$rate_guid = $entity->annotate('kaltura_video_rating', $rate, ACCESS_PUBLIC, $user, "integer");
 
 		//add to the river
-		add_to_river('river/object/kaltura_video/rate','rate',$_SESSION['user']->getGUID(),$entity->getGUID());
+		// We must pass the rate guid here to view correct river view. (Annotation view instead of full view)
+		add_to_river('river/object/kaltura_video/rate', 'rate', $user->getGUID(), $entity->getGUID(), "", 0, $rate_guid);
 
 		system_message(elgg_echo("kalturavideo:ratesucces"));
 
