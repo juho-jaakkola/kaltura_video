@@ -72,7 +72,8 @@ function kaltura_video_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'kaltura_notify_message');
 	
 	// entity menu
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'kaltura_video_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'kaltura_video_entity_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'kaltura_video_owner_block_menu');
 
 	// Add profile widget
     elgg_register_widget_type('kaltura_video',elgg_echo('kalturavideo:label:latest'),elgg_echo('kalturavideo:text:widgetdesc'));
@@ -165,107 +166,17 @@ function kaltura_video_url($entity) {
 * Post init gumph.
 */
 function kaltura_video_page_setup() {
-	$page_owner = elgg_get_page_owner_entity();
-
-	// Show menus only if plugin is configured
+	// Show menu only if plugin is configured
 	if (elgg_get_plugin_setting("password", "kaltura_video")) {
-		// Site menu item
+		// Add site menu item
 		elgg_register_menu_item('site', array(
-			'name' => 'kaltura_video_sitevideos',
+			'name' => 'kaltura_video',
 			'href' => 'kaltura_video/all',
-			'text' => elgg_echo('kalturavideo:label:adminvideos'),
+			'text' => elgg_echo('kaltura_video'),
 		));
-	
-		// All videos
-		elgg_register_menu_item('page', array(
-			'name' => 'kaltura_video_all',
-			'href' => "kaltura_video/all",
-			'text' => elgg_echo('kalturavideo:label:allvideos'),
-			'context' => 'kaltura_video',
-		));
-	
-		// User profile item
-		elgg_register_menu_item('owner_block', array(
-			'name' => 'kaltura_video_own',
-			'href' => "kaltura_video/owner/{$page_owner->username}",
-			'text' => elgg_echo('kalturavideo:userprofile'),
-			'context' => 'profile',
-		));
-		
-		if (can_write_to_container(0, elgg_get_page_owner_guid()) && elgg_is_logged_in()) {
-			// Create new video
-			elgg_register_menu_item('title', array(
-				'name' => 'kaltura_video_create',
-				'href' => '#kaltura_create',
-				'text' => elgg_echo('kalturavideo:label:newvideo'),
-				'context' => 'kaltura_video',
-				'class' => array('elgg-button', 'elgg-button-action'),
-			));
-		}
-		
-		if ((elgg_get_page_owner_guid() == $_SESSION['guid'] || !elgg_get_page_owner_guid()) && elgg_is_logged_in()) {
-			// Users own videos
-			elgg_register_menu_item('page', array(
-				'name' => 'kaltura_video_own',
-				'href' => "kaltura_video/owner/{$page_owner->username}",
-				'text' => elgg_echo('kalturavideo:label:myvideos'),
-				'context' => 'kaltura_video',
-			));
-			
-			// User's friend's videos
-			elgg_register_menu_item('page', array(
-				'name' => 'kaltura_video_friends',
-				'href' => "kaltura_video/friends/{$page_owner->username}",
-				'text' => elgg_echo('kalturavideo:label:friendsvideos'),
-				'context' => 'kaltura_video',
-			));
-			
-			if (elgg_is_active_plugin('groups')) {
-				//this page is to search all groups videos, not ready yet
-				//add_submenu_item(elgg_echo('kalturavideo:label:allgroupvideos'), $CONFIG->wwwroot."mod/kaltura_video/groups.php");
-			}
-		} else if (elgg_get_page_owner_guid()) {
-			// Link to videos of page owner's friends
-			elgg_register_menu_item('page', array(
-				'name' => 'kaltura_video_own',
-				'href' => "kaltura_video/owner/{$page_owner->username}",
-				'text' => sprintf(elgg_echo('kalturavideo:user'), $page_owner->name),
-				'context' => 'kaltura_video',
-			));
-			
-			// Link to videos of page owner's friends
-			if ($page_owner instanceof ElggUser) {
-				elgg_register_menu_item('page', array(
-					'name' => 'kaltura_video_friends',
-					'href' => "kaltura_video/friends{$page_owner->username}",
-					'text' => sprintf(elgg_echo('kalturavideo:user:friends'), $page_owner->name),
-					'context' => 'kaltura_video',
-				));
-			}
-		}
-	}
-
-	// Group submenu option
-	if ($page_owner instanceof ElggGroup) {
-		if ($page_owner->kaltura_video_enable != "no") {
-			elgg_register_menu_item('owner_block', array(
-				'name' => 'kaltura_video_groups',
-				'href' => "kaltura_video/group/{$page_owner->getGUID()}/all",
-				'text' => sprintf(elgg_echo("kalturavideo:label:groupvideos"), $page_owner->name),
-				'context' => 'groups',
-			));
-		}
 	}
 	
-	// Link to plugin configuration 
-	elgg_register_menu_item('page', array(
-		'name' => 'kaltura_video',
-		'href' => 'admin/kaltura_video',
-		'text' => elgg_echo('admin:kaltura_video'),
-		'context' => 'admin',
-		'section' => 'configure'
-	));
-	
+	// Admin links to plugin configuration pages
 	elgg_register_admin_menu_item('configure', 'server', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'custom', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'wizard', 'kaltura_video');
@@ -275,7 +186,10 @@ function kaltura_video_page_setup() {
 }
 
 /**
- * Register title button that open video adding form to lightbox.
+ * Register title button that opens video adding form inside a lightbox.
+ * 
+ * @todo This is propably using some custom javascript. How about
+ * using Elgg's default lightbox functionalities instead?
  */
 function kaltura_video_register_title_button() {
 	if (elgg_is_logged_in()) {
@@ -294,10 +208,30 @@ function kaltura_video_register_title_button() {
 		}
 	}
 }
+
+/**
+ * Add a menu item to an ownerblock
+ */
+function kaltura_video_owner_block_menu($hook, $type, $return, $params) {
+	if (elgg_instanceof($params['entity'], 'user')) {
+		$url = "kaltura_video/owner/{$params['entity']->username}";
+		$item = new ElggMenuItem('kaltura_video', elgg_echo('kaltura_video'), $url);
+		$return[] = $item;
+	} else {
+		if ($params['entity']->blog_enable != "no") {
+			$url = "kaltura_video/group/{$params['entity']->guid}/all";
+			$item = new ElggMenuItem('blog', elgg_echo('kaltura_video:group'), $url);
+			$return[] = $item;
+		}
+	}
+
+	return $return;
+}
+
 /**
  * Add particular links/info to entity menu
  */
-function kaltura_video_entity_menu_setup($hook, $type, $return, $params) {
+function kaltura_video_entity_menu($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -308,7 +242,7 @@ function kaltura_video_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	# Link for editing the video
+	// Link for editing the video
 	//if ($entity->canEdit() && $entity->kaltura_video_editable) { // @todo
 	if ($entity->canEdit()) {
 		$status_text = elgg_echo("kalturavideo:label:edit");
@@ -414,5 +348,6 @@ function kaltura_video_page_handler($page) {
 }
 
 // Initialize the plugin last so we can hack the htmlawed and allow <object> tags.
+// @todo Could we use a plugin hook instead?
 elgg_register_event_handler('init', 'system', 'kaltura_video_init', 9999);
 elgg_register_event_handler('pagesetup', 'system', 'kaltura_video_page_setup');

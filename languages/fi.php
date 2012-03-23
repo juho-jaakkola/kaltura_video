@@ -112,7 +112,7 @@ $translations = array(
 	//elgg notification
 	'kalturavideo:newvideo' => "New collaborative video",
 
-	'kaltura_video' => 'Kaikki videot',
+	'kaltura_video' => 'Videot',
 	'kaltura_video:allvideos' => 'Videot',
 	'kalturavideo:label:friendsvideos' => "Ystävien videot",
 	'kalturavideo:label:allgroupvideos' => "Ryhmien videot",
@@ -158,7 +158,7 @@ Toiminto ei vaikuta kohteisiin, joita ei ole luotu Kaltura video -pluginilla.",
 	'kalturavideo:option:tinymce' => "Yritä integroida tinyMCE-editoriin",
 	'kalturavideo:note:addbuttonlongtext' => "Jos lisäät tämän painikkeen, käyttäjät voivat lisätä videoita &lt;object&gt;-tageilla tekstikenttiin. Objektit toimivat vaikka htmlawed-plugin olisi päällä.",
 	'kalturavideo:enablevideo' => "Ota käyttöön ryhmän videot",
-	'kalturavideo:label:groupvideos' => "Ryhmän videot",
+	'kaltura_video:group' => "Ryhmän videot",
 	'kalturavideo:user' => "Käyttäjän %s videot",
 	'kalturavideo:user:friends' => "Käyttäjän %s ystävien videot",
 	'kalturavideo:notfound' => "Pyytettyä videota ei löytynyt ",

@@ -113,7 +113,7 @@ $translations = array(
 	//elgg notification
 	'kalturavideo:newvideo' => "New collaborative video",
 
-	'kaltura_video' => 'All site videos',
+	'kaltura_video' => 'Videos',
 	'kaltura_video:allvideos' => 'Videos',
 	'kalturavideo:label:friendsvideos' => "Friends' videos",
 	'kalturavideo:label:allgroupvideos' => "Groups' videos",
@@ -159,7 +159,7 @@ Objects not created by the Kaltura Elgg Plugin will not be touched.",
 	'kalturavideo:option:tinymce' => "Try to integrate into tinyMCE",
 	'kalturavideo:note:addbuttonlongtext' => "If you choose to add this button, then users can put &lt;object&gt; html tags into text boxes. Even if htmlawed is enabled.",
 	'kalturavideo:enablevideo' => "Enable collaborative videos for this group",
-	'kalturavideo:label:groupvideos' => "Group videos",
+	'kaltura_video:group' => "Group videos",
 	'kalturavideo:user' => "%s's videos",
 	'kalturavideo:user:friends' => "%s's friends' videos",
 	'kalturavideo:notfound' => "Sorry; we could not find the specified video post. ",
