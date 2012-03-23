@@ -31,7 +31,7 @@ $translations = array(
 	'kalturavideo:label:newvideo' => "Luo uusi video",
 	'kalturavideo:label:gotoconfig' => "Konfiguroi Kaltura-videoliitännäinen sijainnissa ",
 
-	//title of the menu, put whatever you want, for example 'Kaltura videos'
+	'kaltura_video:none' => "Ei videoita",
 	'kalturavideo:label:adminvideos' => "Videot",
 	'kalturavideo:label:myvideos' => "Omat ryhmäni",
 	'kalturavideo:label:length' => "Pituus:",

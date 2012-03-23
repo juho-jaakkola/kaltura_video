@@ -32,7 +32,7 @@ $translations = array(
 	'kalturavideo:label:newvideo' => "Create a new video",
 	'kalturavideo:label:gotoconfig' => "Please configure properly the Kaltura Video Plugin under ",
 
-	//title of the menu, put whatever you want, for example 'Kaltura videos'
+	'kaltura_video:none' => "No videos",
 	'kalturavideo:label:adminvideos' => "Videos",
 	'kalturavideo:label:myvideos' => "My videos",
 	'kalturavideo:label:length' => "Length:",
@@ -98,7 +98,6 @@ $translations = array(
 	 * Groups
 	 **/
 	'kalturavideo:groupprofile' => "Videos",
-	'kalturavideo:text:nogroupvideos' => "This group does not have any videos yet",
 	'kalturavideo:label:collaborative' => "Collaborative",
 	'kalturavideo:text:collaborative' => "This allows other members of this group to edit this video too!",
 	'kalturavideo:text:collaborativechanged' => "Collaborative status for the video %1% changed!",

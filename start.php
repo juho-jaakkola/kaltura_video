@@ -49,13 +49,10 @@ function kaltura_video_init() {
 	// Extend system CSS with our own styles, which are defined in the blog/css view
 	elgg_extend_view('css','kaltura/css');
 
-	// Add to groups context
-	elgg_extend_view('groups/right_column', 'kaltura/groupprofile');
-	//if you prefer to see the widgets in the left part of the groups pages:
-	//extend_view('groups/left_column','kaltura/groupprofile');
 
-	// Add group menu option
+	// Add group option
 	add_group_tool_option('kaltura_video', elgg_echo('kalturavideo:enablevideo'), true);
+	elgg_extend_view('groups/tool_latest', 'kaltura/group_module');
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('kaltura_video','kaltura_video_page_handler');
@@ -186,7 +183,7 @@ function kaltura_video_page_setup() {
 }
 
 /**
- * Register title button that opens video adding form inside a lightbox.
+ * Register title button that opens kcw inside a lightbox.
  * 
  * @todo This is propably using some custom javascript. How about
  * using Elgg's default lightbox functionalities instead?
