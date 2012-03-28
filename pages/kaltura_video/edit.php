@@ -9,29 +9,22 @@
  * @link http://microstudi.net/elgg/
  */
 
-gatekeeper();
+$guid = (int) get_input('guid');
+$entity = get_entity($guid);
 
-// Get the current page's owner
-$page_owner = elgg_get_page_owner_entity();
-if ($page_owner === false || is_null($page_owner)) {
-	$page_owner = $_SESSION['user'];
-	elgg_set_page_owner_guid($_SESSION['guid']);
+if (elgg_instanceof($entity, 'object', 'kaltura_video') && $entity->canEdit()) {
+	$content = elgg_view("kaltura/edit", array('entity' => $entity));
+} else {
+	register_error('kaltura_video:notfound');
+	forward();
 }
 
-// Get the post, if it exists
-$videopost = (int) get_input('videopost');
-$entryid = get_input('entryid');
-if (!$post = get_entity($videopost)) {
-	$post = kaltura_get_entity($entryid);
-}
+$params = array(
+	'title' => elgg_echo('kalturavideo:label:editdetails'),
+	'filter' => '',
+	'content' => $content,
+);
 
-if ($post) {
-	if ($post->canEdit()) {
-		$content = elgg_view_title(elgg_echo('kalturavideo:label:adminvideos') . ": " . elgg_echo('kalturavideo:label:editdetails'));
-		$content .= elgg_view("kaltura/edit", array('entity' => $post));
-		$body = elgg_view_layout("edit_layout", array('content' => $content));
-	}
-}
+$body = elgg_view_layout("content", $params);
 
-// Display page
-echo elgg_view_page(sprintf(elgg_echo('kalturavideo:label:adminvideos') . ": " . elgg_echo('kalturavideo:label:editdetails'), $post->title), $body);
+echo elgg_view_page($params['title'], $body);

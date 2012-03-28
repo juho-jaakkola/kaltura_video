@@ -14,6 +14,11 @@ function kaltura_video_init() {
 
 	//Add the javascript
 	elgg_extend_view('page/elements/head', 'kaltura/jscripts');
+	
+	// @todo Should the html5 player be used?
+	elgg_register_js("html5-player", "http://html5.kaltura.org/js");
+	elgg_load_js("html5-player");
+	//<script src="http://html5.kaltura.org/js"></script>
 
 	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
 
@@ -326,7 +331,8 @@ function kaltura_video_page_handler($page) {
 			include "$file_dir/friends.php";
 			break;
 		case 'edit':
-			set_input('videopost', $page[1]);
+			gatekeeper();
+			set_input('guid', $page[1]);
 			include "$file_dir/edit.php";
 			break;
 		case 'view':
