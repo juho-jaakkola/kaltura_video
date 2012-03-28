@@ -60,5 +60,22 @@ class KalturaVideo extends ElggObject {
 		
 		return true;
 	}
+	
+	public function getEntryId() {
+		return $this->kaltura_video_id;
+	}
+
+	/**
+	 * Return number of plays.
+	 * 
+	 * @return int
+	 */
+	public function getPlayCount () {
+		if ($this->kaltura_video_plays) {
+			return $this->kaltura_video_plays;
+		} else {
+			return 0;
+		}
+	}
 
 }
