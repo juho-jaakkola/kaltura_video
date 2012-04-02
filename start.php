@@ -11,22 +11,34 @@
 function kaltura_video_init() {
 	// Load system configuration
 	global $CONFIG,$KALTURA_CURRENT_TINYMCE_FILE;
-
-	//Add the javascript
-	elgg_extend_view('page/elements/head', 'kaltura/jscripts');
 	
-	// @todo Should the html5 player be used?
-	elgg_register_js("html5-player", "http://html5.kaltura.org/js");
-	elgg_load_js("html5-player");
-	//<script src="http://html5.kaltura.org/js"></script>
-
+	//Add the javascript
+	//elgg_extend_view('page/elements/head', 'kaltura/jscripts');
+	
+	// This enables the kaltura html5 player
+	//elgg_register_js("html5-player", "http://html5.kaltura.org/js");
+	//elgg_load_js("html5-player");
+	
+	// This enables the videojs player
+	//elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js");
+	//elgg_register_css("videojs-css", "http://vjs.zencdn.net/c/video-js.css");
+	//elgg_load_js("videojs-player");
+	//elgg_load_css("videojs-css");
+	
 	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
-
+	
+	// Add plugin settings to configuration
+	$settings = elgg_get_plugin_from_id('kaltura_video');
+	elgg_set_config('kaltura_server_url', $settings->kaltura_server_url);
+	elgg_set_config('kaltura_partner_id', $settings->partner_id);
+	//elgg_set_config('kaltura_', $settings->kaltura_);
+	
+	
 	$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
 	if (!$addbutton) {
 		$addbutton = 'simple';
 	}
-
+	
 	if (in_array($addbutton , array('simple','tinymce'))) {
 
 		include_once(dirname(__FILE__)."/kaltura/api_client/definitions.php");
@@ -76,6 +88,7 @@ function kaltura_video_init() {
 	// entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'kaltura_video_entity_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'kaltura_video_owner_block_menu');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'kaltura_video_thumbnail_url');
 
 	// Add profile widget
     elgg_register_widget_type('kaltura_video',elgg_echo('kalturavideo:label:latest'),elgg_echo('kalturavideo:text:widgetdesc'));
@@ -91,12 +104,13 @@ function kaltura_video_init() {
 	}
 
 	// Register entity type
-	elgg_register_entity_type('object','kaltura_video');
+	elgg_register_entity_type('object', 'kaltura_video');
 
 	$actionspath = elgg_get_plugins_path() . 'kaltura_video/actions/kaltura_video';
 	elgg_register_action("kaltura_video/delete", "$actionspath/delete.php");
 	elgg_register_action("kaltura_video/update", "$actionspath/update.php");
 	elgg_register_action("kaltura_video/rate", "$actionspath/rate.php");
+	elgg_register_action("kaltura_video/save", "$actionspath/save.php");
 
 	if (elgg_is_admin_logged_in()) {
 		$path = $CONFIG->pluginspath . "kaltura_video/actions/admin/kaltura_video";
@@ -105,19 +119,6 @@ function kaltura_video_init() {
 		elgg_register_action("admin/kaltura_video/custom", "$path/custom.php", 'admin');
 		elgg_register_action("admin/kaltura_video/wizard", "$path/wizard.php", 'admin');
 	}
-}
-
-/**
- * Register kaltura_video objects to be loaded as KalturaVideo class.
- */
-function kaltura_video_activate_plugin($event, $type, $details) {
-	echo "<pre>"; var_dump($details); die();
-	
-	if (!update_subtype('object', 'kaltura_video', 'KalturaVideo')) {
-		add_subtype('object', 'kaltura_video', 'KalturaVideo');
-	}
-	
-	return true;
 }
 
 /**
@@ -185,6 +186,7 @@ function kaltura_video_page_setup() {
 	elgg_register_admin_menu_item('configure', 'advanced', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'behavior', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'credits', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'import', 'kaltura_video');
 }
 
 /**
@@ -340,7 +342,7 @@ function kaltura_video_page_handler($page) {
 			include("$file_dir/show.php");
 			break;
 		//case 'group':
-			// @ todo
+			// @todo
 			//	break;
 		case 'all':
 		default:
@@ -348,6 +350,38 @@ function kaltura_video_page_handler($page) {
 			include "$file_dir/everyone.php";
 			break;
 	}
+}
+
+/**
+ * Generate url that gets the correct size thumbnail through Kaltura API
+ *
+ * @param string $hook
+ * @param string $entity_type
+ * @param string $return_value
+ * @param array  $params
+ * @return string
+ */
+function kaltura_video_thumbnail_url($hook, $entity_type, $return_value, $params) {	
+	// if someone already set this, quit
+	if ($return_value) {
+		return null;
+	}
+
+	$video = $params['entity'];
+	$size = $params['size'];
+	
+	if (!elgg_instanceof($video, 'object', 'kaltura_video')) {
+		return null;
+	}
+	
+	// Get image pixel dimensions from icon size configuration
+	$icon_sizes = elgg_get_config('icon_sizes');
+	$width = $icon_sizes[$size]['w'];
+	$height = $icon_sizes[$size]['h'];
+	
+	$url = $video->kaltura_video_thumbnail . "/width/{width}/height/{$height}/";
+	
+	return $url;
 }
 
 // Initialize the plugin last so we can hack the htmlawed and allow <object> tags.
