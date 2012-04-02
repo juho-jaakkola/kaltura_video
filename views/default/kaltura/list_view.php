@@ -35,6 +35,7 @@ $params = $params + $vars;
 
 $list_body = elgg_view('object/elements/summary', $params);
 
-$image = elgg_view('kaltura/thumbnail', $vars);
+$image = elgg_view_entity_icon($video);
+
 $vars = array('class' => 'kalturavideoitem');
 echo elgg_view_image_block($image, $list_body, $vars);
