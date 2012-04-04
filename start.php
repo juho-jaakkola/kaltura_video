@@ -20,10 +20,13 @@ function kaltura_video_init() {
 	//elgg_load_js("html5-player");
 	
 	// This enables the videojs player
-	//elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js");
-	//elgg_register_css("videojs-css", "http://vjs.zencdn.net/c/video-js.css");
-	//elgg_load_js("videojs-player");
-	//elgg_load_css("videojs-css");
+	elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js");
+	elgg_register_css("videojs-css", "http://vjs.zencdn.net/c/video-js.css");
+	elgg_load_js("videojs-player");
+	elgg_load_css("videojs-css");
+	
+	elgg_register_js("video-selector", 'mod/kaltura_video/views/default/js/kaltura_video/kaltura_video.php');
+	elgg_load_js("video-selector");
 	
 	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
 	
@@ -187,6 +190,7 @@ function kaltura_video_page_setup() {
 	elgg_register_admin_menu_item('configure', 'behavior', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'credits', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'import', 'kaltura_video');
+	elgg_register_admin_menu_item('configure', 'develop', 'kaltura_video');
 }
 
 /**
