@@ -25,7 +25,7 @@
 	
 	<div class="left">
 		<input type="hidden" name="kaltura_video_guid" value="<?php echo $vars['entity']->getGUID(); ?>" />
-		<input type="submit" class="submit_button" name="submit" value="<?php echo elgg_echo("kalturavideo:rate"); ?>" />
+		<input type="submit" class="elgg-button elgg-button-submit" name="submit" value="<?php echo elgg_echo("kalturavideo:rate"); ?>" />
 	</div>
 	
 	<div class="clear"></div>

@@ -165,7 +165,7 @@ function kaltura_get_entity($video_id) {
 function kaltura_update_object(&$entry, $kmodel = null, $access = null, $user_guid = null, $container_guid = null, $force = false) {
 	global $CONFIG,$KALTURA_GLOBAL_UICONF;
 
-	if (!($entry instanceof KalturaMixEntry)) {
+	if (!($entry instanceof KalturaMediaEntry)) {
 		return false;
 	}
 
@@ -206,8 +206,8 @@ function kaltura_update_object(&$entry, $kmodel = null, $access = null, $user_gu
 		$ob->tags = $array;
 	}
 
-	if ($entry->comments_on) $ob->kaltura_video_comments_on = $entry->comments_on;
-	if ($entry->rating_on) $ob->kaltura_video_rating_on = $entry->rating_on;
+	if ($entry->comments_on) $ob->comments_on = $entry->comments_on;
+	if ($entry->rating_on) $ob->rating_on = $entry->rating_on;
 	if ($entry->plays) $ob->kaltura_video_plays = $entry->plays;
 	if ($entry->duration) $ob->kaltura_video_length = kaltura_parse_time($entry->duration);
 	if ($entry->thumbnailUrl) $ob->kaltura_video_thumbnail = $entry->thumbnailUrl;
@@ -283,14 +283,14 @@ function kaltura_update_object(&$entry, $kmodel = null, $access = null, $user_gu
 
 		//update metadata in kaltura
 		try {
-			$kentry = new KalturaMixEntry();
+			$kentry = new KalturaMediaEntry();
 			$kentry->name = $entry->name;
 			$kentry->description = $entry->description;
 			$kentry->tags = $entry->tags;
 			$kentry->adminTags = $entry->adminTags;
 			$kentry->userId = $entry->userId;
 			//TODO: votes, rank, searchText
-			$entry = $kmodel->updateMixEntry($entry->id, $kentry);
+			$entry = $kmodel->updateMediaEntry($entry->id, $kentry);
 		} catch(Exception $e) {
 			//nothing at the moment
 			register_error("ID ".$entry->id.": ".$e->getMessage());

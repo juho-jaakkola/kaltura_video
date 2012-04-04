@@ -14,6 +14,13 @@ class KalturaVideo extends ElggObject {
 	}
 
 	/**
+	 * @todo
+	 */
+	public function canRate() {
+		return true;
+	}
+
+	/**
 	 * Has user rated this video?
 	 * 
 	 * @todo Rethink the whole rating system. I think we should

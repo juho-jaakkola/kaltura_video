@@ -8,217 +8,137 @@
  * @link http://microstudi.net/elgg/
  */
 
-$ob = elgg_extract('entity', $vars);
+$entity = elgg_extract('entity', $vars);
 
-if (!$ob) {
-	forward();
+if (!$entity) {
+	return TRUE;
 }
 
 elgg_load_library('kaltura_video');
 
-$access_id = $ob->access_id;
-$metadata = kaltura_get_metadata($ob);
+$owner = $entity->getOwnerEntity();
+$container = $entity->getContainerEntity();
+$categories = elgg_view('output/categories', $vars);
+$excerpt = $entity->excerpt;
+
+$owner_icon = elgg_view_entity_icon($owner, 'tiny');
+$owner_link = elgg_view('output/url', array(
+	'href' => "kaltura_video/owner/$owner->username",
+	'text' => $owner->name,
+	'is_trusted' => true,
+));
+$author_text = elgg_echo('byline', array($owner_link));
+$tags = elgg_view('output/tags', array('tags' => $entity->tags));
+$date = elgg_view_friendly_time($entity->time_created);
+
+// The "on" status changes for comments, so best to check for !Off
+if ($entity->comments_on != 'Off') {
+	$comments_count = $entity->countComments();
+	//only display if there are commments
+	if ($comments_count != 0) {
+		$text = elgg_echo("comments") . " ($comments_count)";
+		$comments_link = elgg_view('output/url', array(
+			'href' => $entity->getURL() . '#kaltura-video-comments',
+			'text' => $text,
+			'is_trusted' => true,
+		));
+	} else {
+		$comments_link = '';
+	}
+} else {
+	$comments_link = '';
+}
+
+$metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
+	'handler' => 'kaltura_video',
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+));
+
+$subtitle = "$author_text $date $comments_link $categories";
+
+$body = elgg_view('output/longtext', array(
+	'value' => $entity->description,
+	'class' => 'blog-post',
+));
+
+$params = array(
+	'entity' => $entity,
+	'title' => false,
+	'metadata' => $metadata,
+	'subtitle' => $subtitle,
+	'tags' => $tags,
+);
+$params = $params + $vars;
+$summary = elgg_view('object/elements/summary', $params);
+
+$full_view = elgg_view('object/elements/full', array(
+	'summary' => $summary,
+	'icon' => $owner_icon,
+	//'body' => $body,
+));
+
+echo $full_view;
+echo elgg_view('kaltura/player', $vars);
+echo $full_view;
 
 //get the number of comments
-$num_comments = $ob->countComments();
+$num_comments = $entity->countComments();
 
-// If we've been asked to display the full view
-$comments =  elgg_view_comments($ob);
-
-list($votes, $rating_image, $rating) = kaltura_get_rating($ob);
-$can_rate = (elgg_is_logged_in() && !kaltura_is_rated_by_user($ob->getGUID(), $_SESSION['user'], $votes));
-
-//groups handle
-$group = get_entity($ob->container_guid);
-if ($group instanceof ElggGroup) {
-	elgg_set_page_owner_guid($group->getGUID());
-	
-	// @todo Is this needed or is start.php menus sufficient
-	elgg_register_menu_item('owner_block', array(
-		'name' => 'kaltura_video_groups',
-		'href' => "kaltura_video/group/{$page_owner->getGUID()}/all",
-		'text' => sprintf(elgg_echo("kalturavideo:label:groupvideos:TEST")),
-		'context' => 'groups',
-	));
-} else {
-	$group = false;
-}
-
-//generic widget
-$widget = kaltura_create_generic_widget_html ( $metadata->kaltura_video_id , 'l' );
-$widgetm = kaltura_create_generic_widget_html ( $metadata->kaltura_video_id , 'm' );
-
-//if widget exists
-if ($metadata->kaltura_video_widget_html) {
-	//generated widget
-	$widget = $metadata->kaltura_video_widget_html;
-	$metadata->kaltura_video_widget_width .= 'px';
-	$metadata->kaltura_video_widget_height .= 'px';
-} else {
-	preg_match('/width="([0-9]*)"/',$widget,$matchs);
-	$metadata->kaltura_video_widget_width = 'auto';
-	if ($matchs[1]) $metadata->kaltura_video_widget_width = $matchs[1]."px";
-
-	$metadata->kaltura_video_widget_height = 'auto';
-	preg_match('/height="([0-9]*)"/',$widget,$matchs);
-	if ($matchs[1]) $metadata->kaltura_video_widget_height = $matchs[1]."px";
-}
-
-$title = elgg_echo("kalturavideo:label:adminvideos").': ';
-$title .= elgg_echo("kalturavideo:label:showvideo");
-
-if (elgg_get_viewtype() != 'default') {
-	// @fixme This file is called through elgg_view_entity()
-	// so the same function cannot be used here again
-	$standard_entity = elgg_view_entity($ob, array('full_view' => true));
-	
-	//put here the standard view call: rss, opendd, etc.
-	echo $standard_entity;
-	//add comments
-	echo $comments;
-	return true;
-}
-
+list($votes, $rating_image, $rating) = kaltura_get_rating($entity);
+$can_rate = (elgg_is_logged_in() && !kaltura_is_rated_by_user($entity->getGUID(), $_SESSION['user'], $votes));
 ?>
-
-<div class="contentWrapper singleview">
-
-<div class="kalturaviewer blog_post">
-<!--
-<h1><a href="<?php echo $ob->getURL(); ?>"><?php echo $ob->title; ?></a></h1>
--->
-<div class="post_icon">
-<?php
-$uob = get_user($ob->owner_guid);
-echo elgg_view_entity_icon($uob, 'tiny');
-?>
-</div>
-<p class="strapline">
-<?php
-	echo sprintf(elgg_echo("kalturavideo:strapline"), $metadata->kaltura_video_created);
-?>
-
-<?php echo elgg_echo('by'); ?> <a href="<?php echo "{$CONFIG->wwwroot}kaltura_video/owner/{$uob->username}"; ?>" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos")); ?>"><?php echo $uob->name; ?></a>
-<?php
-if ($group) {
-	echo elgg_echo('ingroup')." <a href=\"{$CONFIG->wwwroot}kaltura_video/group/{$page_owner->getGUID()}/all/\" title=\"".htmlspecialchars(elgg_echo("kalturavideo:user:showallvideos"))."\">{$group->name}</a> ";
-}
-?>
-<?php echo elgg_echo("kalturavideo:label:length"); ?> <strong><?php echo $metadata->kaltura_video_length; ?></strong>
-<?php echo elgg_echo("kalturavideo:label:plays"); ?> <strong class="ajax_play" rel="<?php echo $metadata->kaltura_video_id; ?>"><?php echo intval($metadata->kaltura_video_plays); ?></strong>
-
-<!-- display the comments link -->
-<?php if ($metadata->kaltura_video_comments_on != 'Off'): ?>
-	<a href="<?php echo $ob->getURL(); ?>#comments"><?php echo sprintf(elgg_echo("comments")) . " (" . $num_comments . ")"; ?></a><br />
-<?php endif; ?>
-
-</p>
-<!-- display tags -->
-<p class="tags">
-<?php
-$tags = elgg_view('output/tags', array('tags' => $ob->tags));
-if (!empty($tags)) {
-	echo $tags ;
-}
-
-$categories = elgg_view('output/categories', array('entity' => $ob));
-if (!empty($categories)) {
-	echo ($tags ? ' - ' : '' ).$categories;
-}
-
-?>
-</p>
 
 <div class="clearfloat"></div>
-
-<!-- descrition -->
-<div class="kalturaplayer left bigwidget" style="height:<?php echo $metadata->kaltura_video_widget_height; ?>;width:<?php echo $metadata->kaltura_video_widget_width; ?>;"><?php echo $widget; ?></div>
-
-<div class="text">
-	<?php echo autop($ob->description); ?>
-</div>
-<div class="clear"></div>
-
+<hr />
 <p class="kaltura_video_rating">
-	<?php if ($metadata->kaltura_video_rating_on != 'Off'): ?>
-		<img src="<?php echo $CONFIG->wwwroot."mod/kaltura_video/kaltura/images/ratings/$rating_image"; ?>" alt="<?php echo "$rating"; ?>" /> <?php echo ("($votes " . elgg_echo('kalturavideo:votes') . ")"); ?>
-	<?php endif; ?>
-	
-	<a href="#" class="elgg-button-action showdetails"><?php echo elgg_echo("kalturavideo:show:advoptions"); ?></a>
-	
-	<?php if ($metadata->kaltura_video_cancollaborate && !$metadata->kaltura_video_editable): ?>
-		&nbsp;
+	<?php
+		if ($entity->canRate() && $entity->rating_on != 'Off') {
+			echo elgg_view('output/img', array(
+				'src' => $CONFIG->wwwroot . "mod/kaltura_video/kaltura/images/ratings/$rating_image",
+				'alt' => $rating
+			));
+			echo $votes . elgg_echo('kalturavideo:votes', array($votes));
+
+			echo elgg_view('input/form', array(
+				'action' => "kaltura_video/rate",
+				"name" => "form1",
+				"id" => "form1",
+				'body' => elgg_view("kaltura/view.rate", array('entity' => $entity))
+			));
+
+			echo "<hr />";
+		}
+
+		echo elgg_view('output/url', array(
+			'href' => '#',
+			'class' => 'elgg-button elgg-button-action',
+			'id' => 'kaltura-view-details',
+			'text' => elgg_echo("kalturavideo:show:advoptions"),
+		));
+	?>
+	<div class="hide kaltura_video_details">
+		<p><strong><?php echo elgg_echo("kalturavideo:label:thumbnail");?></strong></p>
+		<p><a href="<?php echo $entity->kaltura_video_thumbnail; ?>" onclick="window.open(this.href);return false;"><?php echo $entity->kaltura_video_thumbnail; ?></a></p>
+		<p><strong><?php echo elgg_echo("kalturavideo:label:sharel");?></strong></p>
+		<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widget); ?>" /></p>
+		<p><strong><?php echo elgg_echo("kalturavideo:label:sharem");?></strong></p>
+		<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widgetm); ?>" /></p>
+	</div>
+	<hr />
+	<?php
+	if ($entity->collaborate_on): ?>
 		<strong><?php echo elgg_echo("kalturavideo:label:collaborative"); ?>:</strong>
-		<a href="#" rel="<?php echo $metadata->kaltura_video_id; ?>" class="elgg-button-action edit" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>"><img src="<?php echo $CONFIG->wwwroot; ?>mod/kaltura_video/kaltura/images/group.png" alt="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>" style="vertical-align:middle;" />
+		<a href="#" rel="<?php echo $entity->kaltura_video_id; ?>" class="elgg-button-action edit" title="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>"><img src="<?php echo $CONFIG->wwwroot; ?>mod/kaltura_video/kaltura/images/group.png" alt="<?php echo htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")); ?>" style="vertical-align:middle;" />
 		<?php echo elgg_echo("kalturavideo:label:edit"); ?></a>
+		<hr />
 	<?php endif; ?>
 </p>
 
 <?php
-if ($can_rate && $metadata->kaltura_video_rating_on != 'Off') {
-	echo elgg_view('input/form', array(
-		'action' => "{$CONFIG->wwwroot}action/kaltura_video/rate",
-		"name"=>"form1",
-		"id"=>"form1",
-		'body' => elgg_view("kaltura/view.rate", array('entity' => $ob))
-	));
-}
-?>
-
-<div class="hide kaltura_video_details">
-	<p><strong><?php echo elgg_echo("kalturavideo:label:thumbnail");?></strong></p>
-	<p><a href="<?php echo $metadata->kaltura_video_thumbnail; ?>" onclick="window.open(this.href);return false;"><?php echo $metadata->kaltura_video_thumbnail; ?></a></p>
-	<p><strong><?php echo elgg_echo("kalturavideo:label:sharel");?></strong></p>
-	<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widget); ?>" /></p>
-	<p><strong><?php echo elgg_echo("kalturavideo:label:sharem");?></strong></p>
-	<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widgetm); ?>" /></p>
-</div>
-
-<?php if ($ob->canEdit()): ?>
-	<!-- options -->
-	<p class="options">
-	
-	<?php
-	// Edit video link
-	if ($metadata->kaltura_video_editable) {
-		echo elgg_view("output/url", array(
-			"text" => elgg_echo("kalturavideo:label:edit"),
-			"href" => "#",
-			"rel" => $metadata->kaltura_video_id,
-			"class" => 'elgg-button-action edit',
-		));
+	//check to see if comment are on
+	if ($entity->comments_on != 'Off') {
+		echo elgg_view_comments($entity);
 	}
-	
-	// Edit video details link
-	echo elgg_view("output/url", array(
-		"text" => elgg_echo("kalturavideo:label:editdetails"),
-		"href" => "kaltura_video/edit/{$ob->getGUID()}/",
-		"rel" => $metadata->kaltura_video_id,
-		"class" => 'elgg-button-action',
-	));
-
-	// Delete video link
-	echo elgg_view("output/confirmlink", array(
-		"text" => elgg_echo("kalturavideo:label:delete"),
-		"href" => "action/kaltura_video/delete?delete_video={$metadata->kaltura_video_id}/",
-		"confirm" => elgg_echo("kalturavideo:prompt:delete"),
-		"class" => 'elgg-button-action'
-	));
-
-	// Access level settings
-	echo ' ' . elgg_echo('access') . ': ';
-	echo kaltura_view_select_privacity($metadata->kaltura_video_id, $access_id, $group, $metadata->kaltura_video_collaborative);
-	?>
-	
-	</p>
-<?php endif; ?>
-
-</div>
-
-</div>
-
-<?php if ($metadata->kaltura_video_comments_on != 'Off'): ?>
-	<div id="comments">
-		<?php echo $comments; ?>
-	</div>
-<?php endif; ?>
+?>
