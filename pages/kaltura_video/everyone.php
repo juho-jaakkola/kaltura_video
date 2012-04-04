@@ -16,7 +16,6 @@ elgg_set_page_owner_guid($_SESSION['guid']);
 
 $limit = (int)get_input("limit", 12);
 $offset = (int)get_input("offset", 0);
-$list_type = get_input("list_type");
 
 kaltura_video_register_title_button();
 
@@ -27,7 +26,6 @@ $params['content'] = elgg_list_entities(array(
 	'subtypes' => 'kaltura_video',
 	'limit' => $limit,
 	'offset' => $offset,
-	'list_type' => $list_type,
 	'full_view' => FALSE,
 ));
 
