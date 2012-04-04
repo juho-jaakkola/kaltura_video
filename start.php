@@ -13,7 +13,7 @@ function kaltura_video_init() {
 	global $CONFIG,$KALTURA_CURRENT_TINYMCE_FILE;
 	
 	//Add the javascript
-	//elgg_extend_view('page/elements/head', 'kaltura/jscripts');
+	elgg_extend_view('page/elements/head', 'kaltura/jscripts');
 	
 	// This enables the kaltura html5 player
 	//elgg_register_js("html5-player", "http://html5.kaltura.org/js");
@@ -28,7 +28,8 @@ function kaltura_video_init() {
 	elgg_register_js("video-selector", 'mod/kaltura_video/views/default/js/kaltura_video/kaltura_video.php');
 	elgg_load_js("video-selector");
 	
-	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
+	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/lib/kaltura_video.php');
+	//elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
 	
 	// Add plugin settings to configuration
 	$settings = elgg_get_plugin_from_id('kaltura_video');
@@ -113,7 +114,7 @@ function kaltura_video_init() {
 	elgg_register_action("kaltura_video/delete", "$actionspath/delete.php");
 	elgg_register_action("kaltura_video/update", "$actionspath/update.php");
 	elgg_register_action("kaltura_video/rate", "$actionspath/rate.php");
-	elgg_register_action("kaltura_video/save", "$actionspath/save.php");
+	elgg_register_action("kaltura_video/save", "$actionspath/update.php"); // @todo Should we use "save.php"?
 
 	if (elgg_is_admin_logged_in()) {
 		$path = $CONFIG->pluginspath . "kaltura_video/actions/admin/kaltura_video";
@@ -256,6 +257,7 @@ function kaltura_video_entity_menu($hook, $type, $return, $params) {
 		$status_text = elgg_echo("kalturavideo:label:edit");
 		$options = array(
 			'name' => 'kaltura_video_edit',
+			'id' => 'kaltura-video-edit',
 			'text' => "<span>$status_text</span>",
 			'href' => "#",
 			'priority' => 150,
