@@ -1,5 +1,17 @@
 README FILE
 ========================================================================
+The meaning of this project is to update the Elgg 1.7 version of
+the kaltura_video plugin to work in Elgg 1.8.
+
+Currently the plugin is being developed by Juho Jaakkola.
+juho.jaakkola@mediamaisteri.com
+
+THE REST OF THIS README FILE IS CURRENTLY OUTDATED.
+
+
+
+OUTDATED README FILE:
+========================================================================
 PLUGIN VERSION: 1.2
 ELGG VERSION: 1.7.1
 
