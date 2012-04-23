@@ -201,6 +201,7 @@ Objects not created by the Kaltura Elgg Plugin will not be touched.",
 	'admin:kaltura_video:advanced' => 'Advanced',
 	'admin:kaltura_video:credits' => 'Plugin authors',
 	'admin:kaltura_video:wizard' => 'Wizard',
+	'admin:kaltura_video:develop' => 'Developers',
 	
 	// these are propably deprecated:
 	'kalturavideo:menu:server' => "Server",

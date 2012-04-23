@@ -202,6 +202,7 @@ Toiminto ei vaikuta kohteisiin, joita ei ole luotu Kaltura video -pluginilla.",
 	'admin:kaltura_video:advanced' => 'Erityisasetukset',
 	'admin:kaltura_video:credits' => 'Pluginin tekijät',
 	'admin:kaltura_video:wizard' => 'Asetusvelho',
+	'admin:kaltura_video:develop' => 'Kehitys',
 	// Old menu items (propably deprecated)
 	'kalturavideo:menu:server' => "Palvelin",
 	'kalturavideo:menu:custom' => "Soitin ja editori",
