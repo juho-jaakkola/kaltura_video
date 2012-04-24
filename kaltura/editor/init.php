@@ -248,12 +248,13 @@ function finished ( modified )
 	// check if it's a new video
 	if (isset($_REQUEST['new'])) {
 		//go to edit details window
-		$refresh_loc = $CONFIG->wwwroot."mod/kaltura_video/edit.php?entryid=";
+		$refresh_loc = $CONFIG->wwwroot . "kaltura_video/add?entryid=";
 
 		echo "\ntopWindow.location =  '$refresh_loc' + entryId;\n";
+	} else {
+		//remains in the same page if whe are editing the video
+		echo "\ntopWindow.location.reload();\n";
 	}
-	//remains in the same page if whe are editing the video
-	else echo "\ntopWindow.location.reload();\n";
 ?>
         });
 	}

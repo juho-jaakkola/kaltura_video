@@ -39,6 +39,8 @@ $params['content'] .= elgg_view('kaltura/categorylist', array(
 	'subtype' => 'kaltura_video'
 ));
 
+$params['content'] .= elgg_view('kaltura/kcw');
+
 $body = elgg_view_layout("content", $params);
 
 // Display page

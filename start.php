@@ -22,11 +22,13 @@ function kaltura_video_init() {
 	// This enables the videojs player
 	elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js");
 	elgg_register_css("videojs-css", "http://vjs.zencdn.net/c/video-js.css");
-	elgg_load_js("videojs-player");
-	elgg_load_css("videojs-css");
+	//elgg_load_js("videojs-player");
+	//elgg_load_css("videojs-css");
 	
 	elgg_register_js("video-selector", 'mod/kaltura_video/views/default/js/kaltura_video/kaltura_video.php');
 	elgg_load_js("video-selector");
+	
+	elgg_register_js('swfobject', 'http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js');
 	
 	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/lib/kaltura_video.php');
 	//elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
@@ -114,7 +116,8 @@ function kaltura_video_init() {
 	elgg_register_action("kaltura_video/delete", "$actionspath/delete.php");
 	elgg_register_action("kaltura_video/update", "$actionspath/update.php");
 	elgg_register_action("kaltura_video/rate", "$actionspath/rate.php");
-	elgg_register_action("kaltura_video/save", "$actionspath/update.php"); // @todo Should we use "save.php"?
+	//elgg_register_action("kaltura_video/save", "$actionspath/update.php"); // @todo Should we use this or "save.php"?
+	elgg_register_action("kaltura_video/save", "$actionspath/save.php");
 
 	if (elgg_is_admin_logged_in()) {
 		$path = $CONFIG->pluginspath . "kaltura_video/actions/admin/kaltura_video";
@@ -206,13 +209,30 @@ function kaltura_video_register_title_button() {
 			// no owns the page so this is probably an all site list page
 			$owner = elgg_get_logged_in_user_entity();
 		}
+		
 		if ($owner && $owner->canWriteToContainer()) {
+			// Allow the view to be called via ajax
+			elgg_register_ajax_view('kaltura/kcw');
+			
+			elgg_register_menu_item('title', array(
+				'name' => 'kaltura_video_create2',
+				'href' => 'mod/kaltura_video/views/default/kaltura/kcw.php',
+				'text' => elgg_echo('kalturavideo:label:newvideo'),
+				'class' => array('elgg-button', 'elgg-button-action', 'elgg-lightbox'),
+				'rel' => 'lightbox',
+			));
+			
+			elgg_load_js('lightbox');
+			elgg_load_css('lightbox');
+			
+			/*
 			elgg_register_menu_item('title', array(
 				'name' => 'kaltura_video_create',
 				'href' => '#kaltura_create',
 				'text' => elgg_echo('kalturavideo:label:newvideo'),
 				'class' => array('elgg-button', 'elgg-button-action'),
 			));
+			*/
 		}
 	}
 }
@@ -311,15 +331,19 @@ function kaltura_video_register_toggle() {
  * @param array $page
  * @return NULL
  */
-function kaltura_video_page_handler($page) {
+function kaltura_video_page_handler($page) {	
 	$file_dir = elgg_get_plugins_path() . 'kaltura_video/pages/kaltura_video';
 
+	// @todo How about checking CONFIG instead of plugin settings?
 	if (!elgg_get_plugin_setting("password", "kaltura_video")) {
 		// If the URL is just 'feeds/username', or just 'feeds/', load the standard feeds index
 		include("$file_dir/missconfigured.php");
 		return true;
 	}
 
+	elgg_load_library('kaltura_video');
+	elgg_load_js('swfobject');
+	
 	// push all blogs breadcrumb
 	elgg_push_breadcrumb(elgg_echo('kaltura_video:allvideos'), "kaltura_video/all");
 	
@@ -337,23 +361,39 @@ function kaltura_video_page_handler($page) {
 			kaltura_video_register_toggle();
 			include "$file_dir/friends.php";
 			break;
+		case 'add':
+			gatekeeper();
+			set_input('entry_id', $page[1]);
+			$params = kaltura_video_get_page_content_edit();
+			//include "$file_dir/edit.php";
+			break;			
 		case 'edit':
 			gatekeeper();
 			set_input('guid', $page[1]);
-			include "$file_dir/edit.php";
+			$params = kaltura_video_get_page_content_edit('edit', $page[1]);
+			//include "$file_dir/edit.php";
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
 			include("$file_dir/show.php");
 			break;
-		//case 'group':
-			// @todo
-			//	break;
+		case 'group':
+			kaltura_video_register_toggle();
+			$params = kaltura_video_get_page_content_list($page[1]);
+			break;
 		case 'all':
 		default:
 			kaltura_video_register_toggle();
-			include "$file_dir/everyone.php";
+			$params = kaltura_video_get_page_content_list();
+			//include "$file_dir/everyone.php";
 			break;
+	}
+	
+	if (!empty($params)) {
+		$body = elgg_view_layout('content', $params);
+	
+		echo elgg_view_page($params['title'], $body);
+		return true;
 	}
 }
 

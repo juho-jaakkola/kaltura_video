@@ -32,6 +32,9 @@ if (elgg_get_plugin_setting("enablerating", "kaltura_video") != 'no') {
 
 $collaborate_label = '';
 $collaborate_input = '';
+
+/*
+@todo if creating new we don't have the entity here
 if ($vars['entity']->getContainerEntity() instanceof ElggGroup) {
 	$collaborate_label = elgg_echo('kalturavideo:label:collaborative');
 	$collaborate_input = elgg_view('input/dropdown', array(
@@ -41,6 +44,7 @@ if ($vars['entity']->getContainerEntity() instanceof ElggGroup) {
 		'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
 	));
 }
+*/
 
 $thumb = '';
 if ($vars['entity']) {
@@ -49,12 +53,14 @@ if ($vars['entity']) {
 		'alt' => $vars['entity']->title,
 		//'style' => "width:200px;",
 	));
-	
-	// hidden inputs
-	$container_guid_input = elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
+
 	$guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
-	$video_id_input = elgg_view('input/hidden', array('name' => 'kaltura_video_id', 'value' => $vars['entity']->kaltura_video_id));
 }
+
+// @todo What happens when container is a group?
+$container_guid_input = elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
+$video_id_input = elgg_view('input/hidden', array('name' => 'kaltura_video_id', 'value' => $vars['kaltura_video_id']));
+
 
 $access_label = elgg_echo('access');
 $access_input = elgg_view('input/access', array(

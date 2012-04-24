@@ -29,6 +29,7 @@ if ($video_id) {
 	try {
 		$kmodel = KalturaModel::getInstance();
 		$entry = $kmodel->getEntry($video_id);
+		
 		$ob = kaltura_get_entity($video_id);
 
 		//check if belongs to this user (or is admin)
@@ -58,6 +59,8 @@ if ($video_id) {
 			$mediaEntry->tags = $entry->tags;
 			$mediaEntry->adminTags = KALTURA_ADMIN_TAGS;
 			$entry = $kmodel->updateMediaEntry($video_id, $mediaEntry);
+			//$kmodel->media->add($mediaEntry);
+			
 		} catch(Exception $e) {
 			$error = $e->getMessage();
 		}

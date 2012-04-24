@@ -10,14 +10,25 @@
  */
 
 $guid = (int) get_input('guid');
-$entity = get_entity($guid);
 
-if (elgg_instanceof($entity, 'object', 'kaltura_video') && $entity->canEdit()) {
-	$content = elgg_view("kaltura/edit", array('entity' => $entity));
+if ($guid) {
+	$entity = get_entity($guid);
+		
+	if (elgg_instanceof($entity, 'object', 'kaltura_video') && $entity->canEdit()) {
+		$content = elgg_view("kaltura/edit", array('entity' => $entity));
+	} else {
+		register_error('kaltura_video:notfound');
+		forward();
+	}		
 } else {
-	register_error('kaltura_video:notfound');
-	forward();
+	// Create a new video
+	$entry_id = get_input('entry_id');
+	if ($entry_id) {
+		$content = elgg_view("kaltura/edit", array('entity' => $entity));
+	}
 }
+
+
 
 $params = array(
 	'title' => elgg_echo('kalturavideo:label:editdetails'),
