@@ -37,6 +37,7 @@ function kaltura_video_get_page_content_edit($page, $guid = 0) {
 			$title .= ": \"$video->title\"";
 
 			$body_vars = kaltura_video_prepare_form_vars($video);
+			$body_vars['entity'] = $video;
 
 			elgg_push_breadcrumb($video->title, $video->getURL());
 			elgg_push_breadcrumb(elgg_echo('edit'));
@@ -58,11 +59,11 @@ function kaltura_video_get_page_content_edit($page, $guid = 0) {
 		$body_vars = kaltura_video_prepare_form_vars();
 		$body_vars['kaltura_video_id'] = $entry_id;
 
-		$title = elgg_echo('kaltura_video:add');
+		$title = elgg_echo('kaltura_video:add') . " (entry_id: $entry_id)";
 		$content = elgg_view_form('kaltura_video/save', $vars, $body_vars);
 	}
 
-	$return['title'] = $title . " (entry_id: $entry_id)";
+	$return['title'] = $title;
 	$return['content'] = $content;
 	//$return['sidebar'] = $sidebar;
 	return $return;	

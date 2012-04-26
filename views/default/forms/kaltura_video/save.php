@@ -51,12 +51,10 @@ if ($vars['entity']) {
 	$thumb = elgg_view('output/img', array(
 		'src' => $vars['entity']->kaltura_video_thumbnail,
 		'alt' => $vars['entity']->title,
-		//'style' => "width:200px;",
 	));
-
-	$guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
 }
 
+$guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
 // @todo What happens when container is a group?
 $container_guid_input = elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
 $video_id_input = elgg_view('input/hidden', array('name' => 'kaltura_video_id', 'value' => $vars['kaltura_video_id']));

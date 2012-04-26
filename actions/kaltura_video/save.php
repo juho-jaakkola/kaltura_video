@@ -13,7 +13,7 @@ $guid = get_input('guid');
 
 if ($guid) {
 	$entity = get_entity($guid);
-	if (elgg_instanceof($entity, 'object', 'kaltura_video') && $video->canEdit()) {
+	if (elgg_instanceof($entity, 'object', 'kaltura_video') && $entity->canEdit()) {
 		$video = $entity;
 	} else {
 		register_error(elgg_echo('kaltura_video:error:video_not_found'));
@@ -114,6 +114,9 @@ try {
 	$entry->tags = $video->tags;
 	//$entry->adminTags = KALTURA_ADMIN_TAGS; // @todo What is this used for?
 	//$entry = $kmodel->updateMediaEntry($kaltura_video_id, $entry);
+	
+	// Update thumbnail url from Kaltura to Elgg
+	$video->kaltura_video_thumbnail = $entry->thumbnailUrl;
 } catch(Exception $e) {
 	$error = $e->getMessage();
 }
