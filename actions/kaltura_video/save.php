@@ -26,6 +26,8 @@ if ($guid) {
 	$video->kaltura_video_id = $kaltura_video_id;
 }
 
+$user = elgg_get_logged_in_user_entity();
+
 // Set default values
 $values = array(
 	'title' => '',
@@ -111,11 +113,10 @@ try {
 	$entry->description = $video->description;
 	$entry->tags = $video->tags;
 	//$entry->adminTags = KALTURA_ADMIN_TAGS; // @todo What is this used for?
-
 	//$entry = $kmodel->updateMediaEntry($kaltura_video_id, $entry);
 } catch(Exception $e) {
 	$error = $e->getMessage();
-}	
+}
 
 // only try to save base entity if no errors
 if (!$error) {
