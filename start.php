@@ -352,6 +352,7 @@ function kaltura_video_page_handler($page) {
 	}
 
 	$page_type = $page[0];
+	$view_params = null;
 	switch ($page_type) {
 		case 'owner':
 			kaltura_video_register_toggle();
@@ -364,35 +365,37 @@ function kaltura_video_page_handler($page) {
 		case 'add':
 			gatekeeper();
 			set_input('entry_id', $page[1]);
-			$params = kaltura_video_get_page_content_edit();
+			$view_params = kaltura_video_get_page_content_edit();
 			//include "$file_dir/edit.php";
 			break;			
 		case 'edit':
 			gatekeeper();
 			set_input('guid', $page[1]);
-			$params = kaltura_video_get_page_content_edit('edit', $page[1]);
+			$view_params = kaltura_video_get_page_content_edit('edit', $page[1]);
 			//include "$file_dir/edit.php";
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
-			include("$file_dir/show.php");
+			$view_params = kaltura_video_get_page_content_read($page[1]);
+			//include("$file_dir/show.php");
 			break;
 		case 'group':
 			kaltura_video_register_toggle();
-			$params = kaltura_video_get_page_content_list($page[1]);
+			$view_params = kaltura_video_get_page_content_list($page[1]);
 			break;
 		case 'all':
 		default:
 			kaltura_video_register_toggle();
-			$params = kaltura_video_get_page_content_list();
+			$view_params = kaltura_video_get_page_content_list();
 			//include "$file_dir/everyone.php";
 			break;
 	}
 	
-	if (!empty($params)) {
-		$body = elgg_view_layout('content', $params);
+	if (!empty($view_params)) {
+		//var_dump($view_params);
+		$body = elgg_view_layout('content', $view_params);
 	
-		echo elgg_view_page($params['title'], $body);
+		echo elgg_view_page($view_params['title'], $body);
 		return true;
 	}
 }

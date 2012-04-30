@@ -14,6 +14,7 @@ $translations = array(
 	'kalturavideo:error:missingks' => 'Järjestelmässä on todennäköisesti virhe "Administrator Secret"- tai "Web Service Secret"-asetuksessa.',
 	'kalturavideo:error:partnerid' => "Tämä virhe tapahtuu yleensä, jos et ole Kalturan yhteistyökumppani. Lue README-tiedosto ja tee tarvittavat konfiguraatiot.",
 	'kalturavideo:error:readme' => "Lue README-tiedosto ja konfiguroi liitännäinen.",
+	'kaltura_video:error:video_not_found' => "Videota ei löytynyt.",
 	'kalturavideo:label:closewindow' => "Sulje ikkuna",
 	'kalturavideo:label:select_size' => "Valitse soittimen koko",
 	'kalturavideo:label:large' => "Suuri",

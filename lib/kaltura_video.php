@@ -9,6 +9,46 @@
 include_once(elgg_get_plugins_path() . 'kaltura_video/kaltura/api_client/includes.php');
 
 /**
+ * Get page components to view a video.
+ *
+ * @param int $guid GUID of a video entity.
+ * @return array
+ */
+function kaltura_video_get_page_content_read($guid = NULL) {
+
+	$return = array();
+
+	$video = get_entity($guid);
+
+	// no header or tabs for viewing an individual video
+	$return['filter'] = '';
+
+	if (!elgg_instanceof($video, 'object', 'kaltura_video')) {
+		$return['content'] = elgg_echo('kaltura_video:error:post_not_found');
+		return $return;
+	}
+
+	$return['title'] = htmlspecialchars($video->title);
+
+	$container = $video->getContainerEntity();
+	$crumbs_title = $container->name;
+	if (elgg_instanceof($container, 'group')) {
+		elgg_push_breadcrumb($crumbs_title, "kaltura_video/group/$container->guid/all");
+	} else {
+		elgg_push_breadcrumb($crumbs_title, "kaltura_video/owner/$container->username");
+	}
+
+	elgg_push_breadcrumb($video->title);
+	$return['content'] = elgg_view_entity($video, array('full_view' => true));
+	//check to see if comment are on
+	if ($video->comments_on != 'Off') {
+		$return['content'] .= elgg_view_comments($video);
+	}
+
+	return $return;
+}
+
+/**
  * Get page components to edit/create a video.
  *
  * @param string  $page     'edit' or 'new'

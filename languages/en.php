@@ -15,6 +15,7 @@ $translations = array(
 	'kalturavideo:error:missingks' => 'Probably you have a mistake in the "Administrator Secret" or "Web Service Secret" configuration.',
 	'kalturavideo:error:partnerid' => "This error normaly appears if you are not a partner of Kaltura. Please read the README file and configure this plugin!",
 	'kalturavideo:error:readme' => "Please read the README file and configure this plugin!",
+	'kaltura_video:error:video_not_found' => "Video was not found.",
 	'kalturavideo:label:closewindow' => "Close window",
 	'kalturavideo:label:select_size' => "Select player size",
 	'kalturavideo:label:large' => "Large",

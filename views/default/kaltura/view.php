@@ -135,10 +135,3 @@ $can_rate = (elgg_is_logged_in() && !kaltura_is_rated_by_user($entity->getGUID()
 		<hr />
 	<?php endif; ?>
 </p>
-
-<?php
-	//check to see if comment are on
-	if ($entity->comments_on != 'Off') {
-		echo elgg_view_comments($entity);
-	}
-?>
