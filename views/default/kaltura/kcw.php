@@ -18,53 +18,51 @@ $ks = $kmodel->getClientSideSession();
 
 //Prepare variables to be passed to embedded flash object.
 $flashVars = array();
-$flashVars["uid"]             = $partnerUserID;
-$flashVars["partnerId"]       = KALTURA_PARTNER_ID;
-$flashVars["ks"]              = $ks;
+$flashVars["uid"]			 = $partnerUserID;
+$flashVars["partnerId"]	   = KALTURA_PARTNER_ID;
+$flashVars["ks"]			  = $ks;
 $flashVars["afterAddEntry"]   = "onContributionWizardAfterAddEntry";
-$flashVars["close"]           = "onContributionWizardClose";
+$flashVars["close"]		   = "onContributionWizardClose";
 $flashVars["showCloseButton"] = false; 
-$flashVars["Permissions"]     = 1;
+$flashVars["Permissions"]	 = 1;
 
 $uiconf_id = 1002225;
+$server_url = elgg_get_config('kaltura_server_url');
+
+$url = "$server_url/kcw/ui_conf_id/$uiconf_id";
 
 ?>
 <div id="kcw"></div>
 <script type="text/javascript">
 var params = {
-        allowScriptAccess: "always",
-        allowNetworking: "all",
-        wmode: "opaque"
+	allowScriptAccess: "always",
+	allowNetworking: "all",
+	wmode: "opaque"
 };
-
 
 // php to js
 var flashVars = <?php echo json_encode($flashVars); ?>;
 
-
 <!--embed flash object-->
 //swfobject.embedSWF("http://www.kaltura.com/kcw/ui_conf_id/1000741 ", "kcw", "680", "360", "9.0.0", "expressInstall.swf", flashVars, params);
-swfobject.embedSWF("http://video.mmg.fi/kcw/ui_conf_id/<?php echo $uiconf_id; ?>", "kcw", "680", "360", "9.0.0", "expressInstall.swf", flashVars, params);
+swfobject.embedSWF("<?php echo $url; ?>", "kcw", "680", "360", "9.0.0", "expressInstall.swf", flashVars, params);
 </script>
 
 <!--implement callback scripts-->
 <script type="text/javascript">
 function onContributionWizardAfterAddEntry(entries) {
-		alert('test');
-		
-		var url = elgg.get_site_url() + 'kaltura_video/add?entryid=' + entries[0].entryId;
-		alert(url);
-		
-		window.location.replace(url);
+	var url = elgg.get_site_url() + 'kaltura_video/add?entryid=' + entries[0].entryId;
 
-        alert(entries.length + " media file/s was/were succsesfully uploaded");
-        for(var i = 0; i < entries.length; i++) {
-                alert("entries["+i+"]:EntryID = " + entries[i].entryId);
-        }
+	window.location.replace(url);
+
+	alert(entries.length + " media file/s was/were successfully uploaded");
+	for (var i = 0; i < entries.length; i++) {
+		alert("entries["+i+"]:EntryID = " + entries[i].entryId);
+	}
 }
 </script>
 <script type="text/javascript">
 function onContributionWizardClose() {
-        alert("Thank you for using Kaltura ontribution Wizard");
+	alert("Thank you for using Kaltura contribution Wizard");
 }
 </script>
