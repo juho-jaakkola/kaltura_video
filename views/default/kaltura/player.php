@@ -2,20 +2,26 @@
 /**
  * View HTML5 video player
  * 
- * Get all available video flavores through Kaltura API.
+ * Get all available video flavors through Kaltura API.
  * 
  * @uses $vars['entity] KalturaVideo object
  */
 
 $entity = elgg_extract('entity', $vars);
 $entry_id = $entity->getEntryId();
- 
-$kmodel = KalturaModel::getInstance();
-$kmodel->startSession();
 
-$flavorAsset = $kmodel->client->flavorAsset;
-$results = $flavorAsset->getFlavorAssetsWithParams($entry_id);
-//$results = $flavorAsset->getWebPlayableByEntryId($entry_id);
+try {
+	$kmodel = KalturaModel::getInstance();
+	$kmodel->startSession();
+	
+	$flavorAsset = $kmodel->client->flavorAsset;
+	$results = $flavorAsset->getFlavorAssetsWithParams($entry_id);
+	//$results = $flavorAsset->getWebPlayableByEntryId($entry_id);
+} catch (Exception $e) {
+	$message = elgg_echo('kaltura_video:error:video_not_found');
+	register_error($message);
+	forward('kaltura_video');
+}
 
 $plugin = elgg_get_plugin_from_id('kaltura_video');
 $server_url = $plugin->kaltura_server_url;
