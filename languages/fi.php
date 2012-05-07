@@ -290,10 +290,15 @@ Itse luodut soittimet löytyvät Kalturan hallintapaneelista "Application Studio
 	'kalturavideo:index:latest' => "Viimeisimmät",
 	'kalturavideo:index:played' => "Soitetuimmat",
 	'kalturavideo:index:commented' => "Kommentoiduimmat",
-	'kalturavideo:index:rated' => "Parhaiten arvioidut"
+	'kalturavideo:index:rated' => "Parhaiten arvioidut",
 
+	// messages
+	'kaltura_video:message:saved' => 'Videon tiedot tallennettu.',
+	'kaltura_video:error:cannot_save' => 'Videon tallentaminen epäonnistui.',
+	'kaltura_video:error:cannot_write_to_container' => 'Sinulla ei ole tarvittavia oikeuksia lisätä videota tähän ryhmään.',
+	'kaltura_video:error:video_not_found' => 'Tämä video on poistettu, virheellinen tai sinulla ei ole oikeuksia sen näkemiseen.',
+	'kaltura_video:error:missing:title' => 'Syötä otsikko.',
+	'kaltura_video:error:missing:description' => 'Syötä kuvaus.',
 );
 
 add_translation("fi", $translations);
-
-?>

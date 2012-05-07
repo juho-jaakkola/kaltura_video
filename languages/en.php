@@ -287,8 +287,15 @@ Custom players are defined in "Application Studio" sub menu in KMC',
 	'kalturavideo:index:latest' => "Latest",
 	'kalturavideo:index:played' => "Played",
 	'kalturavideo:index:commented' => "Commented",
-	'kalturavideo:index:rated' => "Rated"
+	'kalturavideo:index:rated' => "Rated",
 
+	// messages
+	'kaltura_video:message:saved' => 'Video saved.',
+	'kaltura_video:error:cannot_save' => 'Cannot save video.',
+	'kaltura_video:error:cannot_write_to_container' => 'Insufficient access to save video to group.',
+	'kaltura_video:error:video_not_found' => 'This video has been removed, is invalid, or you do not have permission to view it.',
+	'kaltura_video:error:missing:title' => 'Please enter a title!',
+	'kaltura_video:error:missing:description' => 'Please enter a description for your video!',
 );
 
 add_translation("en", $translations);
