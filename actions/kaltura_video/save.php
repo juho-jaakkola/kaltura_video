@@ -60,7 +60,7 @@ foreach ($values as $name => $default) {
 			if ($value) {
 				$values[$name] = string_to_tag_array($value);
 			} else {
-				unset ($values[$name]);
+				$values[$name] = '';
 			}
 			break;
 
@@ -108,12 +108,25 @@ try {
 	elgg_load_library('kaltura_video');
 	
 	$kmodel = KalturaModel::getInstance();
-	// Create an empty object because only updateable field can be sent to the server.
+	// Create an empty object because only updateable fields can be sent to the server.
 	$entry = new KalturaMediaEntry();
 	$entry->name = $video->title;
 	$entry->description = $video->description;
-	$entry->tags = $video->tags;
-	//$entry->adminTags = KALTURA_ADMIN_TAGS; // @todo What is this used for?
+	
+	// The value of tags must always be a string
+	if ($video->tags) {
+		if (is_array($video->tags)) {
+			$tags = implode(',', $video->tags);
+		} else {
+			$tags = $video->tags;
+		}
+	} else {
+		$tags = '';
+	}
+	
+	$entry->tags = $tags;
+	// @todo What are admin tags used for?
+	//$entry->adminTags = KALTURA_ADMIN_TAGS;
 	$entry = $kmodel->updateMediaEntry($kaltura_video_id, $entry);
 	
 	// Update thumbnail url from Kaltura to Elgg
