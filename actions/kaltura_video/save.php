@@ -108,12 +108,13 @@ try {
 	elgg_load_library('kaltura_video');
 	
 	$kmodel = KalturaModel::getInstance();
-	$entry = $kmodel->getEntry($kaltura_video_id);
-	$entry->name = $video->name;
+	// Create an empty object because only updateable field can be sent to the server.
+	$entry = new KalturaMediaEntry();
+	$entry->name = $video->title;
 	$entry->description = $video->description;
 	$entry->tags = $video->tags;
 	//$entry->adminTags = KALTURA_ADMIN_TAGS; // @todo What is this used for?
-	//$entry = $kmodel->updateMediaEntry($kaltura_video_id, $entry);
+	$entry = $kmodel->updateMediaEntry($kaltura_video_id, $entry);
 	
 	// Update thumbnail url from Kaltura to Elgg
 	$video->kaltura_video_thumbnail = $entry->thumbnailUrl;
