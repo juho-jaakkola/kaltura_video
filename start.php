@@ -272,6 +272,7 @@ function kaltura_video_entity_menu($hook, $type, $return, $params) {
 
 	// Link for editing the video
 	//if ($entity->canEdit() && $entity->kaltura_video_editable) { // @todo
+	/*
 	if ($entity->canEdit()) {
 		$status_text = elgg_echo("kalturavideo:label:edit");
 		$options = array(
@@ -285,6 +286,7 @@ function kaltura_video_entity_menu($hook, $type, $return, $params) {
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
+	*/
 	
 	return $return;
 }
