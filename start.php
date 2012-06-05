@@ -15,30 +15,22 @@ function kaltura_video_init() {
 	//Add the javascript
 	elgg_extend_view('page/elements/head', 'kaltura/jscripts');
 	
-	// This enables the kaltura html5 player
-	//elgg_register_js("html5-player", "http://html5.kaltura.org/js");
-	//elgg_load_js("html5-player");
-	
 	// This enables the videojs player
 	elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js");
 	elgg_register_css("videojs-css", "http://vjs.zencdn.net/c/video-js.css");
-	//elgg_load_js("videojs-player");
-	//elgg_load_css("videojs-css");
+	elgg_load_js("videojs-player");
+	elgg_load_css("videojs-css");
 	
+	// Code that allows user to select between video qualities
 	elgg_register_js("video-selector", 'mod/kaltura_video/views/default/js/kaltura_video/kaltura_video.php');
 	elgg_load_js("video-selector");
 	
-	elgg_register_js('swfobject', 'http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js');
-	
 	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/lib/kaltura_video.php');
-	//elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/kaltura/api_client/includes.php');
 	
 	// Add plugin settings to configuration
 	$settings = elgg_get_plugin_from_id('kaltura_video');
 	elgg_set_config('kaltura_server_url', $settings->kaltura_server_url);
 	elgg_set_config('kaltura_partner_id', $settings->partner_id);
-	//elgg_set_config('kaltura_', $settings->kaltura_);
-	
 	
 	$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
 	if (!$addbutton) {
