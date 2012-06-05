@@ -27,8 +27,10 @@ $plugin = elgg_get_plugin_from_id('kaltura_video');
 $server_url = $plugin->kaltura_server_url;
 $p = $plugin->partner_id;
 $thumb = $plugin->kaltura_video_thumbnail;
+$poster = $entity->getIconUrl('master');
+
 ?>
-<video width="730" height="410" controls="true" poster="" class="video-js vjs-default-skin" id="video-js-player" data-setup="{}">
+<video width="650" height="365" controls="true" poster="<?php echo $poster; ?>" class="video-js vjs-default-skin" id="video-js-player" data-setup="{}">
 
 <?php
 // Here we have all the available flavors
