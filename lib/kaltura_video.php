@@ -69,7 +69,7 @@ function kaltura_video_get_page_content_edit($page, $guid = 0) {
 		$guid = get_input('guid');
 		$video = get_entity($guid);
 
-		$title = elgg_echo('kaltura_video:edit');
+		$title = elgg_echo('edit');
 
 		if (elgg_instanceof($video, 'object', 'kaltura_video') && $video->canEdit()) {
 			$vars['entity'] = $video;
