@@ -9,6 +9,8 @@ if (!$kaltura_video_id) {
 	forward(REFERER);
 }
 
+$new_post = false;
+
 $guid = get_input('guid');
 
 if ($guid) {
@@ -19,11 +21,11 @@ if ($guid) {
 		register_error(elgg_echo('kaltura_video:error:video_not_found'));
 		forward(REFERER);
 	}
-	$new_post = true;
 } else {
 	$video = new KalturaVideo();
 	$video->subtype = 'kaltura_video';
 	$video->kaltura_video_id = $kaltura_video_id;
+	$new_post = true;
 }
 
 $user = elgg_get_logged_in_user_entity();
