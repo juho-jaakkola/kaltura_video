@@ -43,7 +43,7 @@ $values = array(
 );
 
 // fail if a required entity isn't set
-$required = array('title', 'description');
+$required = array('title');
 
 // load from POST and do sanity and access checking
 foreach ($values as $name => $default) {
