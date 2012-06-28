@@ -2,6 +2,7 @@
 
 echo "<p>Page for running development scripts.</p>";
 
+/*
 $options = array(
 	'type' => 'object',
 	'subtype' => 'kaltura_video',
@@ -20,3 +21,4 @@ if ($videos) {
 } else {
 	echo "<p>No videos</p>";
 }
+*/

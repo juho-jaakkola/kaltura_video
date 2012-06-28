@@ -185,7 +185,7 @@ function kaltura_video_page_setup() {
 	elgg_register_admin_menu_item('configure', 'advanced', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'behavior', 'kaltura_video');
 	elgg_register_admin_menu_item('configure', 'credits', 'kaltura_video');
-	elgg_register_admin_menu_item('configure', 'develop', 'kaltura_video');
+	//elgg_register_admin_menu_item('configure', 'develop', 'kaltura_video');
 }
 
 /**
