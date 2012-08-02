@@ -25,6 +25,8 @@ function kaltura_video_init() {
 	elgg_register_js("video-selector", 'mod/kaltura_video/views/default/js/kaltura_video/kaltura_video.php');
 	elgg_load_js("video-selector");
 	
+	elgg_register_js('swfobject', 'http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js');
+	
 	elgg_register_library('kaltura_video', $CONFIG->pluginspath . 'kaltura_video/lib/kaltura_video.php');
 	
 	// Add plugin settings to configuration
