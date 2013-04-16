@@ -15,77 +15,6 @@
  * Useful functions that are missing in Elgg or needed for some specific purpose
  */
 
-//Checks if a video is rated by the user
-function kaltura_is_rated_by_user($guid, $user_entity, $current_votes=1) {
-	$user_ratings = $user_entity->getAnnotations('kaltura_video_rated');
-	//echo "[".print_r($user_ratings,true)."]";die;
-	foreach ($user_ratings as $user_rating) {
-		//$ratingobject->delete();
-		if ($user_rating['value'] == $guid) {
-			if ($current_votes==0) {
-				delete_annotation($user_rating['id']);
-				continue;
-			}
-			return true;
-		}
-	}
-	return false;
-}
-
-//returns a rating of video object
-function kaltura_get_rating($entity) {
-	$article_rating = 0;
-	$getoldrates = $entity->getAnnotations('kaltura_video_rating',1);
-	foreach ($getoldrates as $getoldrate) {
-		$article_rating = $getoldrate['value'];
-	}
-	$numvotes = 0;
-	$getnumvotes = $entity->getAnnotations('kaltura_video_numvotes',1);
-	foreach ($getnumvotes as $getnumvote) {
-		$numvotes = $getnumvote['value'];
-	}
-
-	// Match rating to image
-	if ($numvotes == 0) {
-		$rating_image = "rating0.gif";
-	} else {
-		if ((($article_rating >= 0)or($article_rating == 0)) && ($article_rating <= 0.50)) {
-			$rating_image = "rating0.gif";
-		}
-		if ((($article_rating >= 0.50)or($article_rating == 0.50)) && ($article_rating <= .99)) {
-			$rating_image = "rating0_halt.gif";
-		}
-		if ((($article_rating >= 1.00)or($article_rating == 1.50)) && ($article_rating <= 1.49)) {
-			$rating_image = "rating1.gif";
-		}
-		if ((($article_rating >= 1.50)or($article_rating == 1.50)) && ($article_rating <= 1.99)) {
-			$rating_image = "rating1_half.gif";
-		}
-		if ((($article_rating >= 2.00)or($article_rating == 2.00)) && ($article_rating <= 2.49)) {
-			$rating_image = "rating2.gif";
-		}
-		if ((($article_rating >= 2.50)or($article_rating == 2.50)) && ($article_rating <= 2.99)) {
-			$rating_image = "rating2_half.gif";
-		}
-		if ((($article_rating >= 3.00)or($article_rating == 3.00)) && ($article_rating <= 3.49)) {
-			$rating_image = "rating3.gif";
-		}
-		if ((($article_rating >= 3.50)or($article_rating == 3.50)) && ($article_rating <= 3.99)) {
-			$rating_image = "rating3_half.gif";
-		}
-		if ((($article_rating >= 4.00)or($article_rating == 4.00)) && ($article_rating <= 4.49)) {
-			$rating_image = "rating4.gif";
-		}
-		if ((($article_rating >= 4.50)or($article_rating == 4.50)) && ($article_rating <= 4.99)) {
-			$rating_image = "rating4_half.gif";
-		}
-		if ($article_rating == 5.0) {
-			$rating_image = "rating5.gif";
-		}
-	}
-	return array($numvotes, $rating_image, $article_rating);
-}
-
 /**
  * gets a kaltura object with all metadata from a guid
  * 
@@ -121,11 +50,6 @@ function kaltura_get_metadata($entity) {
 				$ob->kaltura_video_cancollaborate = true;
 			}
 		}
-	}
-
-	//plugin option override
-	if (elgg_get_plugin_setting("enablerating", "kaltura_video") == 'no') {
-		$ob->kaltura_video_rating_on = 'Off';
 	}
 
 	//the mini applet
@@ -207,7 +131,6 @@ function kaltura_update_object(&$entry, $kmodel = null, $access = null, $user_gu
 	}
 
 	if ($entry->comments_on) $ob->comments_on = $entry->comments_on;
-	if ($entry->rating_on) $ob->rating_on = $entry->rating_on;
 	if ($entry->plays) $ob->kaltura_video_plays = $entry->plays;
 	if ($entry->duration) $ob->kaltura_video_length = kaltura_parse_time($entry->duration);
 	if ($entry->thumbnailUrl) $ob->kaltura_video_thumbnail = $entry->thumbnailUrl;

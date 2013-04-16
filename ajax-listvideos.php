@@ -28,11 +28,6 @@ switch ($type) {
     $area = elgg_view_entity_list($videos,0,$offset,$total,false,false,false);
     break;
 
-  case 'rated':
-    $videos = elgg_get_entities_from_annotations(array('order_by_annotation' => array("name" => "kaltura_video_rating", "direction" => "DESC", "as" => "integer") , 'types' => 'object', 'subtypes' => 'kaltura_video','offset'=>$offset,'limit'=>$total));
-    $area = elgg_view_entity_list($videos,0,$offset,$total,false,false,false);
-    break;
-
   default:
      //grab the latest videos
      //created in elgg:

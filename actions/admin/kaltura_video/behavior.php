@@ -2,7 +2,6 @@
 
 $addbutton = get_input('addbutton');
 $alloweditor = get_input('alloweditor');
-$enablerating = get_input('enablerating');
 $enableindexwidget = get_input('enableindexwidget');
 $numindexvideos = get_input('numindexvideos');
 
@@ -13,10 +12,6 @@ if ($addbutton) {
 
 if ($alloweditor && $ok) {
 	$ok = elgg_set_plugin_setting("alloweditor", $alloweditor, "kaltura_video");
-}
-
-if ($enablerating && $ok) {
-	$ok = elgg_set_plugin_setting("enablerating", $enablerating, "kaltura_video");
 }
 
 if ($enableindexwidget && $ok) {

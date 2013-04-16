@@ -216,7 +216,6 @@ if($page > 0) {
 						* */
 						if($metadata->kaltura_video_collaborative) $ob->kaltura_video_collaborative = $metadata->kaltura_video_collaborative;
 						if($metadata->kaltura_video_comments_on) $ob->kaltura_video_comments_on = $metadata->kaltura_video_comments_on;
-						if($metadata->kaltura_video_rating_on) $ob->kaltura_video_rating_on = $metadata->kaltura_video_rating_on;
 						//echo htmlspecialchars(print_r($metadata,true));
 					}
 

@@ -71,8 +71,6 @@ $translations = array(
 	'river:create:object:kaltura_video' => '%s lisäsi videon %s',
 	'river:update:object:kaltura_video' => '%s päivitti videota %s',
 	'river:comment:object:kaltura_video' => '%s kommentoi videota %s',
-	'river:rate:object:kaltura_video' => '%s antoi arvion videolle %s',
-	'kaltura_video:userrate' => "Arvio: %s/5",
 	
 	// Old river strings
 	'kalturavideo:river:created' => "%s lisäsi",
@@ -82,17 +80,6 @@ $translations = array(
 	'kalturavideo:label:videosfrom' => "Käyttäjän %s videot",
 	'kalturavideo:user:showallvideos' => "Näytä kaikki tämän käyttäjän videot",
 	'kalturavideo:strapline' => "%s",
-
-	 /**
-     * kaltura_video rating system
-	 **/
-	'kalturavideo:rating' => "Arviointi",
-	'kalturavideo:yourrate' => "Sinun arviosi:",
-	'kalturavideo:rate' => "Äänestä!",
-	'kalturavideo:votes' => "ääntä",
-	'kalturavideo:ratesucces' => "Arviosi tallennettiin.",
-	'kalturavideo:rateempty' => "Valitse arvo ennen äänestämistä",
-	'kalturavideo:notrated' => "Olet jo arvioinut tämän kohteen",
 
 	/**
 	 * Groups
@@ -171,14 +158,12 @@ Toiminto ei vaikuta kohteisiin, joita ei ole luotu Kaltura video -pluginilla.",
 	'item:object:kaltura_video' => "Videot",
 	'kalturavideo:thumbnail' => "Esikatselukuva",
 	'kalturavideo:comments:allow' => "Salli kommentointi",
-	'kalturavideo:rating:allow' => "Salli arviointi",
 	//these get inserted into the river links to take the user to the entity
 	'kalturavideo:river:updated' => "%s päivitti",
 	'kalturavideo:river:create' => "uuden videon nimeltä",
 	'kalturavideo:river:update' => "videota",
 	//the river search the translation with the object label (kaltura_video)
 	'kaltura_video:river:annotate' => "kommentin videoon",
-	'kalturavideo:river:rates' => "%s antoi arvion videolle",
 	//widget title label
 	'kalturavideo:label:latest' => "Uusimmat videot",
 	//widget options
@@ -269,15 +254,12 @@ Itse luodut soittimet löytyvät Kalturan hallintapaneelista "Application Studio
 	'kalturavideo:kcw:dark' => "Latausohjelma tummalla väriteemalla",
 
 	'kalturavideo:admin:videoeditor' => "Videoeditori",
-	'kalturavideo:admin:rating' => "Videon arviointi",
 
 	'kalturavideo:behavior:alloweditor' => "Salli käyttäjille omien videoiden muokkaaminen",
 	'kalturavideo:alloweditor:full' => "Näytä videota lisätessä ensin latausohjelma ja sitten videoeditori",
 	'kalturavideo:alloweditor:simple' => "Älä näytä editoria videota lisättäessä, mutta salli videon editointi lisäämisen jälkeen",
 	'kalturavideo:alloweditor:no' => "Älä salli videoiden editointia",
 	'kalturavideo:alloweditor:notallowed' => "Videoiden muokkaaminen ei ole sallittu",
-
-	'kalturavideo:behavior:enablerating' => "Ota käyttöön toiminto videoiden arviointiin",
 
 	//new from 1.2
 	'kalturavideo:admin:others' => "Muut asetukset",
@@ -290,7 +272,6 @@ Itse luodut soittimet löytyvät Kalturan hallintapaneelista "Application Studio
 	'kalturavideo:index:latest' => "Viimeisimmät",
 	'kalturavideo:index:played' => "Soitetuimmat",
 	'kalturavideo:index:commented' => "Kommentoiduimmat",
-	'kalturavideo:index:rated' => "Parhaiten arvioidut",
 
 	// messages
 	'kaltura_video:message:saved' => 'Videon tiedot tallennettu.',

@@ -36,16 +36,6 @@ if($result) {
 
 				$body .= '<p>' . sprintf(elgg_echo("kalturavideo:strapline"),$metadata->kaltura_video_created) . '</p>';
 
-				if($metadata->kaltura_video_rating_on != 'Off') {
-
-					list($votes,$rating_image,$rating) = kaltura_get_rating($ob);
-					$rating = round($rating);
-
-					$rating = '<img src="'.$CONFIG->wwwroot.'mod/kaltura_video/kaltura/images/ratings/'.$rating_image.'" alt="'.$rating.'" /> ('.$votes.' '.elgg_echo('kalturavideo:votes').')';
-					$body .= '<p class="rating">'.$rating.'</p>';
-				}
-
-
 				if(trim($ob->description)) $body .= '<p><a href="#" onclick="$(this).parent().next().slideToggle(\'fast\');return false;">'.elgg_echo('kalturavideo:more').'</a></p>';
 
 				$body .= '<span class="desc">'.strip_tags($ob->description).'</span>';

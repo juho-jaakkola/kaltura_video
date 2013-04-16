@@ -51,10 +51,6 @@ if (!($group instanceof ElggGroup)) {
 	$group = false;
 }
 
-list($votes, $rating_image, $rating) = kaltura_get_rating($vars['entity']);
-
-$rating = round($rating);
-
 // Get the number of comments
 $num_comments = $vars['entity']->countComments();
 
@@ -74,10 +70,6 @@ if ($group) {
 }
 $info .= elgg_echo("kalturavideo:label:length"). ' <strong>'.$metadata->kaltura_video_length.'</strong> ';
 $info .= elgg_echo("kalturavideo:label:plays"). ' <strong>'.((int)$metadata->kaltura_video_plays).'</strong>';
-
-if ($metadata->kaltura_video_rating_on != 'Off') {
-	$info .= " ".elgg_echo("kalturavideo:rating").": <strong>".$rating."</strong>";
-}
 
 if ($num_comments && $metadata->kaltura_video_comments_on != 'Off') {
 	$info .= ", <a href=\"{$vars['entity']->getURL()}\">".sprintf(elgg_echo("comments")). " (" . $num_comments . ")</a>";
@@ -103,10 +95,6 @@ if (get_input('search_viewtype') == "gallery") {
 	}
 
 	$info .= '<span class="shared_timestamp">'.$metadata->kaltura_video_created.'</span>';
-
-	if ($metadata->kaltura_video_rating_on != 'Off') {
-		$info .= " ".elgg_echo("kalturavideo:rating").": <strong>".$rating."</strong>";
-	}
 
 	if ($num_comments && $metadata->kaltura_video_comments_on != 'Off')
 		$info .= ", <a href=\"{$vars['entity']->getURL()}\">".sprintf(elgg_echo("comments")). " (" . $num_comments . ")</a>";

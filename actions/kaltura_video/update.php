@@ -18,7 +18,6 @@ $desc = get_input('description');
 $tags = get_input('tags');
 $access = get_input('access_id');
 $comments_on = get_input('comments_on','Off');
-$rating_on = get_input('rating_on','Off');
 $collaborative = get_input('collaborate_on','Off');
 $url = '';
 
@@ -68,7 +67,6 @@ if ($video_id) {
 		if (empty($error)) {
 			//now update the object!
 			$entry->comments_on = $comments_on; //whether the users wants to allow comments or not on the blog post
-			$entry->rating_on = $rating_on; //whether the users wants to allow comments or not on the blog post
 			if (!($ob = kaltura_update_object($entry, null, $access, null, $container_guid, true))) {
 				$error = "Error update Elgg object";
 			} else {

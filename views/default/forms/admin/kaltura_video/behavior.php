@@ -25,27 +25,6 @@
 
 </p>
 
-<h3 class="settings"><?php echo elgg_echo('kalturavideo:admin:rating'); ?></h3>
-
-<p>
-	<?php echo elgg_echo('kalturavideo:behavior:enablerating'); ?>:
-	<?php
-		$enablerating = elgg_get_plugin_setting('enablerating', 'kaltura_video');
-		if (!$enablerating) {
-			$enablerating = 'yes';
-		}
-
-		echo elgg_view('input/dropdown', array(
-			'name' => 'enablerating',
-			'options_values' => array(
-				'yes' => elgg_echo('option:yes'),
-				'no' => elgg_echo('option:no')
-			),
-			'value' => $enablerating
-		));
-	?>
-
-</p>
 
 <h3 class="settings"><?php echo elgg_echo('kalturavideo:admin:textareas'); ?></h3>
 

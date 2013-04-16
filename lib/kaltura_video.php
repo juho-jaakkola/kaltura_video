@@ -155,7 +155,6 @@ function kaltura_video_prepare_form_vars($entity = NULL) {
 		'description' => NULL,
 		'access_id' => ACCESS_DEFAULT,
 		'comments_on' => 'On',
-		'rating_on' => 'On',
 		'collaborate_on' => 'On',
 		'tags' => NULL,
 		'container_guid' => NULL,

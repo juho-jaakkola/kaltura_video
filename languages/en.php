@@ -72,8 +72,6 @@ $translations = array(
 	'river:create:object:kaltura_video' => '%s added a new video %s',
 	'river:update:object:kaltura_video' => '%s updated the video %s',
 	'river:comment:object:kaltura_video' => '%s commented the video %s',
-	'river:rate:object:kaltura_video' => '%s rated the video %s',
-	'kaltura_video:userrate' => "User's rating: %s/5",
 	
 	// Old river strings
 	'kalturavideo:river:created' => "%s created",
@@ -83,17 +81,6 @@ $translations = array(
 	'kalturavideo:label:videosfrom' => "Videos by %s",
 	'kalturavideo:user:showallvideos' => "Show all videos from this user",
 	'kalturavideo:strapline' => "%s",
-
-	 /**
-     * kaltura_video rating system
-	 **/
-	'kalturavideo:rating' => "Rating",
-	'kalturavideo:yourrate' => "Your rating:",
-	'kalturavideo:rate' => "Vote!",
-	'kalturavideo:votes' => "votes",
-	'kalturavideo:ratesucces' => "Your rating has been succesfully saved.",
-	'kalturavideo:rateempty' => "Please select a value before rating!",
-	'kalturavideo:notrated' => "You have already rated this item!",
 
 	/**
 	 * Groups
@@ -171,14 +158,12 @@ Objects not created by the Kaltura Elgg Plugin will not be touched.",
 	'item:object:kaltura_video' => "Videos",
 	'kalturavideo:thumbnail' => "Thumbnail",
 	'kalturavideo:comments:allow' => "Allow comments",
-	'kalturavideo:rating:allow' => "Allow rating",
 	//these get inserted into the river links to take the user to the entity
 	'kalturavideo:river:updated' => "%s updated",
 	'kalturavideo:river:create' => "a new video titled",
 	'kalturavideo:river:update' => "a video titled",
 	//the river search the translation with the object label (kaltura_video)
 	'kaltura_video:river:annotate' => "a comment on this video",
-	'kalturavideo:river:rates' => "%s rates this video",
 	//widget title label
 	'kalturavideo:label:latest' => "Latests videos",
 	//widget options
@@ -266,15 +251,12 @@ Custom players are defined in "Application Studio" sub menu in KMC',
 	'kalturavideo:kcw:dark' => "Uploader in dark color schemes",
 
 	'kalturavideo:admin:videoeditor' => "Video Editor",
-	'kalturavideo:admin:rating' => "Video Rating",
 
 	'kalturavideo:behavior:alloweditor' => "Allow users to edit his videos",
 	'kalturavideo:alloweditor:full' => "Yes, show the uploader and then the editor when creating a video",
 	'kalturavideo:alloweditor:simple' => "Yes, but do not show the editor when creating a video (users can edit it after)",
 	'kalturavideo:alloweditor:no' => "No, do not allow video editing at all",
 	'kalturavideo:alloweditor:notallowed' => "Video editing is not allowed!",
-
-	'kalturavideo:behavior:enablerating' => "Enable the built-in video rating",
 
 	//new from 1.2
 	'kalturavideo:admin:others' => "Other options",
@@ -287,7 +269,6 @@ Custom players are defined in "Application Studio" sub menu in KMC',
 	'kalturavideo:index:latest' => "Latest",
 	'kalturavideo:index:played' => "Played",
 	'kalturavideo:index:commented' => "Commented",
-	'kalturavideo:index:rated' => "Rated",
 
 	// messages
 	'kaltura_video:message:saved' => 'Video saved.',

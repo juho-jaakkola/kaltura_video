@@ -36,7 +36,6 @@ $values = array(
 	'description' => '',
 	'access_id' => ACCESS_DEFAULT,
 	'collaborate_on' => '',
-	'rating_on' => '',
 	'comments_on' => 'On',
 	'tags' => '',
 	'container_guid' => (int)get_input('container_guid'),

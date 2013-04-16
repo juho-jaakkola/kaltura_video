@@ -18,18 +18,6 @@ $comments_input = elgg_view('input/dropdown', array(
 	'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
 ));
 
-$rating_label = '';
-$rating_input = '';
-if (elgg_get_plugin_setting("enablerating", "kaltura_video") != 'no') {
-	$rating_label = elgg_echo('kalturavideo:rating:allow');
-	$rating_input = elgg_view('input/dropdown', array(
-		'name' => 'rating_on',
-		'id' => 'kaltura_video_rating_on',
-		'value' => $vars['rating_on'],
-		'options_values' => array('On' => elgg_echo('on'), 'Off' => elgg_echo('off'))
-	));
-}
-
 $collaborate_label = '';
 $collaborate_input = '';
 
@@ -96,10 +84,6 @@ $form_body = <<<EOT
 	<div>
 		<label>$comments_label</label>
 		$comments_input
-	</div>
-	<div>
-		<label>$rating_label</label>
-		$rating_input
 	</div>
 	<div>
 		<label>$collaborate_label</label>

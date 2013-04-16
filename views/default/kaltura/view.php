@@ -86,31 +86,12 @@ echo $full_view;
 //get the number of comments
 $num_comments = $entity->countComments();
 
-list($votes, $rating_image, $rating) = kaltura_get_rating($entity);
-$can_rate = (elgg_is_logged_in() && !kaltura_is_rated_by_user($entity->getGUID(), $_SESSION['user'], $votes));
 ?>
 
 <div class="clearfloat"></div>
 <hr />
-<p class="kaltura_video_rating">
+<p>
 	<?php
-		if ($entity->canRate() && $entity->rating_on != 'Off') {
-			echo elgg_view('output/img', array(
-				'src' => $CONFIG->wwwroot . "mod/kaltura_video/kaltura/images/ratings/$rating_image",
-				'alt' => $rating
-			));
-			echo $votes . elgg_echo('kalturavideo:votes', array($votes));
-
-			echo elgg_view('input/form', array(
-				'action' => "kaltura_video/rate",
-				"name" => "form1",
-				"id" => "form1",
-				'body' => elgg_view("kaltura/view.rate", array('entity' => $entity))
-			));
-
-			echo "<hr />";
-		}
-
 		echo elgg_view('output/url', array(
 			'href' => '#',
 			'class' => 'elgg-button elgg-button-action',

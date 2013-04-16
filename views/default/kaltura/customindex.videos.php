@@ -42,13 +42,6 @@ if (!$single) {
 			<li class = 'selected'><a href="#" rel="<?php echo $url; ?>latest"><?php echo elgg_echo('kalturavideo:index:latest'); ?></a></li>
 			<li><a href="#" rel="<?php echo $url; ?>played"><?php echo elgg_echo('kalturavideo:index:played'); ?></a></li>
 			<li><a href="#" rel="<?php echo $url; ?>commented"><?php echo elgg_echo('kalturavideo:index:commented'); ?></a></li>
-<?php
-		if (elgg_get_plugin_setting('enablerating','kaltura_video') == 'yes') {
-?>
-			<li><a href="#" rel="<?php echo $url; ?>rated"><?php echo elgg_echo('kalturavideo:index:rated'); ?></a></li>
-<?php
-		}
-?>
 		</ul>
 		</div>
 	</div>

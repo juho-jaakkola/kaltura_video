@@ -35,42 +35,6 @@
 	font-size: 150%;
 	margin-bottom: 5px;
 }
-
-.kalturavideoitem p.kaltura_video_rating ,.kalturaviewer p.kaltura_video_rating {
-	margin-bottom:5px;
-}
-.kalturavideoitem div.kaltura_video_rating ,.kalturaviewer div.kaltura_video_rating {
-	background:#f0f0f0;
-	padding:10px;
-	border: 1px solid #ccc;
-	margin:10px 0 0px 0;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-}
-.kalturavideoitem .kaltura_video_rating img {
-	vertical-align:middle;
-}
-.kalturaviewer .kaltura_video_rating img {
-	vertical-align:bottom;
-}
-.kalturavideoitem .kaltura_video_rating label,.kalturaviewer .kaltura_video_rating label {
-	font-size:1em;
-}
-.kalturavideoitem .kaltura_video_rating label.rate,.kalturaviewer .kaltura_video_rating label.rate {
-	margin:0 1em 0 0;
-}
-
-.kalturavideoitem .kaltura_video_rating .left,.kalturaviewer .kaltura_video_rating .left {
-	margin:0 1em 0 0;
-}
-.kalturavideoitem .kaltura_video_rating input,.kalturaviewer .kaltura_video_rating input {
-	vertical-align:top;
-}
-.kalturavideoitem .kaltura_video_rating input.submit_button,.kalturaviewer .kaltura_video_rating input.submit_button {
-	margin:0 0 2px 0;
-
-	height:21px;
-}
 .kalturavideoitem h3 {
 	margin-bottom: 3px;
 }
@@ -262,9 +226,6 @@ label a.embed_kaltura {
 .river_object_kaltura_video_comment {
 	background: url(<?php echo $vars['url']; ?>_graphics/river_icons/river_icon_comment.gif) no-repeat left -1px;
 }
-.river_object_kaltura_video_rate {
-	background: url(<?php echo $vars['url']; ?>mod/kaltura_video/kaltura/images/rate.gif) no-repeat left -1px;
-}
 
 /* profile widgets */
 .kaltura_video_widget {
@@ -323,10 +284,6 @@ label a.embed_kaltura {
 }
 .kaltura_video_widget .desc {
 	display:none;
-}
-.kaltura_video_widget p.rating img {
-	height:16px;
-	vertical-align:bottom;
 }
 .kaltura_video_widget .clear {
 	clear:both;
