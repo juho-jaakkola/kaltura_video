@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="Ivan Vergés" />
-	<field key="version" value="1.8" />
-	<field key="description" value="The Kaltura Elgg Plugin powers Elgg social engine with interactive video and rich-media capabilities." />
-	<field key="website" value="http://www.microstudi.net/elgg/" />
-	<field key="copyright" value="(C) Ivan Vergés 2010" />
-	<field key="licence" value="GNU Public License version 3" />
-	<field key="elgg_version" value="2010040201" />
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Kaltura video</name>
+	<author>Ivan Vergés, Juho Jaakkola</author>
+	<version>0.1</version>
+	<category>content</category>
+	<description>Integrates Elgg with Kaltura video server.</description>
+	<license>GNU Public License version 3</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
 </plugin_manifest>
