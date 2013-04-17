@@ -73,21 +73,19 @@ $params = array(
 $params = $params + $vars;
 $summary = elgg_view('object/elements/summary', $params);
 
-$full_view = elgg_view('object/elements/full', array(
+$player = elgg_view('kaltura/player', $vars);
+$body = $player;
+
+echo elgg_view('object/elements/full', array(
 	'summary' => $summary,
 	'icon' => $owner_icon,
-	//'body' => $body,
+	'body' => $body,
 ));
-
-echo $full_view;
-echo elgg_view('kaltura/player', $vars);
-echo $full_view;
 
 //get the number of comments
 $num_comments = $entity->countComments();
 
-?>
-
+/*
 <div class="clearfloat"></div>
 <hr />
 <p>
@@ -116,3 +114,5 @@ $num_comments = $entity->countComments();
 		<hr />
 	<?php endif; ?>
 </p>
+*/
+?>

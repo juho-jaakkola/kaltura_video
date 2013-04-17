@@ -7,7 +7,7 @@
 * @copyright Ivan Vergés 2010
 * @link http://microstudi.net/elgg/
 **/
-	global $KALTURA_GLOBAL_UICONF, $JQUERY_LIB, $KALTURA_TINYMCE_PATHS;
+	global $KALTURA_GLOBAL_UICONF, $JQUERY_LIB;
 	//this prefix is used to identify the users of kaltura that are created in Elgg
 	define("KALTURA_ELGG_USER_PREFIX", "elgg_");
 	//the admin tags for kaltura CMS, every created/modified video from Elgg will have this tags
@@ -15,13 +15,6 @@
 
 	$JQUERY_LIB = 'jquery-1.6.4.min.js';
 
-	// Plugin name => path to longtext view
-	// relative to $CONFIG->pluginspath
-	$KALTURA_TINYMCE_PATHS = array(
-		'tinymce' => "tinymce/views/default/input/longtext.php",
-		'tinymce_adv' => "tinymce_adv/views/default/input/longtext.php",
-		'tinymcebrowser' => "tinymcebrowser/views/default/input/longtext.php"
-	);
 	//no more needed to modify this vars, please go to Administration -> Kaltura Video Admin to activate KalturaCE
 	define("KALTURA_SERVER_URL", "http://www.kaltura.com");
 	define("KALTURA_CDN_URL", "http://cdn.kaltura.com");

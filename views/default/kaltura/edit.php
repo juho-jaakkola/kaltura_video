@@ -12,10 +12,6 @@
 
 elgg_load_library('kaltura_video');
 
-global $SKIP_KALTURA_REWRITE;
-//this is to avoid the embed video over the longtext box
-//$SKIP_KALTURA_REWRITE = true;
-
 $guid = get_input('guid');
 
 // Set title, form destination

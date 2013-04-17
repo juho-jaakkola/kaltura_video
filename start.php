@@ -10,13 +10,13 @@
 
 function kaltura_video_init() {
 	// Load system configuration
-	global $CONFIG,$KALTURA_CURRENT_TINYMCE_FILE;
+	global $CONFIG;
 	
 	//Add the javascript
 	elgg_extend_view('page/elements/head', 'kaltura/jscripts');
 	
 	// This enables the videojs player
-	elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js");
+	elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js", 'head', 100);
 	elgg_register_css("videojs-css", "http://vjs.zencdn.net/c/video-js.css");
 	elgg_load_js("videojs-player");
 	elgg_load_css("videojs-css");
@@ -33,39 +33,9 @@ function kaltura_video_init() {
 	$settings = elgg_get_plugin_from_id('kaltura_video');
 	elgg_set_config('kaltura_server_url', $settings->kaltura_server_url);
 	elgg_set_config('kaltura_partner_id', $settings->partner_id);
-	
-	$addbutton = elgg_get_plugin_setting('addbutton', 'kaltura_video');
-	if (!$addbutton) {
-		$addbutton = 'simple';
-	}
-	
-	if (in_array($addbutton , array('simple','tinymce'))) {
-
-		include_once(dirname(__FILE__)."/kaltura/api_client/definitions.php");
-
-		//needs to be loaded after htmlawed
-		//this is for allow html <object> tags
-		$CONFIG->htmlawed_config['safe'] = false;
-
-		$KALTURA_CURRENT_TINYMCE_FILE = '';
-		foreach($KALTURA_TINYMCE_PATHS as $plugin => $path) {
-			if (elgg_is_active_plugin($plugin) && is_file($CONFIG->pluginspath.$path)) {
-				$KALTURA_CURRENT_TINYMCE_FILE = $path;
-				break;
-			}
-		}
-		
-		if ($addbutton == 'tinymce') {
-			set_view_location('input/longtext', $CONFIG->pluginspath . 'kaltura_video/kaltura/views/');
-		} else {
-			elgg_extend_view('input/longtext', 'kaltura/addvideobutton',9);
-			//elgg_extend_view('input/longtext','embed/link',10);
-		}
-	}
 
 	// Extend system CSS with our own styles, which are defined in the blog/css view
 	elgg_extend_view('css','kaltura/css');
-
 
 	// Add group option
 	add_group_tool_option('kaltura_video', elgg_echo('kalturavideo:enablevideo'), true);
