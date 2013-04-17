@@ -18,12 +18,10 @@ function kaltura_video_init() {
 	// This enables the videojs player
 	elgg_register_js("videojs-player", "http://vjs.zencdn.net/c/video.js", 'head', 100);
 	elgg_register_css("videojs-css", "http://vjs.zencdn.net/c/video-js.css");
-	elgg_load_js("videojs-player");
-	elgg_load_css("videojs-css");
 	
-	// Code that allows user to select between video qualities
-	elgg_register_js("video-selector", 'mod/kaltura_video/views/default/js/kaltura_video/kaltura_video.php');
-	elgg_load_js("video-selector");
+	$kaltura_video_js = elgg_get_simplecache_url('js', 'kaltura_video/kaltura_video');
+	elgg_register_simplecache_view('js/kaltura_video/kaltura_video');
+	elgg_register_js('elgg.kaltura_video', $kaltura_video_js);
 	
 	elgg_register_js('swfobject', 'http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js');
 	
@@ -308,8 +306,11 @@ function kaltura_video_page_handler($page) {
 	}
 
 	elgg_load_library('kaltura_video');
+	elgg_load_css('videojs-css');
+	elgg_load_js('videojs-player');
+	elgg_load_js('elgg.kaltura_video');
 	elgg_load_js('swfobject');
-	
+
 	// push all blogs breadcrumb
 	elgg_push_breadcrumb(elgg_echo('kaltura_video:allvideos'), "kaltura_video/all");
 	
