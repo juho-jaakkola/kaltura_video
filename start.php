@@ -396,7 +396,7 @@ function kaltura_video_thumbnail_url($hook, $entity_type, $return_value, $params
 	return $url;
 }
 
-// Initialize the plugin last so we can hack the htmlawed and allow <object> tags.
-// @todo Could we use a plugin hook instead?
-elgg_register_event_handler('init', 'system', 'kaltura_video_init', 9999);
+// @todo The plugin was initialized last (9999) to be able to hack the htmlawed
+// and allow <object> tags. But couldn't we use a plugin hook instead?
+elgg_register_event_handler('init', 'system', 'kaltura_video_init');
 elgg_register_event_handler('pagesetup', 'system', 'kaltura_video_page_setup');
