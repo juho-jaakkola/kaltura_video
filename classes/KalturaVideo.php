@@ -52,4 +52,41 @@ class KalturaVideo extends ElggObject {
 		}
 	}
 
+	/**
+	 * Returns available video flavors
+	 * 
+	 * @return array $flavors Array of KalturaVideoFlavor objects
+	 */
+	public function getFlavors () {
+		try {
+			$kmodel = KalturaModel::getInstance();
+			$kmodel->startSession();
+
+			$flavorAsset = $kmodel->client->flavorAsset;
+			$results = $flavorAsset->getFlavorAssetsWithParams($this->getEntryId());
+		} catch (Exception $e) {
+			$message = elgg_echo('kaltura_video:error:video_not_found');
+			register_error($message);
+			return false;
+		}
+
+		$flavors = array();
+		foreach ($results as $result) {
+			// Flavor Params can exist without Flavor Asset & vice versa. Skip if no flavor.
+			if (empty($result->flavorAsset->id) || empty($result->flavorParams->format)) {
+				continue;
+			}
+
+			$format = $result->flavorParams->format;
+			// We do not want to support flash
+			if ($format === 'flv') {
+				continue;
+			}
+
+			$flavors[] = new KalturaVideoFlavor($result);
+		}
+
+		return $flavors;
+	}
+
 }

@@ -40,6 +40,7 @@ $translations = array(
 	'kalturavideo:label:created' => "Created:",
 	'kalturavideo:label:details' => "Näytä yksityiskohdat",
 	'kalturavideo:label:view' => "Näytä video",
+	'kalturavideo:label:quality' => "Videon laatu: ",
 	'kalturavideo:label:delete' => "Poista video",
 	'kalturavideo:prompt:delete' => "Haluatko varmasti poistaa tämän videon pysyvästi?",
 	'kalturavideo:action:deleteok' => "Video id:llä %ID% poistettiin.",

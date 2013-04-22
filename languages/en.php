@@ -41,6 +41,7 @@ $translations = array(
 	'kalturavideo:label:created' => "Created:",
 	'kalturavideo:label:details' => "View details",
 	'kalturavideo:label:view' => "View video",
+	'kalturavideo:label:quality' => "Video quality: ",
 	'kalturavideo:label:delete' => "Delete video",
 	'kalturavideo:prompt:delete' => "Are you sure to permanently delete this video?",
 	'kalturavideo:action:deleteok' => "The video with id %ID% was deleted.",
