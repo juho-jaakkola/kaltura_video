@@ -31,7 +31,7 @@ if($result) {
 				$body .= '<div class="kaltura_video_widget">';
 				$body .= '<a class="tit" href="'.$ob->getURL().'">'.$ob->title.'</a>';
 
-				$icon .= '<img src="' . $metadata->kaltura_video_thumbnail . '" alt="' . htmlspecialchars($ob->title) . '" title="' . htmlspecialchars($ob->title) . '" />';
+				$icon .= '<img src="' . $metadata->thumbnail_url . '" alt="' . htmlspecialchars($ob->title) . '" title="' . htmlspecialchars($ob->title) . '" />';
 				$body .= '<a class="img" href="'.$ob->getURL().'">'.$icon.'<span></span></a>';
 
 				$body .= '<p>' . sprintf(elgg_echo("kalturavideo:strapline"),$metadata->kaltura_video_created) . '</p>';

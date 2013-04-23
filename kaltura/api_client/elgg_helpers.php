@@ -133,7 +133,7 @@ function kaltura_update_object(&$entry, $kmodel = null, $access = null, $user_gu
 	if ($entry->comments_on) $ob->comments_on = $entry->comments_on;
 	if ($entry->plays) $ob->kaltura_video_plays = $entry->plays;
 	if ($entry->duration) $ob->kaltura_video_length = kaltura_parse_time($entry->duration);
-	if ($entry->thumbnailUrl) $ob->kaltura_video_thumbnail = $entry->thumbnailUrl;
+	if ($entry->thumbnailUrl) $ob->thumbnail_url = $entry->thumbnailUrl;
 	if ($entry->downloadUrl) $ob->kaltura_video_download = $entry->downloadUrl;
 
 	//for the rss
@@ -281,7 +281,7 @@ function kaltura_build_widget_object($ob, $widget_html) {
     $widget->width = $width;
     $widget->swf = $swf;
     $widget->flashvars = $flash_vars;
-    $widget->thumbnail = $ob->kaltura_video_thumbnail;
+    $widget->thumbnail = $ob->thumbnail_url;
 
     //echo '<br>'.nl2br(htmlspecialchars(print_r($widget,true)));die;
 

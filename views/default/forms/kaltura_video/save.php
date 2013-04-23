@@ -37,7 +37,7 @@ if ($vars['entity']->getContainerEntity() instanceof ElggGroup) {
 $thumb = '';
 if ($vars['entity']) {
 	$thumb = elgg_view('output/img', array(
-		'src' => $vars['entity']->kaltura_video_thumbnail,
+		'src' => $vars['entity']->thumbnail_url,
 		'alt' => $vars['entity']->title,
 	));
 }

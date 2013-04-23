@@ -391,7 +391,7 @@ function kaltura_video_thumbnail_url($hook, $entity_type, $return_value, $params
 	$width = $icon_sizes[$size]['w'];
 	$height = $icon_sizes[$size]['h'];
 	
-	$url = $video->kaltura_video_thumbnail . "/width/{$width}/height/{$height}/";
+	$url = $video->thumbnail_url . "/width/{$width}/height/{$height}/";
 	
 	return $url;
 }

@@ -15,7 +15,7 @@ $use_link = elgg_extract('use_link', $vars, true);
 $img_class = elgg_extract('img_class', $vars);
 
 $img = elgg_view('output/img', array(
-	'src' => $entity->kaltura_video_thumbnail,
+	'src' => $entity->thumbnail_url,
 	'alt' => $entity->title,
 	'class' => $img_class,
 ));

@@ -70,7 +70,7 @@ if(count($wrapped_entries)>0) {
 	foreach($wrapped_entries as $entry) {
 		echo '<div class="galleryItem">';
 		echo '<label>'.$entry[1]->kaltura_video_created.'</label>';
-		echo '<img src="'.$entry[1]->kaltura_video_thumbnail.'" alt="'.htmlspecialchars($entry[0]->title).'" title="'.htmlspecialchars($entry[0]->title).'" />';
+		echo '<img src="'.$entry[1]->thumbnail_url.'" alt="'.htmlspecialchars($entry[0]->title).'" title="'.htmlspecialchars($entry[0]->title).'" />';
 
 		echo '<div><a href="'.$CONFIG->wwwroot.'pg/kaltura_video/show/'.$entry[0]->guid.'" rel="'.$entry[1]->kaltura_video_id.'" class="button1 insert">'.elgg_echo('kalturavideo:label:miniinsert').'</a>';
 		if($entry[1]->kaltura_video_editable) {

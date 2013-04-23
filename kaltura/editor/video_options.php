@@ -51,7 +51,7 @@ obj_m = {<?php
 </script>
 
 <div class="left box">
-<div class="videoPreview"><img src="<?php echo $metadata->kaltura_video_thumbnail; ?>/width/250/height/244" alt="<?php echo $ob->title; ?>" /></div>
+<div class="videoPreview"><img src="<?php echo $metadata->thumbnail_url; ?>/width/250/height/244" alt="<?php echo $ob->title; ?>" /></div>
 <!--
 maybe can be added: crop_provider/wordpress_comment_placeholder when click img works
 -->

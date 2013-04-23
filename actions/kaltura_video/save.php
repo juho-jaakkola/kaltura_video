@@ -131,7 +131,7 @@ try {
 	$entry = $kmodel->updateMediaEntry($kaltura_video_id, $entry);
 	
 	// Update thumbnail url from Kaltura to Elgg
-	$video->kaltura_video_thumbnail = $entry->thumbnailUrl;
+	$video->thumbnail_url = $entry->thumbnailUrl;
 } catch(Exception $e) {
 	$error = $e->getMessage();
 }

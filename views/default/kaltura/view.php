@@ -99,7 +99,7 @@ $num_comments = $entity->countComments();
 	?>
 	<div class="hide kaltura_video_details">
 		<p><strong><?php echo elgg_echo("kalturavideo:label:thumbnail");?></strong></p>
-		<p><a href="<?php echo $entity->kaltura_video_thumbnail; ?>" onclick="window.open(this.href);return false;"><?php echo $entity->kaltura_video_thumbnail; ?></a></p>
+		<p><a href="<?php echo $entity->thumbnail_url; ?>" onclick="window.open(this.href);return false;"><?php echo $entity->thumbnail_url; ?></a></p>
 		<p><strong><?php echo elgg_echo("kalturavideo:label:sharel");?></strong></p>
 		<p><input type="text" class="input-text" value="<?php echo htmlspecialchars($widget); ?>" /></p>
 		<p><strong><?php echo elgg_echo("kalturavideo:label:sharem");?></strong></p>
