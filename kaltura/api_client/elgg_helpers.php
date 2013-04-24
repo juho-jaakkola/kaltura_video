@@ -368,20 +368,3 @@ function kaltura_create_generic_widget_html ( $entryId , $size='l' , $version=nu
 
 	return $widget ;
 }
-
-
-function kaltura_view_select_privacity($video_id,$access_id,$group_mode=false,$collaborative=false) {
-	global $CONFIG;
-	$ret = elgg_view('input/access', array('name' => 'access_id', 'class'=>'input-access ajaxprivacity','id'=>'ID'.$video_id, 'value' => $access_id));
-
-	if ($group_mode && elgg_get_plugin_setting("alloweditor","kaltura_video")!='no') {
-		$label = elgg_echo("kalturavideo:text:collaborative");
-		$label2 = '<label for="CO'.$video_id.'" title="'.htmlspecialchars($label).'" style="font-size:0.8em;">'.elgg_echo("kalturavideo:label:collaborative").'</label>';
-		$ret .= '
-		&nbsp; <input id="CO'.$video_id.'" class="input-checkboxes collaborative" type="checkbox" title="'.htmlspecialchars($label).'" name="kaltura_video_collaborative" value="'.$video_id.'"'.($collaborative?' checked="checked"':'').' /><img src="'. $CONFIG->wwwroot .'mod/kaltura_video/kaltura/images/group.png" alt="'. htmlspecialchars(elgg_echo("kalturavideo:text:iscollaborative")). '" style="vertical-align:middle;" /> '.$label2;
-	}
-
-	return $ret;
-}
-
-?>
