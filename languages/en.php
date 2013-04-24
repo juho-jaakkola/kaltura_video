@@ -36,7 +36,6 @@ $translations = array(
 	'kaltura_video:none' => "No videos",
 	'kalturavideo:label:adminvideos' => "Videos",
 	'kalturavideo:label:myvideos' => "My videos",
-	'kalturavideo:label:length' => "Length:",
 	'kalturavideo:label:plays' => "Plays: %s",
 	'kalturavideo:label:created' => "Created:",
 	'kalturavideo:label:details' => "View details",

@@ -15,7 +15,6 @@
 
 	$metadata = kaltura_get_metadata($vars['entity']);
 
-	$description = '<p>'.elgg_echo("kalturavideo:label:length").' <b>'.$metadata->kaltura_video_length."</b>\n";
 	$description .= elgg_echo("kalturavideo:label:plays").' <b>'.intval($metadata->kaltura_video_plays)."</b>\n";
 	$description .= elgg_echo("kalturavideo:label:author").' <b>'.$uob->name.'</b></p>';
 	$description .= $vars['entity']->description;

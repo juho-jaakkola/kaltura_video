@@ -35,7 +35,6 @@ $translations = array(
 	'kaltura_video:none' => "Ei videoita",
 	'kalturavideo:label:adminvideos' => "Videot",
 	'kalturavideo:label:myvideos' => "Omat ryhmäni",
-	'kalturavideo:label:length' => "Pituus:",
 	'kalturavideo:label:plays' => "Katseluita: %s",
 	'kalturavideo:label:created' => "Created:",
 	'kalturavideo:label:details' => "Näytä yksityiskohdat",

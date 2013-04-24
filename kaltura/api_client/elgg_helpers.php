@@ -132,7 +132,6 @@ function kaltura_update_object(&$entry, $kmodel = null, $access = null, $user_gu
 
 	if ($entry->comments_on) $ob->comments_on = $entry->comments_on;
 	if ($entry->plays) $ob->kaltura_video_plays = $entry->plays;
-	if ($entry->duration) $ob->kaltura_video_length = kaltura_parse_time($entry->duration);
 	if ($entry->thumbnailUrl) $ob->thumbnail_url = $entry->thumbnailUrl;
 	if ($entry->downloadUrl) $ob->kaltura_video_download = $entry->downloadUrl;
 
@@ -221,41 +220,6 @@ function kaltura_update_object(&$entry, $kmodel = null, $access = null, $user_gu
 	}
 	$ob->save();
 	return $ob;
-}
-
-//
-function kaltura_parse_time($seconds,$complete=true) {
-	$d = floor($seconds / (3600*24));
-	$h = floor($seconds / 3600) - $d*24;
-	$m = floor($seconds / 60) - $h*60 -$d*24*60;
-	$s = $seconds % 60;
-	//echo "\n[$d $h $m $s]\n";
-	if ($complete) {
-		if (!empty($d)) return sprintf("%dd %d:%02d:%02d",$d,$h,$m,$s);
-		elseif (!empty($h)) return sprintf("%d:%02d:%02d",$h,$m,$s);
-		elseif (!empty($m)) return sprintf("%d:%02d",$m,$s);
-		else return $s."s";
-	} else {
-		$ret = "";
-		if (!empty($d)) {
-			$ret .= sprintf("%dd %dh",$d,$h);
-			if (!empty($m)) $ret .= sprintf(" %02dm",$m);
-			if (!empty($s)) $ret .= sprintf(" %02ds",$s);
-			return $ret;
-		}
-		elseif (!empty($h)) {
-			$ret .= sprintf("%dh",$h);
-			if (!empty($m)) $ret .= sprintf(" %02dm",$m);
-			if (!empty($s)) $ret .= sprintf(" %02ds",$s);
-			return $ret;
-		}
-		elseif (!empty($m)) {
-			$ret .= sprintf("%dm",$m);
-			if (!empty($s)) $ret .= sprintf(" %02ds",$s);
-			return $ret;
-		}
-		else return $s."s";
-	}
 }
 
 function kaltura_build_widget_object($ob, $widget_html) {
