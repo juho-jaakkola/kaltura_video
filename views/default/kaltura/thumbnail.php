@@ -13,9 +13,20 @@ $entity = elgg_extract('entity', $vars);
 $href = elgg_extract('href', $vars);
 $use_link = elgg_extract('use_link', $vars, true);
 $img_class = elgg_extract('img_class', $vars);
+$width = elgg_extract('width', $vars);
+$height = elgg_extract('height', $vars);
+
+$img_src = $entity->thumbnail_url;
+
+if ($width) {
+	$img_src .= "/width/$width";
+}
+if ($height) {
+	$img_src .= "/height/$height";
+}
 
 $img = elgg_view('output/img', array(
-	'src' => $entity->thumbnail_url,
+	'src' => $img_src,
 	'alt' => $entity->title,
 	'class' => $img_class,
 ));
